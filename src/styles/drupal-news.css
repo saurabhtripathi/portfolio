@@ -1679,3 +1679,599 @@
     gap: 1rem;
   }
 }
+
+/* ===== MOBILE-FIRST REDESIGN (max-width: 640px) ===== */
+@media (max-width: 640px) {
+  /* Reset base styles for mobile */
+  .drupal-news-app {
+    padding-bottom: 70px; /* Space for bottom nav */
+  }
+
+  /* Simplified Header */
+  .dn-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .dn-header-top {
+    display: none; /* Hide top bar on mobile */
+  }
+
+  .dn-header-main {
+    padding: 0.75rem 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .dn-logo {
+    flex: 1;
+    justify-content: flex-start;
+  }
+
+  .dn-logo-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+
+  .dn-logo-text {
+    font-size: 1.1rem;
+  }
+
+  .dn-logo-tagline {
+    display: none;
+  }
+
+  .dn-nav {
+    gap: 0.5rem;
+  }
+
+  .dn-nav-link {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+    background: var(--dn-bg-accent);
+    border-radius: 6px;
+    border-bottom: none;
+  }
+
+  .dn-nav-link:hover,
+  .dn-nav-link.active {
+    background: var(--dn-accent-primary);
+    color: white;
+    border-bottom: none;
+  }
+
+  /* Horizontal Scrolling Category Tabs */
+  .dn-category-bar {
+    padding: 0;
+    border-bottom: none;
+    background: var(--dn-bg-accent);
+  }
+
+  .dn-category-tabs {
+    padding: 0.5rem;
+    gap: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .dn-category-tab {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.65rem;
+    background: var(--dn-bg-secondary);
+    border-radius: 20px;
+    border-bottom: none;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  .dn-category-tab.active {
+    background: var(--dn-accent-primary);
+    color: white;
+    border-bottom: none;
+  }
+
+  .dn-category-tab:hover {
+    background: var(--dn-bg-dark);
+    color: white;
+  }
+
+  /* Main Content Area */
+  .dn-main {
+    padding: 0.75rem;
+  }
+
+  /* Featured Layout - Stack vertically */
+  .dn-layout-featured {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Featured Article Card */
+  .dn-featured {
+    border-radius: 12px;
+  }
+
+  .dn-featured-placeholder,
+  .dn-featured-image {
+    height: 180px;
+  }
+
+  .dn-featured-content {
+    padding: 1rem;
+  }
+
+  .dn-featured-source {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .dn-featured-title {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+
+  .dn-featured-excerpt {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .dn-featured-meta {
+    font-size: 0.75rem;
+  }
+
+  /* Secondary Featured - Horizontal scroll cards */
+  .dn-featured-secondary {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .dn-featured-small {
+    flex-direction: column;
+    min-width: 200px;
+    max-width: 200px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  .dn-featured-small-image {
+    width: 100%;
+    height: 100px;
+  }
+
+  .dn-featured-small-content {
+    padding: 0.75rem;
+  }
+
+  .dn-featured-small-source {
+    font-size: 0.55rem;
+  }
+
+  .dn-featured-small-title {
+    font-size: 0.85rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Grid Layout - Single column */
+  .dn-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Hide Sidebar on Mobile */
+  .dn-sidebar {
+    display: none;
+  }
+
+  /* Sections - Compact */
+  .dn-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .dn-section-header {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .dn-section-title {
+    font-size: 1.1rem;
+  }
+
+  /* Article Grid - Full width cards */
+  .dn-articles-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  /* Article Cards - Compact */
+  .dn-article-card {
+    border-radius: 10px;
+    padding: 0;
+  }
+
+  .dn-article-card-image {
+    height: 140px;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .dn-article-card-content {
+    padding: 0.75rem;
+  }
+
+  .dn-article-card-source {
+    font-size: 0.6rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .dn-article-card-title {
+    font-size: 0.95rem;
+    line-height: 1.35;
+    margin-bottom: 0.4rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .dn-article-card-excerpt {
+    font-size: 0.8rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+
+  .dn-article-card-meta {
+    font-size: 0.7rem;
+  }
+
+  /* YouTube Section - Compact */
+  .dn-youtube-section {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+  }
+
+  .dn-youtube-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .dn-youtube-main iframe {
+    height: 200px;
+    border-radius: 8px;
+  }
+
+  .dn-youtube-list {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .dn-youtube-item {
+    padding: 0.75rem;
+  }
+
+  .dn-youtube-item-thumb {
+    width: 80px;
+    height: 50px;
+  }
+
+  .dn-youtube-item-title {
+    font-size: 0.8rem;
+    -webkit-line-clamp: 2;
+  }
+
+  /* Community Section */
+  .dn-community-section {
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .dn-community-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .dn-community-card {
+    padding: 1rem;
+  }
+
+  .dn-community-card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .dn-community-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .dn-community-card p {
+    font-size: 0.8rem;
+  }
+
+  /* Featured Section */
+  .dn-featured-section {
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .dn-featured-section-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .dn-featured-stories-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .dn-featured-story-card {
+    padding: 0.75rem;
+  }
+
+  .dn-featured-story-number {
+    font-size: 1.5rem;
+    width: 35px;
+    height: 35px;
+  }
+
+  .dn-featured-story-title {
+    font-size: 0.9rem;
+  }
+
+  /* Tutorials Section */
+  .dn-tutorials-section {
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .dn-learning-paths-grid {
+    gap: 0.75rem;
+  }
+
+  .dn-learning-path {
+    padding: 0.75rem;
+    max-width: none;
+    width: 100%;
+  }
+
+  .dn-learning-path-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .dn-learning-path h4 {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .dn-learning-path p {
+    font-size: 0.75rem;
+  }
+
+  .dn-tutorials-grid {
+    gap: 0.75rem;
+  }
+
+  .dn-tutorial-card {
+    padding: 1rem;
+  }
+
+  .dn-tutorial-card-badge {
+    font-size: 0.55rem;
+    padding: 0.15rem 0.4rem;
+  }
+
+  .dn-tutorial-card-title {
+    font-size: 1rem;
+  }
+
+  .dn-tutorial-card-desc {
+    font-size: 0.8rem;
+    -webkit-line-clamp: 2;
+  }
+
+  /* Source Section */
+  .dn-source-section {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .dn-source-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .dn-source-logo {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+
+  .dn-source-name {
+    font-size: 1rem;
+  }
+
+  .dn-source-link {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .dn-source-articles {
+    gap: 0.75rem;
+  }
+
+  .dn-source-article {
+    padding: 0.75rem;
+  }
+
+  .dn-source-article-title {
+    font-size: 0.9rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .dn-source-article-excerpt {
+    font-size: 0.8rem;
+    -webkit-line-clamp: 2;
+  }
+
+  /* Footer - Simplified */
+  .dn-footer {
+    padding: 1.5rem 1rem;
+  }
+
+  .dn-footer-inner {
+    gap: 1.5rem;
+  }
+
+  .dn-footer-section h3 {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .dn-footer-links {
+    gap: 0.4rem;
+  }
+
+  .dn-footer-links a {
+    font-size: 0.8rem;
+  }
+
+  .dn-footer-bottom {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    font-size: 0.75rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  /* Loading State */
+  .dn-loading {
+    padding: 3rem 1rem;
+  }
+
+  .dn-loading-spinner {
+    width: 40px;
+    height: 40px;
+  }
+
+  .dn-loading p {
+    font-size: 0.9rem;
+  }
+
+  /* Error/Empty States */
+  .dn-error,
+  .dn-empty {
+    padding: 1.5rem 1rem;
+    margin: 1rem 0;
+    border-radius: 10px;
+  }
+
+  .dn-error {
+    font-size: 0.85rem;
+  }
+
+  .dn-empty-icon {
+    font-size: 2.5rem;
+  }
+
+  .dn-empty p {
+    font-size: 0.9rem;
+  }
+
+  /* Smooth scrolling for touch */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Better touch targets */
+  a, button {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Scroll hints for horizontal scroll areas */
+  .dn-featured-secondary::after,
+  .dn-category-tabs::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to left, var(--dn-bg-primary), transparent);
+    pointer-events: none;
+  }
+
+  .dn-featured-secondary,
+  .dn-category-tabs {
+    position: relative;
+  }
+}
+
+/* ===== Extra Small Devices (max-width: 375px) ===== */
+@media (max-width: 375px) {
+  .dn-logo-text {
+    font-size: 1rem;
+  }
+
+  .dn-logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .dn-nav-link {
+    font-size: 0.65rem;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .dn-category-tab {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.6rem;
+  }
+
+  .dn-featured-title {
+    font-size: 1.1rem;
+  }
+
+  .dn-featured-placeholder,
+  .dn-featured-image {
+    height: 150px;
+  }
+
+  .dn-featured-small {
+    min-width: 170px;
+    max-width: 170px;
+  }
+
+  .dn-section-title {
+    font-size: 1rem;
+  }
+
+  .dn-article-card-title {
+    font-size: 0.9rem;
+  }
+}

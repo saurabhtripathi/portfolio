@@ -22,9 +22,12 @@ const Header: React.FC<HeaderProps> = ({
     });
   };
 
+  // Check if mobile
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+
   return (
     <header className="dn-header">
-      {/* Top Bar */}
+      {/* Top Bar - Hidden on mobile via CSS */}
       <div className="dn-header-top">
         <div className="dn-header-top-inner">
           <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
@@ -95,11 +98,22 @@ const Header: React.FC<HeaderProps> = ({
         </div>
 
         <nav className="dn-nav">
+          {/* Mobile: Show Home button prominently */}
+          <button
+            onClick={onNavigateHome}
+            className="dn-nav-link"
+            style={{
+              background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+              color: 'white',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            ← Portfolio
+          </button>
           <a href="#latest" className="dn-nav-link active">Latest</a>
-          <a href="#featured" className="dn-nav-link">Featured</a>
           <a href="#videos" className="dn-nav-link">Videos</a>
           <a href="#community" className="dn-nav-link">Community</a>
-          <a href="#tutorials" className="dn-nav-link">Tutorials</a>
         </nav>
       </div>
     </header>
