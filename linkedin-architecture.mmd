@@ -1,0 +1,46 @@
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#0a66c2', 'primaryTextColor': '#fff', 'primaryBorderColor': '#0a66c2', 'lineColor': '#0a66c2', 'secondaryColor': '#1e1e1e', 'tertiaryColor': '#000'}}}%%
+
+flowchart LR
+    subgraph Client["🌐 Client"]
+        User["👤 User"]
+    end
+
+    subgraph CDN["☁️ CloudFlare"]
+        CF["DNS + SSL + CDN"]
+    end
+
+    subgraph Frontend["⚛️ AWS Amplify"]
+        React["React 19\nTypeScript\nTailwind CSS"]
+    end
+
+    subgraph Backend["💧 AWS Lightsail"]
+        Drupal["Drupal 11\nJSON:API\nMariaDB"]
+    end
+
+    subgraph Serverless["▲ Vercel"]
+        API["News API\nServerless\nFunctions"]
+    end
+
+    subgraph Feeds["📡 RSS Feeds"]
+        RSS["7 Drupal\nNews Sources"]
+    end
+
+    User --> CF
+    CF --> React
+    React -->|"Portfolio Data"| Drupal
+    React -->|"News Feed"| API
+    API --> RSS
+
+    classDef client fill:#1e1e1e,stroke:#fff,color:#fff
+    classDef cdn fill:#f38020,stroke:#fff,color:#fff
+    classDef frontend fill:#61dafb,stroke:#000,color:#000
+    classDef backend fill:#0678be,stroke:#fff,color:#fff
+    classDef serverless fill:#000,stroke:#fff,color:#fff
+    classDef feeds fill:#ff6b6b,stroke:#fff,color:#fff
+
+    class Client,User client
+    class CDN,CF cdn
+    class Frontend,React frontend
+    class Backend,Drupal backend
+    class Serverless,API serverless
+    class Feeds,RSS feeds
