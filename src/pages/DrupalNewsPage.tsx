@@ -38,6 +38,9 @@ type NewsApiResponse = {
   errors: Record<string, string>;
 };
 
+// Use environment variable for the API URL
+// In production: set REACT_APP_NEWS_API_URL to your Vercel deployment URL
+// Locally: defaults to Express server on port 3001
 const NEWS_API_URL = process.env.REACT_APP_NEWS_API_URL || 'http://localhost:3001/api/news';
 
 const DEFAULT_SOURCES: NewsSource[] = [
@@ -96,16 +99,6 @@ const DrupalNewsPage: React.FC<{ onNavigateHome: () => void }> = ({ onNavigateHo
   const loadFeeds = async () => {
     setLoading(true);
     try {
-      // In production, skip the news API and just show the sources
-      // The news scraper server is optional and runs locally
-      if (process.env.NODE_ENV === 'production') {
-        setSources(DEFAULT_SOURCES);
-        setArticles([]);
-        setLastUpdated(new Date());
-        setLoading(false);
-        return;
-      }
-
       const response = await fetch(NEWS_API_URL);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
