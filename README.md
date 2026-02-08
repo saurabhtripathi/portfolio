@@ -44,3 +44,54 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Drupal Media - News Aggregator
+
+This project includes a magazine-style Drupal news aggregator at `/news`. It features:
+
+- **Magazine-style theme** inspired by Tablet Magazine
+- **YouTube integration** with embedded videos from Drupal Media channel
+- **Multiple Drupal news sources** including:
+  - Dries Buytaert's blog
+  - Planet Drupal
+  - Lullabot
+  - Drupalize.Me
+  - Pantheon Blog
+  - DrupalEasy
+  - Wim Leers
+- **Featured articles section** with hero layout
+- **Source filtering** via category tabs and sidebar
+- **Trending section** showing most recent articles
+- **Responsive design** for mobile and desktop
+
+### Run the News App
+
+1. Start the news scraper server:
+   ```bash
+   npm run start:news
+   ```
+   This runs the server at `http://localhost:3001`
+
+2. In another terminal, start the React app:
+   ```bash
+   npm start
+   ```
+
+3. Visit `http://localhost:3000/news` to see the Drupal news magazine
+
+### Configuration
+
+- The scraper runs at `http://localhost:3001` by default
+- Set `REACT_APP_NEWS_API_URL` to customize the API endpoint
+- Set `NEWS_SCRAPER_PORT` to change the server port
+
+### Theme Features
+
+The magazine theme includes:
+- Elegant serif typography (Playfair Display) for headlines
+- Clean sans-serif body text (Inter)
+- Color-coded sources for visual distinction
+- Smooth hover animations
+- Dark header bar with stats
+- Category/source filtering
+- Sidebar with trending articles

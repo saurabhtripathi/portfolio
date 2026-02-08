@@ -1,0 +1,97 @@
+{
+  "title": "Work Experience",
+  "totalYears": "14+",
+
+  "positions": [
+    {
+      "title": "Senior Solutions Architect",
+      "company": "Mediacorp Pte. Ltd.",
+      "location": "Singapore",
+      "period": "June 2021 - Present",
+      "current": true,
+      "responsibilities": [
+        "Lead a team of backend developers, frontend developers, QA and support engineers",
+        "Drupal 8 to 9 and 9 to 10 upgrades",
+        "Acquia Cloud to Acquia Cloud Next migrations",
+        "AI and services integrations",
+        "Email templating using Braze",
+        "Work with product owners to determine new features and user stories",
+        "Review code, track projects and drive delivery of modules",
+        "Leverage DevOps tool stack to build, deploy, test and promote features",
+        "Actively participate in Agile ceremonies including planning and grooming",
+        "Code reviews and deployments for MOE microsite",
+        "Train and mentor new joiners for smooth onboarding",
+        "Work on web optimizations and increasing web traffic"
+      ]
+    },
+    {
+      "title": "Software Engineer (R&D)",
+      "company": "Acquia India Private Limited",
+      "location": "India",
+      "period": "April 2019 - June 2021",
+      "current": false,
+      "responsibilities": [
+        "Develop new plugins/modules for Drupal CMS (Acquia Products)",
+        "Automation scripts for testing plugins and PSR4 standard reviews",
+        "Implement API Integration and provide customer support",
+        "Site Building, Backend plugins, Templates, Hooks, Services",
+        "Debugging Travis issues and Migrations",
+        "Search API and various integrations",
+        "Products: Acquia Site Studio, Acquia Cloud, Acquia Lift, Acquia CMS"
+      ]
+    },
+    {
+      "title": "Application Dev. Sr. Analyst",
+      "company": "Accenture",
+      "location": "India",
+      "period": "Feb 2017 - April 2019",
+      "current": false,
+      "responsibilities": [
+        "Supported multiple features with complex business logic",
+        "Extended contributed modules for automation",
+        "Created chatbot to automate developer workflows"
+      ]
+    },
+    {
+      "title": "Software Engineer",
+      "company": "Faichi Solutions",
+      "location": "India",
+      "period": "Oct 2014 - Feb 2017",
+      "current": false,
+      "responsibilities": [
+        "Multilingual website support",
+        "Created Drush commands in Drupal 8",
+        "Feed integration and module development",
+        "Theme customization and configuration management"
+      ]
+    },
+    {
+      "title": "Software Developer",
+      "company": "Iksula",
+      "location": "India",
+      "period": "Jan 2013 - Sept 2014",
+      "current": false,
+      "responsibilities": [
+        "Drupal commerce and custom modules",
+        "Implemented discount structure logic for eBay books category"
+      ]
+    },
+    {
+      "title": "Software Engineer",
+      "company": "Corpus Software",
+      "location": "India",
+      "period": "Jun 2011 - Dec 2012",
+      "current": false,
+      "responsibilities": [
+        "Early career Drupal development",
+        "CMS development and maintenance"
+      ]
+    }
+  ],
+
+  "education": {
+    "degree": "Bachelor of Technology",
+    "university": "Gautam Buddh Technical University",
+    "year": "2011"
+  }
+}

@@ -1,0 +1,174 @@
+VS Code Portfolio - Architecture Overview
+=========================================
+
+Project Architecture
+--------------------
+
+┌─────────────────────────────────────────────────────────────────┐
+│                         FRONTEND                                 │
+│                    React App (localhost:3000)                    │
+├─────────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
+│  │   Sidebar   │  │   TabBar    │  │      Main Content       │  │
+│  │  (files)    │  │  (tabs)     │  │  WelcomeTab/CodeEditor  │  │
+│  └──────┬──────┘  └──────┬──────┘  └───────────┬─────────────┘  │
+│         │                │                     │                 │
+│         └────────────────┴─────────────────────┘                 │
+│                          │                                       │
+│                    App.tsx (State)                               │
+│              files[], tabs[], activeTabId                        │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │
+                    axios (HTTP)
+                           │
+              ┌────────────┴────────────┐
+              │   CRA Proxy (dev only)  │
+              │   package.json proxy    │
+              └────────────┬────────────┘
+                           │
+┌──────────────────────────┴──────────────────────────────────────┐
+│                         BACKEND                                  │
+│              Drupal (vscode-portfolio.ddev.site)                │
+├─────────────────────────────────────────────────────────────────┤
+│  JSON:API Endpoint:                                              │
+│  /jsonapi/node/portfolio_file?sort=field_order                  │
+│                                                                  │
+│  Content Types:                                                  │
+│  - portfolio_file (about.md, skills.ts, etc.)                   │
+│  - project                                                       │
+│  - experience                                                    │
+│  - skill                                                         │
+└─────────────────────────────────────────────────────────────────┘
+
+
+Key Components in App.tsx
+-------------------------
+
+Component       Purpose
+---------       -------
+Sidebar         File explorer showing all portfolio files
+TabBar          Open file tabs (like VS Code)
+WelcomeTab      Landing page with quick actions
+CodeEditor      Displays file content (markdown rendered, code as-is)
+StatusBar       Bottom bar showing file info
+FileIcon        Renders icons based on file type
+
+
+Data Flow
+---------
+
+1. App mounts
+       |
+2. useEffect -> fetchFiles()
+       |
+3. axios.get('/jsonapi/node/portfolio_file')
+       |
+4. Proxy forwards to Drupal backend
+       |
+5. JSON response transformed to FileItem[]
+       |
+6. setFiles(files) -> UI renders
+       |
+7. User clicks file -> handleFileSelect()
+       |
+8. New tab created -> setTabs([...tabs, newTab])
+       |
+9. CodeEditor displays content
+
+
+Data Models
+-----------
+
+FileItem (from Drupal):
+{
+  id: string;        // Drupal node UUID
+  title: string;     // "about.md"
+  content: string;   // File body text
+  language: string;  // "markdown", "json", "typescript"
+  icon: string;      // "md", "json", "ts"
+  isActive: boolean; // Auto-open on load
+}
+
+Tab (local state):
+{
+  id: string;
+  title: string;
+  content: string;
+  language: string;
+  icon: string;
+  type: 'file' | 'welcome';
+}
+
+
+Styling
+-------
+
+- Tailwind CSS with VS Code-inspired color palette
+- Custom colors defined in tailwind.config.js (vscode.bg, vscode.sidebar, vscode.accent, etc.)
+- Monospace font family: Consolas, Monaco, Courier New
+
+
+File Structure
+--------------
+
+vscode-portfolio-frontend/
+├── src/
+│   ├── App.tsx          # All components + state (main file)
+│   ├── index.tsx        # React entry point
+│   ├── index.css        # Tailwind directives
+│   └── types/index.ts   # TypeScript interfaces
+├── package.json         # Dependencies + proxy config
+├── tailwind.config.js   # VS Code theme colors
+└── tsconfig.json        # TypeScript config
+
+
+How It Mimics VS Code
+---------------------
+
+1. Sidebar    - Left panel with file tree
+2. Tabs       - Multiple files open with close buttons
+3. Editor     - Main content area with syntax highlighting
+4. Status Bar - Blue bar at bottom with file info
+5. Color Scheme - Dark theme matching VS Code
+
+The content (files) comes from Drupal, making it a headless CMS architecture
+where Drupal manages content and React handles presentation.
+
+
+API Configuration
+-----------------
+
+Development:
+- CRA dev server runs on localhost:3000
+- Proxy in package.json routes /jsonapi/* to https://vscode-portfolio.ddev.site
+- This avoids CORS issues during local development
+
+Production:
+- Set REACT_APP_DRUPAL_URL environment variable to Drupal URL
+- CORS must be configured on Drupal backend
+
+
+Drupal Content Types
+--------------------
+
+portfolio_file:
+- title: File name (about.md, skills.ts)
+- field_file_content: The file content/body
+- field_language: markdown, json, typescript, javascript
+- field_icon: md, json, ts, js, jsx, tsx
+- field_order: Sort order in sidebar
+- field_is_active: Auto-open on page load
+
+project:
+- title, description, technologies
+- github_url, live_demo_url
+- featured_image, status, featured, order
+
+experience:
+- title, company, location
+- start_date, end_date, current_position
+- description, technologies, order
+
+skill:
+- title, proficiency (0-100)
+- category, years_experience, order

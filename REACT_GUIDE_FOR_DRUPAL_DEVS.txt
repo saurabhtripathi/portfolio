@@ -1,0 +1,453 @@
+React Guide for Drupal Developers
+==================================
+
+This guide explains React concepts by comparing them to Drupal concepts you already know.
+
+
+PART 1: CONCEPT MAPPING (Drupal vs React)
+=========================================
+
+Drupal Concept          →    React Equivalent
+--------------               ----------------
+Twig Template           →    Component (function that returns HTML)
+Preprocess Hook         →    Props (data passed to component)
+Drupal State/Cache      →    useState (component memory)
+hook_init/page_load     →    useEffect (runs code on page load)
+Render Array            →    JSX (HTML-like syntax in JavaScript)
+Module                  →    Component file
+Theme                   →    CSS/Tailwind classes
+AJAX callback           →    Event handler (onClick, onChange)
+Views JSON output       →    API endpoint (JSON:API)
+$variables in Twig      →    Props in Component
+
+
+PART 2: REACT BASICS YOU NEED TO KNOW
+=====================================
+
+1. COMPONENTS = Functions that return HTML
+------------------------------------------
+
+In Drupal Twig:
+  {% block content %}
+    <div class="sidebar">
+      <h2>{{ title }}</h2>
+    </div>
+  {% endblock %}
+
+In React:
+  function Sidebar({ title }) {
+    return (
+      <div className="sidebar">
+        <h2>{title}</h2>
+      </div>
+    );
+  }
+
+Key differences:
+- class → className (because 'class' is reserved in JavaScript)
+- {{ variable }} → {variable} (single curly braces)
+- Components start with CAPITAL letter (Sidebar, not sidebar)
+
+
+2. PROPS = Data passed to components (like $variables in Twig)
+--------------------------------------------------------------
+
+In Drupal:
+  // In .theme file
+  function mytheme_preprocess_node(&$variables) {
+    $variables['author_name'] = 'John';
+  }
+
+  // In Twig
+  <span>{{ author_name }}</span>
+
+In React:
+  // Parent passes data
+  <UserCard name="John" age={25} />
+
+  // Child receives as props
+  function UserCard({ name, age }) {
+    return <span>{name} is {age} years old</span>;
+  }
+
+
+3. STATE = Component's memory (like Drupal's cache/session)
+-----------------------------------------------------------
+
+In Drupal:
+  // Store something
+  \Drupal::state()->set('my_count', 5);
+  // Retrieve it
+  $count = \Drupal::state()->get('my_count');
+
+In React:
+  // Create state variable
+  const [count, setCount] = useState(5);
+
+  // Read it
+  console.log(count);  // 5
+
+  // Update it (triggers re-render!)
+  setCount(10);
+
+IMPORTANT: When state changes, React automatically re-renders the component!
+This is the magic of React - change data, UI updates automatically.
+
+
+4. useEffect = Run code when component loads (like hook_init)
+-------------------------------------------------------------
+
+In Drupal:
+  function mymodule_init() {
+    // Runs on every page load
+    $data = fetch_from_api();
+  }
+
+In React:
+  useEffect(() => {
+    // Runs when component first appears
+    fetchDataFromAPI();
+  }, []);  // Empty [] means "run once on mount"
+
+
+5. EVENT HANDLERS = onClick, onChange (like Drupal AJAX)
+--------------------------------------------------------
+
+In Drupal:
+  // In .module
+  function mymodule_ajax_callback() {
+    return ['#markup' => 'Clicked!'];
+  }
+
+  // In Twig
+  <button class="use-ajax" data-ajax-url="/ajax/callback">Click</button>
+
+In React:
+  function MyButton() {
+    const handleClick = () => {
+      alert('Clicked!');
+    };
+
+    return <button onClick={handleClick}>Click</button>;
+  }
+
+
+PART 3: UNDERSTANDING App.tsx STEP BY STEP
+==========================================
+
+Let's read App.tsx from top to bottom:
+
+
+SECTION 1: IMPORTS (Lines 1-2)
+------------------------------
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+Like Drupal's:
+  use Drupal\Core\...;
+  use Symfony\Component\...;
+
+
+SECTION 2: INTERFACES (Lines 4-20)
+----------------------------------
+interface FileItem {
+  id: string;
+  title: string;
+  content: string;
+  language: string;
+  icon: string;
+  isActive: boolean;
+}
+
+This is TypeScript - defines the SHAPE of data.
+Like Drupal's Entity fields - you're saying "a FileItem has these properties"
+
+
+SECTION 3: API CONFIG (Lines 22-25)
+-----------------------------------
+const API_BASE_URL = process.env.REACT_APP_DRUPAL_URL || '';
+const JSONAPI_BASE = '/jsonapi';
+
+Like Drupal's settings.php:
+  $settings['api_url'] = 'https://...';
+
+
+SECTION 4: FETCH FUNCTION (Lines 27-41)
+---------------------------------------
+const fetchFiles = async (): Promise<FileItem[]> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}${JSONAPI_BASE}/node/portfolio_file`);
+    return response.data.data.map((item: any) => ({
+      id: item.id,
+      title: item.attributes.title,
+      // ... transform Drupal JSON:API format to our format
+    }));
+  } catch (error) {
+    console.error('Error fetching files:', error);
+    return [];
+  }
+};
+
+Like Drupal's:
+  function mymodule_fetch_nodes() {
+    $response = \Drupal::httpClient()->get('https://api.example.com/data');
+    $data = json_decode($response->getBody());
+    return $data;
+  }
+
+
+SECTION 5: SMALL COMPONENTS (Lines 42-164)
+------------------------------------------
+
+FileIcon Component (lines 42-62):
+  - Receives: icon type ("md", "json", "ts")
+  - Returns: colored emoji icon
+  - Like a Twig macro or inline template
+
+Sidebar Component (lines 64-93):
+  - Receives: files array, click handler, active file ID
+  - Returns: file explorer UI
+  - Like: views-view--file-list.html.twig
+
+TabBar Component (lines 95-128):
+  - Receives: tabs array, active tab, click handlers
+  - Returns: tab bar UI
+  - Like: a custom block template
+
+CodeEditor Component (lines 130-164):
+  - Receives: content string, language type
+  - Returns: formatted content display
+  - Like: field--body.html.twig with custom formatting
+
+WelcomeTab Component (lines 166-242):
+  - Receives: files array, click handler
+  - Returns: welcome page with quick actions
+  - Like: page--front.html.twig
+
+
+SECTION 6: MAIN APP COMPONENT (Lines 259-350)
+---------------------------------------------
+
+This is the "controller" - like a Drupal page controller.
+
+const App: React.FC = () => {
+
+  // STATE VARIABLES (like class properties in Drupal)
+  const [files, setFiles] = useState<FileItem[]>([]);      // All files from API
+  const [tabs, setTabs] = useState<Tab[]>([...]);          // Open tabs
+  const [activeTabId, setActiveTabId] = useState('welcome'); // Current tab
+  const [loading, setLoading] = useState(true);            // Loading spinner
+
+  // LOAD DATA ON START (like hook_init)
+  useEffect(() => {
+    loadFiles();
+  }, []);
+
+  // FUNCTION TO LOAD FILES
+  const loadFiles = async () => {
+    setLoading(true);
+    const fetchedFiles = await fetchFiles();  // Call API
+    setFiles(fetchedFiles);                   // Store in state
+    setLoading(false);
+  };
+
+  // FUNCTION TO HANDLE FILE CLICK
+  const handleFileSelect = (file: FileItem) => {
+    // Add new tab or switch to existing
+    setTabs([...tabs, newTab]);
+    setActiveTabId(file.id);
+  };
+
+  // RENDER THE UI (like Twig template)
+  return (
+    <div className="h-screen flex flex-col">
+      <Sidebar files={files} onFileSelect={handleFileSelect} />
+      <TabBar tabs={tabs} activeTabId={activeTabId} />
+      <CodeEditor content={activeTab.content} />
+      <StatusBar />
+    </div>
+  );
+};
+
+
+PART 4: DATA FLOW EXPLAINED SIMPLY
+==================================
+
+Think of it like a Drupal page with AJAX, but smoother:
+
+1. PAGE LOADS
+   - Drupal: Browser requests /page, Drupal builds render array, sends HTML
+   - React: Browser loads index.html (empty), JavaScript builds UI
+
+2. DATA FETCHES
+   - Drupal: Controller loads nodes, passes to Twig
+   - React: useEffect calls API, stores in state
+
+3. USER CLICKS
+   - Drupal: AJAX request → server processes → returns HTML → JavaScript updates DOM
+   - React: Click handler runs → state updates → React re-renders only changed parts
+
+4. UI UPDATES
+   - Drupal: You manually update DOM or reload page
+   - React: Automatic! Change state → UI updates instantly
+
+
+PART 5: FILE STRUCTURE COMPARISON
+=================================
+
+Drupal Module:
+  mymodule/
+  ├── mymodule.info.yml      → package.json
+  ├── mymodule.module        → App.tsx (hooks/logic)
+  ├── src/
+  │   └── Controller/        → Components (UI logic)
+  ├── templates/
+  │   └── *.html.twig        → JSX inside components
+  └── css/
+      └── style.css          → index.css + Tailwind
+
+React App:
+  src/
+  ├── App.tsx                → Main component (like page.tpl.php)
+  ├── index.tsx              → Entry point (like index.php)
+  ├── index.css              → Global styles
+  └── types/index.ts         → Type definitions
+
+
+PART 6: HANDS-ON EXERCISES
+==========================
+
+Exercise 1: Read the Components
+-------------------------------
+Open App.tsx and identify:
+- [ ] Where is Sidebar defined? (around line 64)
+- [ ] What props does Sidebar receive?
+- [ ] Where is Sidebar used? (around line 329)
+
+Exercise 2: Trace a Click
+-------------------------
+1. Find where files are rendered in Sidebar (line 77-88)
+2. Find the onClick handler (line 80)
+3. Find handleFileSelect function (line 287)
+4. See how it updates tabs state
+
+Exercise 3: Add a Console Log
+-----------------------------
+Add this inside handleFileSelect:
+  console.log('File clicked:', file.title);
+
+Then click a file and check browser console (F12).
+
+Exercise 4: Modify the UI
+-------------------------
+Find WelcomeTab component. Change the heading text:
+  <h1>Welcome to My Portfolio</h1>
+to:
+  <h1>Hello from React!</h1>
+
+Save and see it update instantly (hot reload).
+
+
+PART 7: KEY REACT PATTERNS IN THIS APP
+======================================
+
+1. LIFTING STATE UP
+   - All state (files, tabs) lives in App component
+   - Child components receive data via props
+   - Like passing $variables down through Twig includes
+
+2. CALLBACK PROPS
+   - Parent passes function to child: onFileSelect={handleFileSelect}
+   - Child calls it: onClick={() => onFileSelect(file)}
+   - Like AJAX callbacks but synchronous
+
+3. CONDITIONAL RENDERING
+   {loading ? (
+     <div>Loading...</div>
+   ) : (
+     <Sidebar files={files} />
+   )}
+
+   Like Twig's {% if %}...{% else %}...{% endif %}
+
+4. LIST RENDERING
+   {files.map(file => (
+     <div key={file.id}>{file.title}</div>
+   ))}
+
+   Like Twig's {% for item in items %}
+
+
+PART 8: LEARNING PATH
+=====================
+
+Week 1: Basics
+- [ ] Understand components and JSX
+- [ ] Learn props (passing data down)
+- [ ] Practice reading this App.tsx
+
+Week 2: State & Effects
+- [ ] Understand useState (component memory)
+- [ ] Understand useEffect (lifecycle)
+- [ ] Try modifying the app
+
+Week 3: Events & Data Flow
+- [ ] Understand onClick and event handlers
+- [ ] Trace data flow from API to UI
+- [ ] Build a small feature
+
+Week 4: Build Something
+- [ ] Add a new component to this app
+- [ ] Connect to a different Drupal endpoint
+- [ ] Style with Tailwind
+
+
+RESOURCES
+=========
+
+Official Docs:
+- React: https://react.dev/learn
+- TypeScript: https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html
+
+YouTube (search for):
+- "React for beginners 2024"
+- "React hooks explained"
+- "React with TypeScript tutorial"
+
+Practice:
+- Modify this app!
+- Break things, fix them
+- Add console.log() everywhere to see what's happening
+
+
+QUICK REFERENCE
+===============
+
+// Create component
+function MyComponent({ prop1, prop2 }) {
+  return <div>{prop1}</div>;
+}
+
+// Use component
+<MyComponent prop1="hello" prop2={123} />
+
+// State (memory)
+const [value, setValue] = useState(initialValue);
+
+// Effect (on load)
+useEffect(() => {
+  // code runs on mount
+}, []);
+
+// Event handler
+<button onClick={() => doSomething()}>Click</button>
+
+// Conditional render
+{condition ? <ShowThis /> : <ShowThat />}
+
+// List render
+{items.map(item => <Item key={item.id} data={item} />)}
+
+// API call
+const response = await axios.get('/api/endpoint');
+const data = response.data;

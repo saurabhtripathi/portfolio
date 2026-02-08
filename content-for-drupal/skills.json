@@ -1,0 +1,76 @@
+{
+  "title": "Technical Skills",
+  "lastUpdated": "2024",
+
+  "backend": {
+    "label": "Backend Development",
+    "skills": [
+      { "name": "Drupal 7/8/9/10/11", "level": 95 },
+      { "name": "PHP 7.x/8.x", "level": 90 },
+      { "name": "MySQL/MariaDB", "level": 85 },
+      { "name": "REST API & JSON:API", "level": 90 },
+      { "name": "Custom Module Development", "level": 95 },
+      { "name": "Drush/Console Commands", "level": 90 }
+    ]
+  },
+
+  "frontend": {
+    "label": "Frontend Development",
+    "skills": [
+      { "name": "HTML5 & CSS3", "level": 90 },
+      { "name": "JavaScript/jQuery", "level": 85 },
+      { "name": "React", "level": 75 },
+      { "name": "TypeScript", "level": 70 },
+      { "name": "Twig 3", "level": 90 },
+      { "name": "SCSS/Pattern Library", "level": 85 },
+      { "name": "Tailwind CSS", "level": 75 }
+    ]
+  },
+
+  "devops": {
+    "label": "DevOps & Cloud",
+    "skills": [
+      { "name": "Acquia Cloud/Cloud Next", "level": 90 },
+      { "name": "Pantheon", "level": 80 },
+      { "name": "Docker/DDEV/Lando", "level": 85 },
+      { "name": "Apache/LAMP", "level": 85 },
+      { "name": "Git & GitHub", "level": 90 },
+      { "name": "CI/CD Pipelines", "level": 80 }
+    ]
+  },
+
+  "integrations": {
+    "label": "Integrations & APIs",
+    "skills": [
+      { "name": "AI Search/OpenAI", "level": 80 },
+      { "name": "Apache Solr", "level": 85 },
+      { "name": "Brightcove Video", "level": 85 },
+      { "name": "ADFS Authentication", "level": 80 },
+      { "name": "AWS Cognito", "level": 75 },
+      { "name": "Salesforce", "level": 70 },
+      { "name": "Braze CMS", "level": 80 }
+    ]
+  },
+
+  "tools": {
+    "label": "Tools & IDEs",
+    "skills": [
+      { "name": "PhpStorm", "level": 90 },
+      { "name": "VS Code", "level": 90 },
+      { "name": "JIRA/Confluence", "level": 90 },
+      { "name": "Chrome DevTools", "level": 90 }
+    ]
+  },
+
+  "soft": {
+    "label": "Key Competencies",
+    "skills": [
+      "Team Leadership & Management",
+      "Technical Architecture",
+      "Problem Solving",
+      "Coaching & Mentoring",
+      "Client Communication",
+      "Agile/Scrum Methodology"
+    ]
+  }
+}
