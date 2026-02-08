@@ -741,9 +741,7 @@ const Terminal: React.FC<{
 }> = ({ files, onFileSelect, onOpenMicrosite }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<TerminalLine[]>([
-    { type: 'output', text: 'Welcome to Saurabh\'s Portfolio Terminal v1.0.0' },
-    { type: 'output', text: 'Type "help" or click the commands listed above to navigate.' },
-    { type: 'output', text: '' },
+    { type: 'success', text: '💡 Type a command or tap a button above. Try: about, skills, experience, help' },
   ]);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const terminalRef = React.useRef<HTMLDivElement>(null);
@@ -950,10 +948,22 @@ const Terminal: React.FC<{
     setInput('');
   };
 
-  // Auto-scroll to bottom
+  // Track history length to find new lines
+  const prevHistoryLength = React.useRef(history.length);
+
+  // Auto-scroll to show first new success line at top of visible area
   React.useEffect(() => {
-    if (terminalRef.current) {
-      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    if (terminalRef.current && history.length > prevHistoryLength.current) {
+      // Find the first new success line added
+      const allLines = terminalRef.current.querySelectorAll('[data-line]');
+      for (let i = prevHistoryLength.current; i < allLines.length; i++) {
+        const line = allLines[i] as HTMLElement;
+        if (line.classList.contains('animate-pulse')) {
+          line.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          break;
+        }
+      }
+      prevHistoryLength.current = history.length;
     }
   }, [history]);
 
@@ -975,49 +985,50 @@ const Terminal: React.FC<{
         <div className="text-xs text-gray-500">bash</div>
       </div>
       {/* Command hints bar */}
-      <div className="px-4 py-2 bg-gray-900 border-b border-gray-800 text-xs flex flex-wrap items-center gap-x-2">
+      <div
+        className="bg-gray-900 border-b border-gray-800 px-2 py-1"
+        style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', alignItems: 'center', gap: '8px', overflowX: 'auto', whiteSpace: 'nowrap', fontSize: '13px', minHeight: '32px' }}
+      >
         <span className="text-gray-500">Commands:</span>
-        <button onClick={() => { executeCommand('about'); setInput(''); }} className="text-blue-400 hover:text-blue-300 hover:underline">about</button>
-        <span className="text-gray-600">|</span>
-        <button onClick={() => { executeCommand('experience'); setInput(''); }} className="text-green-400 hover:text-green-300 hover:underline">experience</button>
-        <span className="text-gray-600">|</span>
-        <button onClick={() => { executeCommand('skills'); setInput(''); }} className="text-green-400 hover:text-green-300 hover:underline">skills</button>
-        <span className="text-gray-600">|</span>
-        <button onClick={() => { executeCommand('projects'); setInput(''); }} className="text-blue-400 hover:text-blue-300 hover:underline">projects</button>
-        <span className="text-gray-600">|</span>
-        <button onClick={() => { executeCommand('whoami'); setInput(''); }} className="text-purple-400 hover:text-purple-300 hover:underline">whoami</button>
-        <span className="text-gray-600">|</span>
-        <button onClick={() => { executeCommand('contact'); setInput(''); }} className="text-purple-400 hover:text-purple-300 hover:underline">contact</button>
-        <span className="text-gray-600">|</span>
-        <button onClick={() => { executeCommand('help'); setInput(''); }} className="text-yellow-400 hover:text-yellow-300 hover:underline">help</button>
+        <button onClick={() => { executeCommand('about'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-blue-400 hover:text-blue-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>about</button>
+        <button onClick={() => { executeCommand('experience'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-green-400 hover:text-green-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>experience</button>
+        <button onClick={() => { executeCommand('skills'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-green-400 hover:text-green-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>skills</button>
+        <button onClick={() => { executeCommand('projects'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-blue-400 hover:text-blue-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>projects</button>
+        <button onClick={() => { executeCommand('whoami'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-purple-400 hover:text-purple-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>whoami</button>
+        <button onClick={() => { executeCommand('contact'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-purple-400 hover:text-purple-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>contact</button>
+        <button onClick={() => { executeCommand('help'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-yellow-400 hover:text-yellow-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>help</button>
       </div>
       <div
         ref={terminalRef}
         className="h-32 overflow-auto p-3 cursor-text"
+        id="terminal-output"
       >
         {history.map((line, idx) => (
           <div
             key={idx}
+            data-line={idx}
             className={`${
               line.type === 'input' ? 'text-white' :
               line.type === 'error' ? 'text-red-400' :
-              line.type === 'success' ? 'text-green-400' :
+              line.type === 'success' ? 'text-green-400 bg-green-900/30 rounded px-1 animate-pulse' :
               'text-gray-400'
             }`}
+            style={line.type === 'success' ? { animationDuration: '1.2s' } : {}}
           >
             {line.text}
           </div>
         ))}
         <form onSubmit={handleSubmit} className="flex items-center gap-2 mt-1">
-          <span className="text-green-400">$</span>
+          <span className="text-green-400 text-lg animate-pulse">$</span>
           <input
             ref={inputRef}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="flex-1 bg-transparent outline-none text-white"
-            placeholder="Type a command..."
+            className="flex-1 bg-transparent outline-none text-white caret-yellow-400"
+            placeholder="Try 'about' or tap a button above…"
             autoFocus
+            style={{ caretColor: '#facc15', fontSize: '15px' }}
           />
         </form>
       </div>
@@ -1103,6 +1114,35 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
     setActiveTabId('welcome');
   };
 
+  // Mobile-only UI
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+  if (isMobile) {
+    return (
+      <div className="h-screen w-screen flex flex-col bg-gray-900 text-gray-300">
+        {/* Output top half */}
+        <div className="flex-1 overflow-auto border-b border-gray-800" style={{minHeight:'50vh',maxHeight:'50vh'}}>
+          {loading ? (
+            <div className="flex items-center justify-center h-full">
+              <div className="text-gray-400">Loading...</div>
+            </div>
+          ) : activeTab?.type === 'welcome' ? (
+            <WelcomeTab files={files} onFileSelect={handleFileSelect} />
+          ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-experience' ? (
+            <ExperienceMicrosite content={activeTab.content} onGoHome={handleGoHome} />
+          ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-skills' ? (
+            <SkillsMicrosite content={activeTab.content} onGoHome={handleGoHome} />
+          ) : activeTab ? (
+            <CodeEditor content={activeTab.content} language={activeTab.language} title={activeTab.title} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} />
+          ) : null}
+        </div>
+        {/* Terminal bottom half */}
+        <div className="flex-1 overflow-auto" style={{minHeight:'50vh',maxHeight:'50vh'}}>
+          <Terminal files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} />
+        </div>
+      </div>
+    );
+  }
+  // Desktop UI
   return (
     <div className="h-screen flex flex-col bg-gray-900 text-gray-300">
       <div className="bg-gray-800 px-4 py-1 flex justify-between items-center text-sm border-b border-gray-700">

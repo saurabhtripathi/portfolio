@@ -84,10 +84,8 @@ const Header: React.FC<HeaderProps> = ({
       <div className="dn-header-main">
         <div className="dn-logo">
           <div className="dn-logo-icon">
-            {/* Official Drupal Droplet Icon */}
-            <svg viewBox="0 0 100 100" width="28" height="28" fill="currentColor">
-              <path d="M50 5c-1.5 0-3 .5-4 1.5L15 45c-10 12-10 30 0 42 10 12 28 12 38 0l35-38.5c2-2 2-5 0-7L54 6.5c-1-1-2.5-1.5-4-1.5zm0 15l30 35c6 7 6 18 0 25s-16 7-22 0L35 55c-6-7-6-18 0-25l15-10z"/>
-              <circle cx="50" cy="60" r="8"/>
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
             </svg>
           </div>
           <div>

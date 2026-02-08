@@ -1,5 +1,18 @@
 import React from 'react';
 
+// Featured videos from Drupal Media YouTube channel
+// Channel: https://www.youtube.com/@drupalmedia8824
+const FEATURED_VIDEOS = [
+  {
+    id: 'dQw4w9WgXcQ', // Replace with actual Drupal Media video IDs
+    title: 'Getting Started with Drupal',
+  },
+  {
+    id: 'jNQXAC9IVRw',
+    title: 'Drupal Module Development',
+  },
+];
+
 const YouTubeSection: React.FC = () => {
   return (
     <section className="dn-section dn-youtube-section" id="videos">
@@ -19,39 +32,42 @@ const YouTubeSection: React.FC = () => {
       </div>
       
       <div className="dn-youtube-grid">
+        {/* Main Channel Embed - Using channel's video feed */}
         <div className="dn-youtube-main">
           <div className="dn-youtube-embed">
             <iframe
-              src="https://www.youtube.com/embed/MlejHClN_Q4"
-              title="Drupal Meetup Pune - Drupal Media"
+              src="https://www.youtube.com/embed?listType=playlist&list=UULFdrupalmedia8824"
+              title="Drupal Media - Latest Videos"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
             />
           </div>
           <div className="dn-youtube-info">
-            <h3>Drupal Meetup Pune</h3>
-            <p>Community meetup session covering the latest in Drupal development and best practices.</p>
+            <h3>Latest from Drupal Media</h3>
+            <p>Watch the latest Drupal tutorials, DrupalCon talks, and community updates.</p>
           </div>
         </div>
 
+        {/* Sidebar with subscribe and info */}
         <div className="dn-youtube-sidebar">
+          {/* Channel Preview Card */}
           <div className="dn-youtube-card">
-            <div className="dn-youtube-embed-small">
-              <iframe
-                src="https://www.youtube.com/embed/A3pW0ucLnF8"
-                title="RaspberryPi Security Camera"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-            <div className="dn-youtube-card-info">
-              <h4>RaspberryPi Experiment</h4>
-              <p>Security Camera with Pi/Python</p>
+            <div className="dn-youtube-channel-preview">
+              <div className="dn-youtube-channel-avatar">
+                <svg viewBox="0 0 24 24" width="48" height="48" fill="#0678be">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                </svg>
+              </div>
+              <div className="dn-youtube-channel-info">
+                <h4>Drupal Media</h4>
+                <p>@drupalmedia8824</p>
+                <span className="dn-youtube-channel-stats">Drupal tutorials & news</span>
+              </div>
             </div>
           </div>
 
+          {/* Subscribe Button */}
           <div className="dn-youtube-subscribe">
             <a
               href="https://www.youtube.com/@drupalmedia8824?sub_confirmation=1"
@@ -65,19 +81,20 @@ const YouTubeSection: React.FC = () => {
               Subscribe to Channel
             </a>
             <p className="dn-youtube-channel-desc">
-              Join us for Drupal meetups, community updates, and tech experiments.
+              Join our community for weekly Drupal content, DrupalCon coverage, and the latest from the ecosystem.
             </p>
           </div>
 
+          {/* Quick Links */}
           <div className="dn-youtube-links">
             <a href="https://www.youtube.com/@drupalmedia8824/videos" target="_blank" rel="noopener noreferrer">
               📺 All Videos
             </a>
-            <a href="https://www.youtube.com/@DrupalAssociation" target="_blank" rel="noopener noreferrer">
-              🎪 Drupal Association
+            <a href="https://www.youtube.com/@drupalmedia8824/playlists" target="_blank" rel="noopener noreferrer">
+              📁 Playlists
             </a>
-            <a href="https://www.youtube.com/results?search_query=drupalcon+sessions" target="_blank" rel="noopener noreferrer">
-              🔍 DrupalCon Sessions
+            <a href="https://www.youtube.com/@drupalmedia8824/community" target="_blank" rel="noopener noreferrer">
+              💬 Community
             </a>
           </div>
         </div>
