@@ -31,8 +31,22 @@ flowchart TB
         Route53["🌍 Route 53\n(Domain Registrar)"]
     end
 
+    subgraph Vercel["▲ Vercel (Serverless)"]
+        NewsAPI["📰 News API\n/api/news"]
+        HealthAPI["❤️ Health Check\n/api/health"]
+        EdgeCache["⚡ Edge Caching\n5min TTL"]
+    end
+
+    subgraph ExternalFeeds["📡 RSS/Atom Feeds"]
+        Dries["Dries Buytaert"]
+        PlanetDrupal["Planet Drupal"]
+        Lullabot["Lullabot"]
+        OtherFeeds["+ 4 more sources"]
+    end
+
     subgraph GitHub["🐙 GitHub"]
         Repo["📁 saurabhtripathi/portfolio"]
+        NewsRepo["📁 drupal-news-api"]
         CICD["🔄 Auto-Deploy Trigger"]
     end
 
@@ -61,6 +75,11 @@ flowchart TB
     React --> |"HTTPS API Calls"| JSONAPI
     JSONAPI --> |"JSON Response"| React
     
+    %% Frontend to Vercel News API
+    React --> |"Fetch News"| NewsAPI
+    NewsAPI --> |"Scrape RSS"| ExternalFeeds
+    EdgeCache --> NewsAPI
+    
     %% Drupal Stack
     Drupal --> Apache
     Drupal --> MariaDB
@@ -73,6 +92,7 @@ flowchart TB
     %% CI/CD
     Repo --> CICD
     CICD --> |"npm run build"| Amplify
+    NewsRepo --> |"Auto Deploy"| Vercel
 
     %% Styling
     classDef aws fill:#232f3e,stroke:#ff9900,color:#fff
@@ -80,9 +100,11 @@ flowchart TB
     classDef react fill:#61dafb,stroke:#282c34,color:#282c34
     classDef drupal fill:#0678be,stroke:#fff,color:#fff
     classDef github fill:#24292e,stroke:#fff,color:#fff
+    classDef vercel fill:#000000,stroke:#fff,color:#fff
 
     class Amplify,Lightsail,Route53 aws
     class CloudFlare,CF_DNS,CF_SSL,CF_CDN,CF_WAF cloudflare
     class React,Tailwind,SPA react
     class Drupal,Apache,MariaDB,PHP,JSONAPI drupal
-    class GitHub,Repo,CICD github
+    class GitHub,Repo,NewsRepo,CICD github
+    class Vercel,NewsAPI,HealthAPI,EdgeCache vercel

@@ -69,6 +69,46 @@
                      └─────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                                  VERCEL (Serverless)                                     │
+│                                   News API Functions                                     │
+│                                                                                          │
+│  URL: drupal-news-api.vercel.app                                                         │
+│                                                                                          │
+│  ┌─────────────────────────────────────────────────────────────────────────────────┐    │
+│  │  SERVERLESS FUNCTIONS                                                           │    │
+│  │                                                                                  │    │
+│  │  /api/news     - Aggregates Drupal news from 7 RSS/Atom sources                 │    │
+│  │  /api/health   - Health check endpoint                                          │    │
+│  │                                                                                  │    │
+│  │  News Sources:                                                                   │    │
+│  │  • Dries Buytaert (dri.es)         • DrupalEasy                                 │    │
+│  │  • Planet Drupal                    • Wim Leers                                  │    │
+│  │  • Lullabot                         • Pantheon Blog                              │    │
+│  │  • Drupalize.Me                                                                  │    │
+│  │                                                                                  │    │
+│  │  Features:                                                                       │    │
+│  │  • RSS/Atom feed parsing with Cheerio                                           │    │
+│  │  • Edge caching (5 min TTL, stale-while-revalidate)                             │    │
+│  │  • CORS enabled for cross-origin requests                                       │    │
+│  └─────────────────────────────────────────────────────────────────────────────────┘    │
+│                                                                                          │
+│  CI/CD: Auto-deploy from GitHub (drupal-news-api repo)                                   │
+│  Cost: Free tier                                                                         │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+
+                     │
+                     │  React fetches from Vercel
+                     │  for /drupal-media page
+                     ▼
+    ┌──────────────────────────────────────────────────────────────────┐
+    │                       EXTERNAL RSS FEEDS                          │
+    │  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐              │
+    │  │   dri.es     │ │ drupal.org   │ │  lullabot    │   + 4 more   │
+    │  │   /rss.xml   │ │ /planet/rss  │ │  /rss        │              │
+    │  └──────────────┘ └──────────────┘ └──────────────┘              │
+    └──────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
 │                                    AWS ROUTE 53                                          │
 │                                  (Domain Registrar)                                      │
 │                                                                                          │
@@ -80,15 +120,16 @@
 
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
 │                                       GITHUB                                             │
-│                              (Source Code Repository)                                    │
+│                              (Source Code Repositories)                                  │
 │                                                                                          │
-│  Repo: github.com/saurabhtripathi/portfolio                                              │
-│  Branch: main                                                                            │
+│  Repos:                                                                                  │
+│  • github.com/saurabhtripathi/portfolio        (React Frontend)                          │
+│  • github.com/saurabhtripathi/drupal-news-api  (Vercel Serverless API)                   │
 │                                                                                          │
 │  Workflow:                                                                               │
 │  ┌─────────┐     ┌─────────┐     ┌─────────────┐     ┌───────────────┐                  │
-│  │  Code   │────▶│  Push   │────▶│   Amplify   │────▶│   Live Site   │                  │
-│  │ Changes │     │ to main │     │ Auto-Build  │     │   Deployed    │                  │
+│  │  Code   │────▶│  Push   │────▶│   Amplify/  │────▶│   Live Site   │                  │
+│  │ Changes │     │ to main │     │   Vercel    │     │   Deployed    │                  │
 │  └─────────┘     └─────────┘     └─────────────┘     └───────────────┘                  │
 │                                                                                          │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
@@ -123,21 +164,36 @@
     │   index.html + JS     │
     └───────────┬───────────┘
                 │
-                ▼
-    ┌───────────────────────┐       ┌─────────────────────────┐
-    │   Fetch Portfolio     │──────▶│  api.saurabh-tripathi   │
-    │   Data (JSON:API)     │       │  .com/jsonapi/node/...  │
-    └───────────┬───────────┘       └────────────┬────────────┘
-                │                                 │
-                │◀────────────────────────────────┘
-                │         JSON Response
-                ▼
-    ┌───────────────────────┐
-    │   Render Portfolio    │
-    │   - Files in Sidebar  │
-    │   - Content in Editor │
-    │   - Terminal Commands │
-    └───────────────────────┘
+        ┌───────┴───────┐
+        │               │
+        ▼               ▼
+┌───────────────┐   ┌───────────────────────────┐
+│  Portfolio    │   │  Drupal News Page         │
+│  (Home)       │   │  (/drupal-media)          │
+└───────┬───────┘   └───────────┬───────────────┘
+        │                       │
+        ▼                       ▼
+┌───────────────────┐   ┌───────────────────────────┐
+│  Fetch from       │   │  Fetch from Vercel        │
+│  Drupal JSON:API  │   │  /api/news                │
+│  (Lightsail)      │   │  (Serverless)             │
+└───────┬───────────┘   └───────────┬───────────────┘
+        │                           │
+        ▼                           ▼
+┌───────────────────┐   ┌───────────────────────────┐
+│  Render Portfolio │   │  Vercel scrapes 7 RSS     │
+│  - Files Sidebar  │   │  feeds (Dries, Planet     │
+│  - Editor Content │   │  Drupal, Lullabot, etc)   │
+│  - Terminal       │   │                           │
+└───────────────────┘   └───────────┬───────────────┘
+                                    │
+                                    ▼
+                        ┌───────────────────────────┐
+                        │  Render News Articles     │
+                        │  - Category Tabs          │
+                        │  - Article Cards          │
+                        │  - Source Filters         │
+                        └───────────────────────────┘
 ```
 
 ---
@@ -168,6 +224,7 @@
 | AWS Amplify | Frontend Hosting + CI/CD | Free tier |
 | AWS Lightsail | Backend Hosting | $5/month |
 | AWS Route 53 | Domain Registrar | ~$12/year |
+| Vercel | News API Serverless Functions | Free tier |
 | CloudFlare | DNS + CDN + SSL | Free |
 | GitHub | Source Control | Free |
 | Let's Encrypt | SSL for API | Free |
