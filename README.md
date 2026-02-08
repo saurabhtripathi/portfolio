@@ -210,17 +210,30 @@ curl -I https://api.saurabh-tripathi.com/jsonapi/node/portfolio_file
 
 ---
 
-## DNS Configuration (Route 53)
+## DNS Configuration
 
-### Current DNS Records:
+### Route 53 Configuration
+
+After switching to CloudFlare, Route 53 only manages nameservers:
 
 ```
-Record Name                    Type    Value
---------------------------------------------------------------------------------------------------------
-saurabh-tripathi.com          NS      ns-670.awsdns-19.net, ns-1830.awsdns-36.co.uk, etc.
-saurabh-tripathi.com          SOA     ns-670.awsdns-19.net. awsdns-hostmaster.amazon.com. ...
-api.saurabh-tripathi.com      A       54.254.233.142
-www.saurabh-tripathi.com      CNAME   main.d2ro4pzs069gml.amplifyapp.com
+Record Name              Type    Value
+-------------------------------------------------------------------------
+saurabh-tripathi.com    NS      corey.ns.cloudflare.com
+                                dina.ns.cloudflare.com
+saurabh-tripathi.com    SOA     ns-670.awsdns-19.net. awsdns-hostmaster... (auto)
+```
+
+### CloudFlare DNS Records (Active)
+
+All DNS management is now in CloudFlare:
+
+```
+Type    Name    Target                              Proxy    SSL Provider
+---------------------------------------------------------------------------
+CNAME   @       main.digs9n8jzvy4e.amplifyapp.com  Orange   CloudFlare
+CNAME   www     main.digs9n8jzvy4e.amplifyapp.com  Orange   CloudFlare
+A       api     54.254.233.142                      Grey     Let's Encrypt
 ```
 
 ---
@@ -386,25 +399,131 @@ openssl s_client -connect api.saurabh-tripathi.com:443 -servername api.saurabh-t
 
 ---
 
-## Domain Setup Issues
+## Domain Configuration with CloudFlare
 
-### Current Issue: Custom Domain Not Working
+### Why CloudFlare?
 
-**Problem:** Amplify refuses to add custom domain with error:
-> "One or more of the CNAMEs you provided are already associated with a different resource"
+AWS Amplify domain addition kept failing with CloudFront CNAME conflicts. CloudFlare provides:
+- ✅ Free SSL certificates (auto-renewing)
+- ✅ Fast global CDN
+- ✅ Bypasses AWS domain conflicts
+- ✅ Easy DNS management
+- ✅ DDoS protection
 
-**Attempted Solutions:**
-1. Deleted old CloudFront distributions
-2. Removed old SSL validation records from Route 53
-3. Created IAM service role for Amplify
-4. Tried subdomain-only approach
+### CloudFlare Setup Steps
 
-**Current Workaround:**
-- Using Amplify default URL: https://main.digs9n8jzvy4e.amplifyapp.com
-- Manual CNAME: www.saurabh-tripathi.com → Amplify (no SSL)
+#### 1. Sign Up and Add Domain
 
-**Recommended Solution:**
-Use CloudFlare Free for SSL proxy (bypasses AWS domain conflicts)
+1. Go to https://dash.cloudflare.com/sign-up
+2. Sign up for free account
+3. Click **"Add a site"**
+4. Enter: `saurabh-tripathi.com`
+5. Select **Free plan**
+6. Continue
+
+#### 2. Update Nameservers in Route 53
+
+CloudFlare will provide nameservers (e.g., `corey.ns.cloudflare.com` and `dina.ns.cloudflare.com`)
+
+1. Go to **Route 53** Console
+2. Click **Hosted zones** → **saurabh-tripathi.com**
+3. Click the **NS record**
+4. Click **Edit**
+5. Replace all AWS nameservers with CloudFlare's nameservers:
+   ```
+   corey.ns.cloudflare.com
+   dina.ns.cloudflare.com
+   ```
+6. Delete old nameservers (ns-*.awsdns-*.*)
+7. Save changes
+
+#### 3. Configure DNS Records in CloudFlare
+
+Go to CloudFlare dashboard → **DNS** → **Records**
+
+**Add these 3 records:**
+
+```
+Type    Name    Target                              Proxy Status
+------------------------------------------------------------------------
+CNAME   @       main.digs9n8jzvy4e.amplifyapp.com  Proxied (orange cloud)
+CNAME   www     main.digs9n8jzvy4e.amplifyapp.com  Proxied (orange cloud)
+A       api     54.254.233.142                      DNS only (grey cloud)
+```
+
+**Important Notes:**
+- `@` represents root domain (saurabh-tripathi.com)
+- **Orange cloud (Proxied):** CloudFlare handles SSL and CDN
+- **Grey cloud (DNS only):** Direct connection to server (for Drupal with its own SSL)
+- API must be grey because Drupal already has Let's Encrypt SSL
+
+**Delete any old NS records** that CloudFlare imported from Route 53
+
+#### 4. Enable SSL/TLS in CloudFlare
+
+1. Go to **SSL/TLS** (left sidebar)
+2. Set encryption mode to: **Full**
+3. Enable these settings:
+   - ✅ Always Use HTTPS
+   - ✅ Automatic HTTPS Rewrites
+
+4. Go to **SSL/TLS** → **Edge Certificates**
+5. Enable:
+   - ✅ Always Use HTTPS
+   - ✅ Automatic HTTPS Rewrites
+   - ✅ HTTP Strict Transport Security (HSTS) - optional
+
+#### 5. Wait for Propagation
+
+- **Nameserver update:** 5-30 minutes
+- **CloudFlare SSL:** Instant (automatic)
+
+Check propagation: https://dnschecker.org/
+
+```bash
+# Check nameservers updated
+nslookup -type=ns saurabh-tripathi.com
+
+# Should return CloudFlare nameservers
+```
+
+#### 6. Test Your Domains
+
+After propagation (10-15 minutes):
+
+```bash
+# Test all domains
+curl -I https://saurabh-tripathi.com
+curl -I https://www.saurabh-tripathi.com
+curl -I https://api.saurabh-tripathi.com
+
+# All should return 200 OK with valid SSL
+```
+
+Visit in browser:
+- **Portfolio:** https://saurabh-tripathi.com ✅
+- **Portfolio (www):** https://www.saurabh-tripathi.com ✅
+- **Drupal API:** https://api.saurabh-tripathi.com ✅
+
+All should show valid SSL certificates (green padlock)
+
+---
+
+### Current Domain Setup (Final)
+
+```
+Domain                        Points To                              SSL Provider
+------------------------------------------------------------------------------------------
+saurabh-tripathi.com         AWS Amplify (via CloudFlare CDN)       CloudFlare
+www.saurabh-tripathi.com     AWS Amplify (via CloudFlare CDN)       CloudFlare
+api.saurabh-tripathi.com     AWS Lightsail (54.254.233.142)         Let's Encrypt
+```
+
+### CloudFlare Dashboard Access
+
+- **Dashboard:** https://dash.cloudflare.com
+- **DNS Management:** CloudFlare Dashboard → Your domain → DNS
+- **SSL Settings:** CloudFlare Dashboard → Your domain → SSL/TLS
 
 ---
 
