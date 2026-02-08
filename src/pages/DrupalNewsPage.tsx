@@ -96,6 +96,16 @@ const DrupalNewsPage: React.FC<{ onNavigateHome: () => void }> = ({ onNavigateHo
   const loadFeeds = async () => {
     setLoading(true);
     try {
+      // In production, skip the news API and just show the sources
+      // The news scraper server is optional and runs locally
+      if (process.env.NODE_ENV === 'production') {
+        setSources(DEFAULT_SOURCES);
+        setArticles([]);
+        setLastUpdated(new Date());
+        setLoading(false);
+        return;
+      }
+
       const response = await fetch(NEWS_API_URL);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
