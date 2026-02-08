@@ -1,0 +1,88 @@
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#007acc', 'primaryTextColor': '#fff', 'primaryBorderColor': '#569cd6', 'lineColor': '#569cd6', 'secondaryColor': '#252526', 'tertiaryColor': '#1e1e1e'}}}%%
+
+flowchart TB
+    subgraph Users["👤 Users"]
+        Desktop["🖥️ Desktop Browser"]
+        Mobile["📱 Mobile Browser"]
+    end
+
+    subgraph CloudFlare["☁️ CloudFlare (DNS + CDN + SSL)"]
+        CF_DNS["DNS Management"]
+        CF_SSL["SSL/TLS"]
+        CF_CDN["CDN Caching"]
+        CF_WAF["DDoS Protection"]
+    end
+
+    subgraph AWS["☁️ AWS Cloud"]
+        subgraph Amplify["AWS Amplify (Frontend)"]
+            React["⚛️ React 19 + TypeScript"]
+            Tailwind["🎨 Tailwind CSS"]
+            SPA["📄 Single Page App"]
+        end
+
+        subgraph Lightsail["AWS Lightsail $5/mo"]
+            Drupal["💧 Drupal 11 CMS"]
+            Apache["🌐 Apache"]
+            MariaDB["🗄️ MariaDB"]
+            PHP["🐘 PHP 8.2"]
+            JSONAPI["📡 JSON:API"]
+        end
+
+        Route53["🌍 Route 53\n(Domain Registrar)"]
+    end
+
+    subgraph GitHub["🐙 GitHub"]
+        Repo["📁 saurabhtripathi/portfolio"]
+        CICD["🔄 Auto-Deploy Trigger"]
+    end
+
+    subgraph Content["📝 Content Types"]
+        Files["portfolio_file"]
+        Projects["project"]
+        Experience["experience"]
+        Skills["skill"]
+    end
+
+    %% User Flow
+    Desktop --> CF_DNS
+    Mobile --> CF_DNS
+    
+    %% CloudFlare to Services
+    CF_DNS --> |"saurabh-tripathi.com"| Amplify
+    CF_DNS --> |"api.saurabh-tripathi.com"| Lightsail
+    CF_SSL --> Amplify
+    CF_CDN --> Amplify
+    CF_WAF --> Amplify
+    
+    %% Route 53
+    Route53 --> |"NS Records"| CloudFlare
+
+    %% Frontend to Backend
+    React --> |"HTTPS API Calls"| JSONAPI
+    JSONAPI --> |"JSON Response"| React
+    
+    %% Drupal Stack
+    Drupal --> Apache
+    Drupal --> MariaDB
+    Drupal --> PHP
+    Drupal --> JSONAPI
+    
+    %% Content
+    JSONAPI --> Content
+    
+    %% CI/CD
+    Repo --> CICD
+    CICD --> |"npm run build"| Amplify
+
+    %% Styling
+    classDef aws fill:#232f3e,stroke:#ff9900,color:#fff
+    classDef cloudflare fill:#f38020,stroke:#fff,color:#fff
+    classDef react fill:#61dafb,stroke:#282c34,color:#282c34
+    classDef drupal fill:#0678be,stroke:#fff,color:#fff
+    classDef github fill:#24292e,stroke:#fff,color:#fff
+
+    class Amplify,Lightsail,Route53 aws
+    class CloudFlare,CF_DNS,CF_SSL,CF_CDN,CF_WAF cloudflare
+    class React,Tailwind,SPA react
+    class Drupal,Apache,MariaDB,PHP,JSONAPI drupal
+    class GitHub,Repo,CICD github
