@@ -107,6 +107,78 @@ ddev start
 
 ---
 
+## CI/CD Pipeline
+
+This project uses **automatic deployment** - push to GitHub and changes go live automatically.
+
+### How Auto-Deployment Works
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   Code      │     │   GitHub    │     │    AWS      │     │    Live     │
+│   Change    │────▶│    Push     │────▶│   Amplify   │────▶│    Site     │
+│             │     │   (main)    │     │   Build     │     │             │
+└─────────────┘     └─────────────┘     └─────────────┘     └─────────────┘
+                                              │
+                                              ▼
+                                    ┌─────────────────┐
+                                    │  Build Steps:   │
+                                    │  1. npm install │
+                                    │  2. npm build   │
+                                    │  3. Deploy      │
+                                    └─────────────────┘
+```
+
+### Deployment Flow
+
+| Step | Action | Time |
+|------|--------|------|
+| 1 | `git push origin main` | Instant |
+| 2 | GitHub webhook triggers Amplify | ~5 seconds |
+| 3 | Amplify runs `npm install` | ~1 minute |
+| 4 | Amplify runs `npm run build` | ~1-2 minutes |
+| 5 | Deploy to CDN | ~30 seconds |
+| **Total** | **Push to Live** | **~3 minutes** |
+
+### Amplify Build Settings
+
+Located in AWS Amplify Console → App Settings → Build settings:
+
+```yaml
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+```
+
+### Environment Variables (Amplify)
+
+| Variable | Value | Purpose |
+|----------|-------|---------|
+| `REACT_APP_DRUPAL_URL` | `https://api.saurabh-tripathi.com` | Drupal API endpoint |
+| `REACT_APP_NEWS_API_URL` | `https://drupal-news-api.vercel.app/api/news` | News API endpoint |
+
+### Branch Deployments
+
+| Branch | URL | Purpose |
+|--------|-----|---------|
+| `main` | https://main.digs9n8jzvy4e.amplifyapp.com | Production |
+| Feature branches | Auto-generated preview URLs | Testing |
+
+---
+
 ## Deployment Guide
 
 ### Frontend Deployment (AWS Amplify)
