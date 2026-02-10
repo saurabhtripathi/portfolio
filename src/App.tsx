@@ -745,6 +745,27 @@ const Terminal: React.FC<{
   ]);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const terminalRef = React.useRef<HTMLDivElement>(null);
+  
+  // Easter egg: Ant distraction message
+  const [showAntMessage, setShowAntMessage] = React.useState(false);
+  React.useEffect(() => {
+    // Show message periodically when ant is in the middle of the screen
+    const interval = setInterval(() => {
+      setShowAntMessage(true);
+      setTimeout(() => setShowAntMessage(false), 2500);
+    }, 12000); // Every 12 seconds (one ant cycle)
+    
+    // Show first message after 5 seconds
+    const firstTimeout = setTimeout(() => {
+      setShowAntMessage(true);
+      setTimeout(() => setShowAntMessage(false), 2500);
+    }, 5000);
+    
+    return () => {
+      clearInterval(interval);
+      clearTimeout(firstTimeout);
+    };
+  }, []);
 
   const addLine = (type: TerminalLine['type'], text: string) => {
     setHistory(prev => [...prev, { type, text }]);
@@ -829,21 +850,19 @@ const Terminal: React.FC<{
     if (trimmedCmd === 'build:timeline' || trimmedCmd === 'npm run build:timeline') {
       const expFile = findFile('experience');
       if (expFile) {
-        addLine('success', '⚡ Building experience timeline...');
+        addLine('output', '⚡ Building experience timeline...');
         addLine('output', '✓ Parsing experience.json');
         addLine('output', '✓ Generating timeline view');
-        addLine('success', '✓ Done! Opening timeline...');
-        setTimeout(() => {
-          const newTab: Tab = {
-            id: 'experience-microsite',
-            title: 'Experience Timeline',
-            content: expFile.content,
-            language: 'microsite-experience',
-            icon: 'tsx',
-            type: 'microsite',
-          };
-          onOpenMicrosite(newTab);
-        }, 500);
+        const newTab: Tab = {
+          id: 'experience-microsite',
+          title: 'Experience Timeline',
+          content: expFile.content,
+          language: 'microsite-experience',
+          icon: 'tsx',
+          type: 'microsite',
+        };
+        onOpenMicrosite(newTab);
+        addLine('success', '✓ Done! Timeline opened 👆 See above');
       } else {
         addLine('error', '✗ Error: experience.json not found');
       }
@@ -854,21 +873,19 @@ const Terminal: React.FC<{
     if (trimmedCmd === 'render:skills' || trimmedCmd === 'npm run render:skills') {
       const skillsFile = findFile('skill');
       if (skillsFile) {
-        addLine('success', '⚡ Rendering skills dashboard...');
+        addLine('output', '⚡ Rendering skills dashboard...');
         addLine('output', '✓ Parsing skills data');
         addLine('output', '✓ Generating visualizations');
-        addLine('success', '✓ Done! Opening dashboard...');
-        setTimeout(() => {
-          const newTab: Tab = {
-            id: 'skills-microsite',
-            title: 'Skills Dashboard',
-            content: skillsFile.content,
-            language: 'microsite-skills',
-            icon: 'tsx',
-            type: 'microsite',
-          };
-          onOpenMicrosite(newTab);
-        }, 500);
+        const newTab: Tab = {
+          id: 'skills-microsite',
+          title: 'Skills Dashboard',
+          content: skillsFile.content,
+          language: 'microsite-skills',
+          icon: 'tsx',
+          type: 'microsite',
+        };
+        onOpenMicrosite(newTab);
+        addLine('success', '✓ Done! Dashboard opened 👆 See above');
       } else {
         addLine('error', '✗ Error: skills file not found');
       }
@@ -879,18 +896,27 @@ const Terminal: React.FC<{
     if (trimmedCmd === 'experience' || trimmedCmd === 'exp') {
       const expFile = findFile('experience');
       if (expFile) {
-        addLine('success', '⚡ Loading experience timeline...');
-        setTimeout(() => {
-          const newTab: Tab = {
-            id: 'experience-microsite',
-            title: 'Experience Timeline',
-            content: expFile.content,
-            language: 'microsite-experience',
-            icon: 'tsx',
-            type: 'microsite',
-          };
-          onOpenMicrosite(newTab);
-        }, 300);
+        const newTab: Tab = {
+          id: 'experience-microsite',
+          title: 'Experience Timeline',
+          content: expFile.content,
+          language: 'microsite-experience',
+          icon: 'tsx',
+          type: 'microsite',
+        };
+        onOpenMicrosite(newTab);
+        addLine('success', '✓ Experience Timeline opened! 👆 See above');
+        // Scroll to top of content area on mobile
+        const contentArea = document.getElementById('content-area');
+        if (contentArea) {
+          contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        // Flash the tab bar to draw attention
+        const tabBar = document.getElementById('tab-bar');
+        if (tabBar) {
+          tabBar.classList.add('ring-2', 'ring-blue-500');
+          setTimeout(() => tabBar.classList.remove('ring-2', 'ring-blue-500'), 1500);
+        }
       } else {
         addLine('error', '✗ Error: experience data not found');
       }
@@ -901,18 +927,27 @@ const Terminal: React.FC<{
     if (trimmedCmd === 'skills' || trimmedCmd === 'skill') {
       const skillsFile = findFile('skill');
       if (skillsFile) {
-        addLine('success', '⚡ Loading skills dashboard...');
-        setTimeout(() => {
-          const newTab: Tab = {
-            id: 'skills-microsite',
-            title: 'Skills Dashboard',
-            content: skillsFile.content,
-            language: 'microsite-skills',
-            icon: 'tsx',
-            type: 'microsite',
-          };
-          onOpenMicrosite(newTab);
-        }, 300);
+        const newTab: Tab = {
+          id: 'skills-microsite',
+          title: 'Skills Dashboard',
+          content: skillsFile.content,
+          language: 'microsite-skills',
+          icon: 'tsx',
+          type: 'microsite',
+        };
+        onOpenMicrosite(newTab);
+        addLine('success', '✓ Skills Dashboard opened! 👆 See above');
+        // Scroll to top of content area on mobile
+        const contentArea = document.getElementById('content-area');
+        if (contentArea) {
+          contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        // Flash the tab bar to draw attention
+        const tabBar = document.getElementById('tab-bar');
+        if (tabBar) {
+          tabBar.classList.add('ring-2', 'ring-blue-500');
+          setTimeout(() => tabBar.classList.remove('ring-2', 'ring-blue-500'), 1500);
+        }
       } else {
         addLine('error', '✗ Error: skills data not found');
       }
@@ -930,8 +965,19 @@ const Terminal: React.FC<{
       if (trimmedCmd === cmd || trimmedCmd === `open ${cmd}` || trimmedCmd === `cat ${cmd}`) {
         const file = findFile(fileName);
         if (file) {
-          addLine('success', `Opening ${file.title}...`);
-          setTimeout(() => onFileSelect(file), 300);
+          onFileSelect(file);
+          addLine('success', `✓ ${file.title} opened! 👆 See above`);
+          // Scroll to top of content area on mobile
+          const contentArea = document.getElementById('content-area');
+          if (contentArea) {
+            contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+          // Flash the tab bar to draw attention
+          const tabBar = document.getElementById('tab-bar');
+          if (tabBar) {
+            tabBar.classList.add('ring-2', 'ring-blue-500');
+            setTimeout(() => tabBar.classList.remove('ring-2', 'ring-blue-500'), 1500);
+          }
           return;
         }
       }
@@ -977,7 +1023,27 @@ const Terminal: React.FC<{
       className="bg-gray-950 border-t border-gray-700 font-mono text-sm"
       onClick={handleTerminalClick}
     >
-      <div className="flex items-center justify-between px-4 py-1.5 bg-gray-800 border-b border-gray-700">
+      <div className="flex items-center justify-between px-4 py-1.5 bg-gray-800 border-b border-gray-700 relative overflow-hidden">
+        {/* Crawling ant animation */}
+        <div 
+          className="absolute text-xs select-none pointer-events-none"
+          style={{
+            animation: 'crawl 12s linear infinite',
+            top: '50%',
+            transform: 'translateY(-50%)',
+          }}
+        >
+          🐜
+        </div>
+        <style>{`
+          @keyframes crawl {
+            0% { left: -20px; transform: translateY(-50%) scaleX(1); }
+            45% { left: calc(100% + 20px); transform: translateY(-50%) scaleX(1); }
+            50% { left: calc(100% + 20px); transform: translateY(-50%) scaleX(-1); }
+            95% { left: -20px; transform: translateY(-50%) scaleX(-1); }
+            100% { left: -20px; transform: translateY(-50%) scaleX(1); }
+          }
+        `}</style>
         <div className="flex items-center gap-2 text-xs text-gray-400">
           <span className="text-green-400">●</span>
           <span>TERMINAL</span>
@@ -1003,21 +1069,29 @@ const Terminal: React.FC<{
         className="h-32 overflow-auto p-3 cursor-text"
         id="terminal-output"
       >
-        {history.map((line, idx) => (
-          <div
-            key={idx}
-            data-line={idx}
-            className={`${
-              line.type === 'input' ? 'text-white' :
-              line.type === 'error' ? 'text-red-400' :
-              line.type === 'success' ? 'text-green-400 bg-green-900/30 rounded px-1 animate-pulse' :
-              'text-gray-400'
-            }`}
-            style={line.type === 'success' ? { animationDuration: '1.2s' } : {}}
-          >
-            {line.text}
-          </div>
-        ))}
+        {history.map((line, idx) => {
+          // Easter egg: Replace the first hint message when ant is crawling
+          const isFirstHintLine = idx === 0 && line.text.includes('Type a command');
+          const displayText = isFirstHintLine && showAntMessage 
+            ? '🐜 Hey! Stop looking at the ant and type a command! 😄'
+            : line.text;
+          
+          return (
+            <div
+              key={idx}
+              data-line={idx}
+              className={`${
+                line.type === 'input' ? 'text-white' :
+                line.type === 'error' ? 'text-red-400' :
+                line.type === 'success' ? 'text-green-400 bg-green-900/30 rounded px-1 animate-pulse' :
+                'text-gray-400'
+              } ${isFirstHintLine && showAntMessage ? 'bg-yellow-500/20 text-yellow-300' : ''}`}
+              style={line.type === 'success' ? { animationDuration: '1.2s' } : {}}
+            >
+              {displayText}
+            </div>
+          );
+        })}
         <form onSubmit={handleSubmit} className="flex items-center gap-2 mt-1">
           <span className="text-green-400 text-lg animate-pulse">$</span>
           <input
@@ -1116,11 +1190,57 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
 
   // Mobile-only UI
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+  const [contentChanged, setContentChanged] = React.useState(false);
+  const contentAreaRef = React.useRef<HTMLDivElement>(null);
+  
+  // Watch for tab changes to show visual feedback
+  React.useEffect(() => {
+    if (activeTabId !== 'welcome') {
+      setContentChanged(true);
+      // Scroll content area to top
+      if (contentAreaRef.current) {
+        contentAreaRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      // Auto-hide notification after 2 seconds
+      const timer = setTimeout(() => setContentChanged(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [activeTabId]);
+
   if (isMobile) {
     return (
       <div className="h-screen w-screen flex flex-col bg-gray-900 text-gray-300">
-        {/* Output top half */}
-        <div className="flex-1 overflow-auto border-b border-gray-800" style={{minHeight:'50vh',maxHeight:'50vh'}}>
+        {/* Content notification banner - shows when content changes */}
+        {contentChanged && activeTab && activeTab.id !== 'welcome' && (
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 text-center text-sm font-medium animate-pulse flex items-center justify-center gap-2">
+            <span>👆</span>
+            <span>Opened: {activeTab.title}</span>
+            <span>👆</span>
+          </div>
+        )}
+        {/* Tab indicator bar for mobile */}
+        <div id="tab-bar" className="bg-gray-800 border-b border-gray-700 px-3 py-2 flex items-center gap-2 overflow-x-auto transition-all">
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTabId(tab.id)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
+                activeTabId === tab.id 
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' 
+                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
+              }`}
+            >
+              {tab.title}
+            </button>
+          ))}
+        </div>
+        {/* Content area - scrollable */}
+        <div 
+          id="content-area"
+          ref={contentAreaRef}
+          className="flex-1 overflow-auto" 
+          style={{paddingBottom: '220px'}} // Space for fixed terminal
+        >
           {loading ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-gray-400">Loading...</div>
@@ -1135,8 +1255,8 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             <CodeEditor content={activeTab.content} language={activeTab.language} title={activeTab.title} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} />
           ) : null}
         </div>
-        {/* Terminal bottom half */}
-        <div className="flex-1 overflow-auto" style={{minHeight:'50vh',maxHeight:'50vh'}}>
+        {/* Terminal - fixed at bottom */}
+        <div className="fixed bottom-0 left-0 right-0 bg-gray-950 border-t-2 border-blue-500 shadow-lg" style={{maxHeight: '200px'}}>
           <Terminal files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} />
         </div>
       </div>
@@ -1164,8 +1284,10 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
       <div className="flex-1 flex overflow-hidden">
         <Sidebar files={files} onFileSelect={handleFileSelect} activeFileId={activeTabId} />
         <div className="flex-1 flex flex-col">
-          <TabBar tabs={tabs} activeTabId={activeTabId} onTabSelect={setActiveTabId} onTabClose={handleTabClose} />
-          <div className="flex-1 overflow-hidden">
+          <div id="tab-bar" className="transition-all">
+            <TabBar tabs={tabs} activeTabId={activeTabId} onTabSelect={setActiveTabId} onTabClose={handleTabClose} />
+          </div>
+          <div id="content-area" className="flex-1 overflow-auto">
             {loading ? (
               <div className="flex items-center justify-center h-full">
                 <div className="text-gray-400">Loading...</div>
