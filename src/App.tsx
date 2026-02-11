@@ -1066,8 +1066,9 @@ const Terminal: React.FC<{
       </div>
       <div
         ref={terminalRef}
-        className="h-32 overflow-auto p-3 cursor-text"
+        className="overflow-auto p-2 cursor-text"
         id="terminal-output"
+        style={{ maxHeight: '80px' }}
       >
         {history.map((line, idx) => {
           // Easter egg: Replace the first hint message when ant is crawling
@@ -1092,20 +1093,21 @@ const Terminal: React.FC<{
             </div>
           );
         })}
-        <form onSubmit={handleSubmit} className="flex items-center gap-2 mt-1">
-          <span className="text-green-400 text-lg animate-pulse">$</span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="flex-1 bg-transparent outline-none text-white caret-yellow-400"
-            placeholder="Try 'about' or tap a button above…"
-            autoFocus
-            style={{ caretColor: '#facc15', fontSize: '15px' }}
-          />
-        </form>
       </div>
+      {/* Input form - always visible */}
+      <form onSubmit={handleSubmit} className="flex items-center gap-2 px-3 py-2 bg-gray-900 border-t border-gray-800">
+        <span className="text-green-400 text-lg animate-pulse">$</span>
+        <input
+          ref={inputRef}
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="flex-1 bg-transparent outline-none text-white caret-yellow-400"
+          placeholder="Try 'about' or tap a button above…"
+          autoFocus
+          style={{ caretColor: '#facc15', fontSize: '16px' }}
+        />
+      </form>
     </div>
   );
 };
@@ -1255,8 +1257,14 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             <CodeEditor content={activeTab.content} language={activeTab.language} title={activeTab.title} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} />
           ) : null}
         </div>
-        {/* Terminal - fixed at bottom */}
-        <div className="fixed bottom-0 left-0 right-0 bg-gray-950 border-t-2 border-blue-500 shadow-lg" style={{maxHeight: '200px'}}>
+        {/* Terminal - fixed at bottom with safe area for mobile browsers */}
+        <div 
+          className="fixed bottom-0 left-0 right-0 bg-gray-950 border-t-2 border-blue-500 shadow-lg"
+          style={{
+            paddingBottom: 'env(safe-area-inset-bottom, 16px)',
+            maxHeight: '45vh',
+          }}
+        >
           <Terminal files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} />
         </div>
       </div>
