@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import DrupalNewsPage from './pages/DrupalNewsPage';
-
-interface FileItem {
-  id: string;
-  title: string;
-  content: string;
-  language: string;
-  icon: string;
-  isActive: boolean;
-}
+import { portfolioFiles, FileItem } from './data/portfolioData';
 
 interface Tab {
   id: string;
@@ -20,26 +11,12 @@ interface Tab {
   type: 'file' | 'welcome' | 'microsite';
 }
 
-// In development, requests go through CRA proxy (set in package.json)
-// In production, use the full Drupal URL
-const API_BASE_URL = process.env.REACT_APP_DRUPAL_URL || '';
-const JSONAPI_BASE = '/jsonapi';
-
 const fetchFiles = async (): Promise<FileItem[]> => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}${JSONAPI_BASE}/node/portfolio_file?sort=field_order`);
-    return response.data.data.map((item: any) => ({
-      id: item.id,
-      title: item.attributes.title,
-      content: item.attributes.field_file_content?.value || '',
-      language: item.attributes.field_language || 'text',
-      icon: item.attributes.field_icon || 'file',
-      isActive: item.attributes.field_is_active || false,
-    }));
-  } catch (error) {
-    console.error('Error fetching files:', error);
-    return [];
-  }
+  // Return static data instead of fetching from Drupal API
+  return new Promise((resolve) => {
+    // Simulate async operation for consistency
+    setTimeout(() => resolve(portfolioFiles), 100);
+  });
 };
 
 const FileIcon: React.FC<{ icon: string; className?: string }> = ({ icon, className = '' }) => {
