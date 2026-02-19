@@ -16,7 +16,7 @@ export const portfolioFiles: FileItem[] = [
 
 ### About Me
 
-I am a Senior Solutions Architect with 14+ years of experience in building enterprise-level web applications. My expertise lies in Drupal development, headless CMS architectures, and modern frontend technologies.
+I am a Senior Solutions Architect with years of experience in building enterprise-level web applications. My expertise lies in Drupal development, headless CMS architectures, and modern frontend technologies.
 
 ### Certifications
 
