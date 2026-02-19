@@ -139,10 +139,10 @@ vscode-portfolio-frontend/
 4. **Stop Lightsail instance:** Test without backend running
 
 ### Long Term (After 2 Weeks)
-1. **Delete Lightsail instance:** See `AWS_DECOMMISSION_GUIDE.md`
-2. **Clean up DNS:** Remove api.saurabh-tripathi.com
-3. **Verify cost savings:** Check AWS bill
-4. **Archive Drupal code:** Local backup of /web directory
+1. ✅ **Delete Lightsail instance:** COMPLETED (Feb 19, 2026)
+2. ⏳ **Clean up DNS:** Remove api.saurabh-tripathi.com from CloudFlare
+3. ✅ **Verify cost savings:** CONFIRMED - AWS bill shows Lightsail: $0.00
+4. ✅ **Archive Drupal code:** Local backup stored in /Users/saurabh/Documents/vscode-portfolio/
 
 ---
 
@@ -246,9 +246,54 @@ See `MIGRATION_README.md` → "Rollback Plan" section
 
 ---
 
+## AWS Cleanup Completed
+
+### ✅ Completed Actions (Feb 19, 2026)
+- [x] Stopped Lightsail instance
+- [x] Deleted static IP
+- [x] Deleted Lightsail instance
+- [x] Verified AWS billing: Lightsail = $0.00
+- [x] Local backups confirmed
+
+### ⏳ Remaining Action
+- [ ] Delete DNS record: api.saurabh-tripathi.com from CloudFlare
+
+### Local Drupal Backups
+
+All backups stored in: `/Users/saurabh/Documents/vscode-portfolio/`
+
+```
+├── drupal-database.sql              (13 MB) - Full database backup
+├── drupal-files.tar.gz              (5.6 MB) - All uploaded files
+├── drupal-config.tar.gz             (74 KB) - Drupal configuration
+├── drupal-complete-export.tar.gz    (6.8 MB) - Complete site export
+├── web/                             - Full Drupal codebase
+├── vendor/                          - PHP dependencies
+├── composer.json & composer.lock    - Composer configuration
+```
+
+**Backup Date:** February 8, 2026
+**Total Size:** ~25 MB
+**Status:** Complete and verified
+
+### Final AWS Billing
+
+| Service | Previous | Current | Savings |
+|---------|----------|---------|---------|
+| Lightsail | $5.00/mo | $0.00/mo | $5.00/mo |
+| Route 53 | $0.52/mo | $0.52/mo | $0.00 |
+| Amplify | $0.40/mo | $0.40/mo | $0.00 |
+| **Total** | **$5.92/mo** | **$0.92/mo** | **$5.00/mo** |
+| **Annual** | **$71/year** | **$11/year** | **$60/year** |
+
+**Cost Reduction: 84%**
+
+---
+
 ## Sign-Off
 
 **Migration Completed By:** Claude (AI Assistant)
 **Reviewed By:** Saurabh Tripathi
 **Date:** February 19, 2026
-**Status:** ✅ Ready for Production Deployment
+**Status:** ✅ Production Deployment Complete
+**AWS Cleanup:** ✅ Complete (except DNS cleanup)
