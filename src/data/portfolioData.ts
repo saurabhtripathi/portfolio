@@ -325,7 +325,7 @@ Migrated large government portal from Drupal 7 to Drupal 8.
 
 This portfolio is built as a **headless architecture demonstration**, showcasing modern web development practices.
 
-## Previous Architecture (Before Migration)
+## Architecture
 
 \`\`\`
 ┌─────────────────────┐
@@ -343,28 +343,6 @@ This portfolio is built as a **headless architecture demonstration**, showcasing
            │
 ┌──────────▼──────────┐
 │   AWS Lightsail     │
-│   ($5/month)        │
-└─────────────────────┘
-\`\`\`
-
-## Current Architecture (After Migration)
-
-\`\`\`
-┌─────────────────────┐
-│   React Frontend    │
-│  (TypeScript + CRA) │
-│                     │
-│  ┌───────────────┐  │
-│  │ Static Data   │  │
-│  │ (JSON files)  │  │
-│  └───────────────┘  │
-└─────────────────────┘
-          │
-          │
-┌─────────▼───────────┐
-│  Static Hosting     │
-│  (Vercel/Netlify)   │
-│  (Free tier)        │
 └─────────────────────┘
 \`\`\`
 
@@ -377,6 +355,12 @@ This portfolio is built as a **headless architecture demonstration**, showcasing
 - **Framer Motion** - Animations
 - **Create React App** - Build tooling
 
+### Backend
+- **Drupal 11** - Headless CMS
+- **JSON:API** - RESTful API
+- **PHP 8.2** - Server-side language
+- **MariaDB** - Database
+
 ### Features
 - VS Code-like interface
 - Interactive terminal
@@ -384,82 +368,94 @@ This portfolio is built as a **headless architecture demonstration**, showcasing
 - Dynamic microsites (Experience Timeline, Skills Dashboard)
 - Responsive design (mobile + desktop)
 - Client-side routing
+- Headless CMS integration
 
-## Data Management
+## Data Flow
 
-### Before Migration
-- Portfolio content stored in Drupal
-- Fetched via JSON:API endpoints
-- Required backend server running
-- Monthly hosting costs ($5+)
+1. **Content Management**
+   - Portfolio content stored in Drupal CMS
+   - Admin interface for easy content updates
+   - Structured content types
 
-### After Migration
-- Portfolio content in TypeScript files
-- Compiled into React bundle
-- No backend required
-- Free static hosting
+2. **API Layer**
+   - JSON:API provides RESTful endpoints
+   - Standardized data format
+   - CORS-enabled for cross-origin requests
 
-## Benefits of Migration
-
-1. **Cost Savings**
-   - From $5/month to $0/month
-   - No database maintenance
-   - No server management
-
-2. **Performance**
-   - Faster load times (no API calls)
-   - Better caching
-   - Global CDN distribution
-
-3. **Simplicity**
-   - Single codebase
-   - Easy to update (edit TypeScript files)
-   - No CMS learning curve
-
-4. **Reliability**
-   - No backend dependencies
-   - No database failures
-   - 100% uptime
+3. **Frontend Consumption**
+   - React fetches data via API calls
+   - TypeScript ensures type safety
+   - Real-time content updates
 
 ## Deployment
 
-### Build Process
-\`\`\`bash
-npm run build
-\`\`\`
+### Frontend Deployment
+- **Platform:** AWS Amplify / Vercel
+- **Build Process:** Automatic on git push
+- **CDN:** Global content delivery
+- **SSL:** Automatic HTTPS
 
-### Deployment Platforms
-- **Vercel** (Recommended)
-- **Netlify**
-- **GitHub Pages**
-- **AWS S3 + CloudFront**
-
-### Environment
-- No environment variables needed
-- No secrets management
-- No database connections
+### Backend Deployment
+- **Platform:** AWS Lightsail
+- **Server:** Apache 2.4
+- **SSL:** Let's Encrypt
+- **Database:** MariaDB
 
 ## Development Workflow
 
-1. **Update Content**
-   - Edit src/data/portfolioData.ts
-   - Add/modify FileItem objects
+1. **Content Updates**
+   - Log into Drupal admin
+   - Update content via CMS
+   - Changes reflect immediately via API
 
-2. **Test Locally**
-   - npm start
-   - View changes at localhost:3000
+2. **Frontend Development**
+   - npm start (local development)
+   - npm run build (production build)
+   - git push (auto-deploy)
 
-3. **Deploy**
-   - git push
-   - Auto-deploy via CI/CD
+3. **Backend Maintenance**
+   - Drupal security updates
+   - Database backups
+   - Module updates
+
+## API Endpoints
+
+### Available Endpoints
+\`\`\`
+GET /jsonapi/node/portfolio_file?sort=field_order
+GET /jsonapi/node/portfolio_file/{uuid}
+GET /jsonapi/node/project
+\`\`\`
+
+## Benefits of Headless Architecture
+
+1. **Flexibility**
+   - Separate frontend and backend
+   - Easy to change either independently
+   - Multiple frontends possible
+
+2. **Performance**
+   - Optimized React frontend
+   - Cached API responses
+   - CDN distribution
+
+3. **Developer Experience**
+   - Modern tooling (React, TypeScript)
+   - Type-safe development
+   - Hot module replacement
+
+4. **Content Management**
+   - User-friendly Drupal interface
+   - Structured content
+   - Version control for content
 
 ## Future Enhancements
 
-- Add CMS headless integration (Contentful, Sanity)
-- Implement blog section
-- Add contact form
-- SEO optimization
-- Analytics integration`,
+- Add CMS preview mode
+- Implement GraphQL endpoint
+- Add real-time content updates
+- Integrate analytics
+- Add search functionality`,
     language: 'markdown',
     icon: 'md',
     isActive: false,
