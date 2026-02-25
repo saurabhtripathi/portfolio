@@ -1020,16 +1020,26 @@ const Terminal: React.FC<{
       {/* Command hints bar */}
       <div
         className="bg-gray-900 border-b border-gray-800 px-2 py-1"
-        style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', alignItems: 'center', gap: '8px', overflowX: 'auto', whiteSpace: 'nowrap', fontSize: '13px', minHeight: '32px' }}
+        style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', alignItems: 'center', gap: '6px', overflowX: 'auto', whiteSpace: 'nowrap', fontSize: '12px', minHeight: '30px' }}
       >
-        <span className="text-gray-500">Commands:</span>
-        <button onClick={() => { executeCommand('about'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-blue-400 hover:text-blue-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>about</button>
-        <button onClick={() => { executeCommand('experience'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-green-400 hover:text-green-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>experience</button>
-        <button onClick={() => { executeCommand('skills'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-green-400 hover:text-green-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>skills</button>
-        <button onClick={() => { executeCommand('projects'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-blue-400 hover:text-blue-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>projects</button>
-        <button onClick={() => { executeCommand('whoami'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-purple-400 hover:text-purple-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>whoami</button>
-        <button onClick={() => { executeCommand('contact'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-purple-400 hover:text-purple-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>contact</button>
-        <button onClick={() => { executeCommand('help'); setInput(''); document.getElementById('terminal-output')?.scrollIntoView({behavior:'smooth',block:'end'}); }} className="text-yellow-400 hover:text-yellow-300 hover:underline" style={{padding:'4px 8px',background:'#23272e',borderRadius:'4px'}}>help</button>
+        {[
+          { cmd: 'about', color: 'text-blue-400' },
+          { cmd: 'experience', color: 'text-green-400' },
+          { cmd: 'skills', color: 'text-green-400' },
+          { cmd: 'projects', color: 'text-blue-400' },
+          { cmd: 'whoami', color: 'text-purple-400' },
+          { cmd: 'contact', color: 'text-purple-400' },
+          { cmd: 'help', color: 'text-yellow-400' },
+        ].map(({ cmd: c, color }) => (
+          <button
+            key={c}
+            onClick={() => { executeCommand(c); setInput(''); }}
+            className={`${color} hover:brightness-125 active:scale-95`}
+            style={{ padding: '3px 7px', background: '#23272e', borderRadius: '4px', fontSize: '12px' }}
+          >
+            {c}
+          </button>
+        ))}
       </div>
       <div
         ref={terminalRef}
@@ -1160,6 +1170,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
   // Mobile-only UI
   const [isMobile, setIsMobile] = React.useState(typeof window !== 'undefined' && window.innerWidth <= 640);
   const [contentChanged, setContentChanged] = React.useState(false);
+  const [mobileToast, setMobileToast] = React.useState('');
   const contentAreaRef = React.useRef<HTMLDivElement>(null);
 
   // Listen for resize to update isMobile
@@ -1169,21 +1180,27 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
-  // Watch for tab changes to show visual feedback
+  // Watch for tab changes — show quick toast + scroll to top
   React.useEffect(() => {
-    if (activeTabId !== 'welcome') {
+    if (activeTabId !== 'welcome' && activeTab) {
       setContentChanged(true);
+      setMobileToast(`✓ ${activeTab.title}`);
       // Scroll content area to top
       if (contentAreaRef.current) {
         contentAreaRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       }
-      // Auto-hide notification after 2 seconds
-      const timer = setTimeout(() => setContentChanged(false), 2000);
+      // Toast disappears quickly
+      const timer = setTimeout(() => { setMobileToast(''); setContentChanged(false); }, 1200);
       return () => clearTimeout(timer);
     }
-  }, [activeTabId]);
+  }, [activeTabId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (isMobile) {
+    const scrollToTerminal = () => {
+      const terminal = document.getElementById('mobile-terminal');
+      if (terminal) terminal.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    };
+
     return (
       <div className="h-screen w-screen flex flex-col bg-gray-900 text-gray-300" style={{ overflow: 'hidden' }}>
         {/* Minimal top bar */}
@@ -1191,22 +1208,40 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           <button onClick={handleGoHome} className="text-white text-sm font-semibold truncate">
             Saurabh Tripathi
           </button>
-          <button
-            onClick={onNavigateNews}
-            className="flex items-center gap-1 px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded text-xs font-medium"
-          >
-            � News
-          </button>
+          <div className="flex items-center gap-2">
+            {activeTabId !== 'welcome' && (
+              <button onClick={handleGoHome} className="text-blue-400 text-xs px-2 py-1 bg-gray-700 rounded">
+                🏠
+              </button>
+            )}
+            <button
+              onClick={onNavigateNews}
+              className="flex items-center gap-1 px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded text-xs font-medium"
+            >
+              📰
+            </button>
+          </div>
         </div>
 
-        {/* Content notification banner */}
-        {contentChanged && activeTab && activeTab.id !== 'welcome' && (
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 text-center text-xs font-medium animate-pulse flex-shrink-0">
-            ✓ Opened: {activeTab.title}
+        {/* Quick toast notification */}
+        {mobileToast && (
+          <div
+            className="bg-green-600 text-white px-3 py-1.5 text-center text-xs font-medium flex-shrink-0"
+            style={{ animation: 'fadeInOut 1.2s ease-in-out forwards' }}
+          >
+            {mobileToast}
           </div>
         )}
+        <style>{`
+          @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(-4px); }
+            15% { opacity: 1; transform: translateY(0); }
+            70% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-4px); }
+          }
+        `}</style>
 
-        {/* Content area - takes all remaining space above terminal */}
+        {/* Content area */}
         <div
           id="content-area"
           ref={contentAreaRef}
@@ -1225,25 +1260,31 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           ) : activeTab ? (
             <CodeEditor content={activeTab.content} language={activeTab.language} title={activeTab.title} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} />
           ) : null}
+
+          {/* Jump to terminal button at end of content */}
+          {activeTabId !== 'welcome' && (
+            <div className="text-center py-4">
+              <button
+                onClick={scrollToTerminal}
+                className="text-gray-500 text-xs flex items-center gap-1 mx-auto px-3 py-1.5 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
+              >
+                ⌨ Jump to Terminal ↓
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Terminal - always visible at bottom */}
-        <div className="flex-shrink-0 bg-gray-950 border-t-2 border-blue-500" style={{ paddingBottom: 'env(safe-area-inset-bottom, 8px)' }}>
+        {/* Terminal — always visible at bottom */}
+        <div id="mobile-terminal" className="flex-shrink-0 bg-gray-950 border-t-2 border-blue-500" style={{ paddingBottom: 'env(safe-area-inset-bottom, 8px)' }}>
           <Terminal
             files={files}
             onFileSelect={(file) => {
               handleFileSelect(file);
-              setTimeout(() => {
-                const el = document.getElementById('content-area');
-                if (el) el.scrollTo({ top: 0, behavior: 'smooth' });
-              }, 200);
+              setTimeout(() => contentAreaRef.current?.scrollTo({ top: 0, behavior: 'smooth' }), 150);
             }}
             onOpenMicrosite={(tab) => {
               handleOpenMicrosite(tab);
-              setTimeout(() => {
-                const el = document.getElementById('content-area');
-                if (el) el.scrollTo({ top: 0, behavior: 'smooth' });
-              }, 200);
+              setTimeout(() => contentAreaRef.current?.scrollTo({ top: 0, behavior: 'smooth' }), 150);
             }}
           />
         </div>
