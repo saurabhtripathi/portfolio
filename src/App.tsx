@@ -967,15 +967,9 @@ const Terminal: React.FC<{
   // Auto-scroll to show first new success line at top of visible area
   React.useEffect(() => {
     if (terminalRef.current && history.length > prevHistoryLength.current) {
-      // Find the first new success line added
-      const allLines = terminalRef.current.querySelectorAll('[data-line]');
-      for (let i = prevHistoryLength.current; i < allLines.length; i++) {
-        const line = allLines[i] as HTMLElement;
-        if (line.classList.contains('animate-pulse')) {
-          line.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          break;
-        }
-      }
+      // Scroll terminal output to bottom so latest output is visible
+      // Use scrollTop instead of scrollIntoView to avoid scrolling ancestor containers (which breaks mobile)
+      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
       prevHistoryLength.current = history.length;
     }
   }, [history]);
@@ -1169,7 +1163,6 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
 
   // Mobile-only UI
   const [isMobile, setIsMobile] = React.useState(typeof window !== 'undefined' && window.innerWidth <= 640);
-  const [contentChanged, setContentChanged] = React.useState(false);
   const contentAreaRef = React.useRef<HTMLDivElement>(null);
 
   // Listen for resize to update isMobile
@@ -1179,40 +1172,88 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
-  // Watch for tab changes to show visual feedback
+  // Watch for tab changes — scroll content to top (desktop only, mobile handled by scrollMobileToContent)
   React.useEffect(() => {
-    if (activeTabId !== 'welcome') {
-      setContentChanged(true);
-      // Scroll content area to top
+    if (!isMobile && activeTabId !== 'welcome' && contentAreaRef.current) {
+      contentAreaRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [activeTabId, isMobile]);
+
+  // Ref for the mobile outer wrapper
+  const mobileWrapperRef = React.useRef<HTMLDivElement>(null);
+
+  // Toast state for mobile
+  const [mobileToast, setMobileToast] = React.useState<string | null>(null);
+
+  // Show a brief toast overlay instead of a banner
+  const showMobileToast = React.useCallback((msg: string) => {
+    setMobileToast(msg);
+    setTimeout(() => setMobileToast(null), 1400);
+  }, []);
+
+  // Helper: scroll mobile view to show content (top of page)
+  const scrollMobileToContent = React.useCallback(() => {
+    setTimeout(() => {
+      // Scroll inner content area to its top
       if (contentAreaRef.current) {
         contentAreaRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       }
-      // Auto-hide notification after 2 seconds
-      const timer = setTimeout(() => setContentChanged(false), 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [activeTabId]);
+      // Also scroll the outer wrapper so content-area is visible (not terminal)
+      if (mobileWrapperRef.current) {
+        mobileWrapperRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 150);
+  }, []);
 
   if (isMobile) {
     return (
-      <div className="h-screen w-screen flex flex-col bg-gray-900 text-gray-300" style={{ overflow: 'hidden' }}>
-        {/* Top bar — single slim line */}
-        <div className="bg-gray-800 border-b border-gray-700 px-3 py-1 flex items-center justify-between flex-shrink-0">
-          <button onClick={handleGoHome} className="text-white text-xs font-bold truncate">Saurabh Tripathi</button>
-          <div className="flex items-center gap-3 text-xs">
+      <div
+        ref={mobileWrapperRef}
+        className="h-screen w-screen flex flex-col bg-gray-900 text-gray-300"
+        style={{ overflow: 'hidden' }}
+      >
+        {/* Slim top bar — all items on one line */}
+        <div className="bg-gray-800 border-b border-gray-700 px-3 flex items-center justify-between flex-shrink-0" style={{ height: '28px', minHeight: '28px' }}>
+          <button onClick={handleGoHome} className="text-white font-bold truncate" style={{ fontSize: '11px' }}>Saurabh Tripathi</button>
+          <div className="flex items-center gap-3" style={{ fontSize: '11px' }}>
             {activeTabId !== 'welcome' && (
               <button onClick={handleGoHome} className="text-blue-400">Home</button>
             )}
-            <button onClick={onNavigateNews} className="text-blue-400">📰 News</button>
+            <button onClick={onNavigateNews} className="text-blue-400 whitespace-nowrap">📰 News</button>
           </div>
         </div>
 
-        {/* Content notification banner */}
-        {contentChanged && activeTab && activeTab.id !== 'welcome' && (
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 text-center text-xs font-medium animate-pulse flex-shrink-0">
-            ✓ Opened: {activeTab.title}
+        {/* Toast overlay — absolutely positioned, doesn't push content */}
+        {mobileToast && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '32px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 50,
+              background: 'rgba(37,99,235,0.92)',
+              color: 'white',
+              padding: '4px 16px',
+              borderRadius: '16px',
+              fontSize: '11px',
+              fontWeight: 600,
+              pointerEvents: 'none',
+              animation: 'toastFade 1.4s ease-out forwards',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            ✓ {mobileToast}
           </div>
         )}
+        <style>{`
+          @keyframes toastFade {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            75% { opacity: 1; }
+            100% { opacity: 0; }
+          }
+        `}</style>
 
         {/* Content area - takes all remaining space above terminal */}
         <div
@@ -1233,25 +1274,39 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           ) : activeTab ? (
             <CodeEditor content={activeTab.content} language={activeTab.language} title={activeTab.title} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} />
           ) : null}
+
+          {/* Jump to Terminal button at bottom of content */}
+          {activeTab && activeTab.id !== 'welcome' && (
+            <div className="flex justify-center py-3">
+              <button
+                onClick={() => {
+                  document.getElementById('mobile-terminal')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="text-xs text-gray-500 border border-gray-700 rounded-full px-3 py-1"
+              >
+                Jump to Terminal ↓
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Terminal - always visible at bottom */}
-        <div className="flex-shrink-0 bg-gray-950 border-t-2 border-blue-500" style={{ paddingBottom: 'env(safe-area-inset-bottom, 8px)' }}>
+        <div
+          id="mobile-terminal"
+          className="flex-shrink-0 bg-gray-950 border-t-2 border-blue-500"
+          style={{ paddingBottom: 'env(safe-area-inset-bottom, 8px)' }}
+        >
           <Terminal
             files={files}
             onFileSelect={(file) => {
               handleFileSelect(file);
-              setTimeout(() => {
-                const el = document.getElementById('content-area');
-                if (el) el.scrollTo({ top: 0, behavior: 'smooth' });
-              }, 200);
+              showMobileToast(`Opened: ${file.title}`);
+              scrollMobileToContent();
             }}
             onOpenMicrosite={(tab) => {
               handleOpenMicrosite(tab);
-              setTimeout(() => {
-                const el = document.getElementById('content-area');
-                if (el) el.scrollTo({ top: 0, behavior: 'smooth' });
-              }, 200);
+              showMobileToast(`Opened: ${tab.title}`);
+              scrollMobileToContent();
             }}
           />
         </div>
