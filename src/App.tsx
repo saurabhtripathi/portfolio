@@ -107,17 +107,20 @@ const TabBar: React.FC<{
   );
 };
 
-const BackToHome: React.FC<{ onGoHome: () => void }> = ({ onGoHome }) => (
-  <div className="px-4 py-2 bg-gray-800 border-b border-gray-700 flex items-center gap-4">
-    <button
-      onClick={onGoHome}
-      className="flex items-center gap-1.5 text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors"
-    >
-      <span>←</span>
-      <span>Back to Home</span>
-    </button>
-  </div>
-);
+const BackToHome: React.FC<{ onGoHome: () => void }> = ({ onGoHome }) => {
+  // Hide on mobile since we have the top nav bar
+  return (
+    <div className="px-4 py-2 bg-gray-800 border-b border-gray-700 items-center gap-4 hidden sm:flex">
+      <button
+        onClick={onGoHome}
+        className="flex items-center gap-1.5 text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors"
+      >
+        <span>←</span>
+        <span>Back to Home</span>
+      </button>
+    </div>
+  );
+};
 
 const CodeEditor: React.FC<{
   content: string;
@@ -271,13 +274,13 @@ const CodeEditor: React.FC<{
 
       {/* Action Banner */}
       {(isExperienceJson || isSkillsFile) && (
-        <div className="px-4 py-5 bg-gradient-to-r from-blue-900/30 via-gray-900 to-blue-900/30 border-b border-blue-500/30">
-          <div className="flex flex-col items-center gap-3">
-            <div className="flex items-center gap-2 text-base">
-              <span className="text-yellow-400 text-lg">💡</span>
-              <p className="text-yellow-300 font-medium">
-                {isExperienceJson && 'Transform this JSON into an interactive timeline — click below to generate!'}
-                {isSkillsFile && 'Visualize this data as a skills dashboard — click below to generate!'}
+        <div className="px-3 py-3 sm:px-4 sm:py-5 bg-gradient-to-r from-blue-900/30 via-gray-900 to-blue-900/30 border-b border-blue-500/30">
+          <div className="flex flex-col items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-2 text-sm sm:text-base">
+              <span className="text-yellow-400 text-base sm:text-lg">💡</span>
+              <p className="text-yellow-300 font-medium text-xs sm:text-base">
+                {isExperienceJson && 'Transform this JSON into an interactive timeline!'}
+                {isSkillsFile && 'Visualize this data as a skills dashboard!'}
               </p>
             </div>
             {isExperienceJson && (
@@ -346,13 +349,13 @@ const ExperienceMicrosite: React.FC<{ content: string; onGoHome?: () => void }> 
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {onGoHome && <BackToHome onGoHome={onGoHome} />}
-      <div className="flex-1 p-6 overflow-auto">
+      <div className="flex-1 p-4 sm:p-6 overflow-auto">
         <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold text-white mb-2">Saurabh Tripathi</h1>
-            <p className="text-blue-400 text-lg">Professional Experience</p>
-          <p className="text-gray-400 mt-1">{data.totalYears || '14+'} Years in Software Development</p>
+          {/* Header - compact on mobile */}
+          <div className="text-center mb-4 sm:mb-10">
+            <h1 className="text-xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">Saurabh Tripathi</h1>
+            <p className="text-blue-400 text-sm sm:text-lg">Professional Experience</p>
+          <p className="text-gray-400 mt-1 text-xs sm:text-base">{data.totalYears || '14+'} Years in Software Development</p>
         </div>
 
         {/* Timeline */}
@@ -456,26 +459,26 @@ const SkillsMicrosite: React.FC<{ content: string; onGoHome?: () => void }> = ({
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {onGoHome && <BackToHome onGoHome={onGoHome} />}
-      <div className="flex-1 p-6 overflow-auto">
+      <div className="flex-1 p-4 sm:p-6 overflow-auto">
         <div className="max-w-5xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold text-white mb-2">Technical Skills</h1>
-            <p className="text-gray-400">Saurabh Tripathi - Senior Solutions Architect</p>
+          {/* Header - compact on mobile */}
+          <div className="text-center mb-4 sm:mb-10">
+            <h1 className="text-xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">Technical Skills</h1>
+            <p className="text-gray-400 text-xs sm:text-base">Saurabh Tripathi - Senior Solutions Architect</p>
           </div>
 
           {/* Skills Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {categories.map(cat => {
               const category = data[cat];
               if (!category) return null;
               return (
-                <div key={cat} className="bg-gray-800/80 rounded-xl p-5 border border-gray-700">
-                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                <div key={cat} className="bg-gray-800/80 rounded-xl p-3 sm:p-5 border border-gray-700">
+                  <h3 className="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-4 flex items-center gap-2">
                     <span>{categoryIcons[cat]}</span>
                     {category.label}
                   </h3>
-                  <div className="space-y-3">
+                  <div className="space-y-2 sm:space-y-3">
                     {category.skills?.map((skill: any, idx: number) => (
                       <div key={idx}>
                         <div className="flex justify-between text-sm mb-1">
@@ -562,34 +565,34 @@ const WelcomeTab: React.FC<{
   ];
 
   return (
-    <div className="p-8 overflow-auto h-full bg-gray-900">
+    <div className="p-4 sm:p-8 overflow-auto h-full bg-gray-900">
       <div className="max-w-4xl mx-auto">
         {/* Hero Section */}
-        <div className="mb-10 text-center">
-          <h1 className="text-4xl font-bold text-white mb-2">Saurabh Tripathi</h1>
-          <h2 className="text-xl text-blue-400 mb-4">Senior Solutions Architect</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+        <div className="mb-6 sm:mb-10 text-center">
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-1 sm:mb-2">Saurabh Tripathi</h1>
+          <h2 className="text-base sm:text-xl text-blue-400 mb-2 sm:mb-4">Senior Solutions Architect</h2>
+          <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
             14+ years of experience building enterprise-level Drupal applications.
             Specializing in headless CMS architectures, React frontends, and cloud deployments.
           </p>
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-4 gap-4 mb-10">
-          <div className="bg-gray-800 p-4 rounded text-center">
-            <div className="text-2xl font-bold text-blue-400">14+</div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-10">
+          <div className="bg-gray-800 p-3 sm:p-4 rounded text-center">
+            <div className="text-xl sm:text-2xl font-bold text-blue-400">14+</div>
             <div className="text-xs text-gray-400">Years Experience</div>
           </div>
-          <div className="bg-gray-800 p-4 rounded text-center">
-            <div className="text-2xl font-bold text-green-400">3x</div>
+          <div className="bg-gray-800 p-3 sm:p-4 rounded text-center">
+            <div className="text-xl sm:text-2xl font-bold text-green-400">3x</div>
             <div className="text-xs text-gray-400">Triple Certified Drupal</div>
           </div>
-          <div className="bg-gray-800 p-4 rounded text-center">
-            <div className="text-2xl font-bold text-yellow-400">D7-11</div>
+          <div className="bg-gray-800 p-3 sm:p-4 rounded text-center">
+            <div className="text-xl sm:text-2xl font-bold text-yellow-400">D7-11</div>
             <div className="text-xs text-gray-400">Drupal Versions</div>
           </div>
-          <div className="bg-gray-800 p-4 rounded text-center">
-            <div className="text-2xl font-bold text-purple-400">SG</div>
+          <div className="bg-gray-800 p-3 sm:p-4 rounded text-center">
+            <div className="text-xl sm:text-2xl font-bold text-purple-400">SG</div>
             <div className="text-xs text-gray-400">Singapore Based</div>
           </div>
         </div>
@@ -882,18 +885,13 @@ const Terminal: React.FC<{
           type: 'microsite',
         };
         onOpenMicrosite(newTab);
-        addLine('success', '✓ Experience Timeline opened! 👆 See above');
-        // Scroll to top of content area on mobile
-        const contentArea = document.getElementById('content-area');
-        if (contentArea) {
-          contentArea.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        // Flash the tab bar to draw attention
-        const tabBar = document.getElementById('tab-bar');
-        if (tabBar) {
-          tabBar.classList.add('ring-2', 'ring-blue-500');
-          setTimeout(() => tabBar.classList.remove('ring-2', 'ring-blue-500'), 1500);
-        }
+        addLine('success', '✓ Experience Timeline opened!');
+        setTimeout(() => {
+          const contentArea = document.getElementById('content-area');
+          if (contentArea) {
+            contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }, 300);
       } else {
         addLine('error', '✗ Error: experience data not found');
       }
@@ -901,7 +899,7 @@ const Terminal: React.FC<{
     }
 
     // Skills command - open dashboard directly
-    if (trimmedCmd === 'skills' || trimmedCmd === 'skill') {
+    if (trimmedCmd.toLowerCase() === 'skills' || trimmedCmd.toLowerCase() === 'skill') {
       const skillsFile = findFile('skill');
       if (skillsFile) {
         const newTab: Tab = {
@@ -913,18 +911,14 @@ const Terminal: React.FC<{
           type: 'microsite',
         };
         onOpenMicrosite(newTab);
-        addLine('success', '✓ Skills Dashboard opened! 👆 See above');
-        // Scroll to top of content area on mobile
-        const contentArea = document.getElementById('content-area');
-        if (contentArea) {
-          contentArea.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        // Flash the tab bar to draw attention
-        const tabBar = document.getElementById('tab-bar');
-        if (tabBar) {
-          tabBar.classList.add('ring-2', 'ring-blue-500');
-          setTimeout(() => tabBar.classList.remove('ring-2', 'ring-blue-500'), 1500);
-        }
+        addLine('success', '✓ Skills Dashboard opened!');
+        // On mobile, scroll content area to top after a short delay
+        setTimeout(() => {
+          const contentArea = document.getElementById('content-area');
+          if (contentArea) {
+            contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }, 300);
       } else {
         addLine('error', '✗ Error: skills data not found');
       }
@@ -933,7 +927,8 @@ const Terminal: React.FC<{
 
     // Open specific files
     const fileCommands: { [key: string]: string } = {
-      'about': 'about',
+      'about': 'readme',
+      'readme': 'readme',
       'projects': 'project',
       'architecture': 'architecture',
     };
@@ -943,18 +938,13 @@ const Terminal: React.FC<{
         const file = findFile(fileName);
         if (file) {
           onFileSelect(file);
-          addLine('success', `✓ ${file.title} opened! 👆 See above`);
-          // Scroll to top of content area on mobile
-          const contentArea = document.getElementById('content-area');
-          if (contentArea) {
-            contentArea.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-          // Flash the tab bar to draw attention
-          const tabBar = document.getElementById('tab-bar');
-          if (tabBar) {
-            tabBar.classList.add('ring-2', 'ring-blue-500');
-            setTimeout(() => tabBar.classList.remove('ring-2', 'ring-blue-500'), 1500);
-          }
+          addLine('success', `✓ ${file.title} opened!`);
+          setTimeout(() => {
+            const contentArea = document.getElementById('content-area');
+            if (contentArea) {
+              contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }, 300);
           return;
         }
       }
@@ -1168,9 +1158,16 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
   };
 
   // Mobile-only UI
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+  const [isMobile, setIsMobile] = React.useState(typeof window !== 'undefined' && window.innerWidth <= 640);
   const [contentChanged, setContentChanged] = React.useState(false);
   const contentAreaRef = React.useRef<HTMLDivElement>(null);
+
+  // Listen for resize to update isMobile
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 640);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   // Watch for tab changes to show visual feedback
   React.useEffect(() => {
@@ -1188,37 +1185,32 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
 
   if (isMobile) {
     return (
-      <div className="h-screen w-screen flex flex-col bg-gray-900 text-gray-300">
-        {/* Content notification banner - shows when content changes */}
+      <div className="h-screen w-screen flex flex-col bg-gray-900 text-gray-300" style={{ overflow: 'hidden' }}>
+        {/* Minimal top bar */}
+        <div className="bg-gray-800 border-b border-gray-700 px-3 py-1.5 flex items-center justify-between flex-shrink-0">
+          <button onClick={handleGoHome} className="text-white text-sm font-semibold truncate">
+            Saurabh Tripathi
+          </button>
+          <button
+            onClick={onNavigateNews}
+            className="flex items-center gap-1 px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded text-xs font-medium"
+          >
+            � News
+          </button>
+        </div>
+
+        {/* Content notification banner */}
         {contentChanged && activeTab && activeTab.id !== 'welcome' && (
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 text-center text-sm font-medium animate-pulse flex items-center justify-center gap-2">
-            <span>👆</span>
-            <span>Opened: {activeTab.title}</span>
-            <span>👆</span>
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 text-center text-xs font-medium animate-pulse flex-shrink-0">
+            ✓ Opened: {activeTab.title}
           </div>
         )}
-        {/* Tab indicator bar for mobile */}
-        <div id="tab-bar" className="bg-gray-800 border-b border-gray-700 px-3 py-2 flex items-center gap-2 overflow-x-auto transition-all">
-          {tabs.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTabId(tab.id)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
-                activeTabId === tab.id 
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' 
-                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
-              }`}
-            >
-              {tab.title}
-            </button>
-          ))}
-        </div>
-        {/* Content area - scrollable */}
-        <div 
+
+        {/* Content area - takes all remaining space above terminal */}
+        <div
           id="content-area"
           ref={contentAreaRef}
-          className="flex-1 overflow-auto" 
-          style={{paddingBottom: '220px'}} // Space for fixed terminal
+          className="flex-1 overflow-auto"
         >
           {loading ? (
             <div className="flex items-center justify-center h-full">
@@ -1234,15 +1226,26 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             <CodeEditor content={activeTab.content} language={activeTab.language} title={activeTab.title} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} />
           ) : null}
         </div>
-        {/* Terminal - fixed at bottom with safe area for mobile browsers */}
-        <div 
-          className="fixed bottom-0 left-0 right-0 bg-gray-950 border-t-2 border-blue-500 shadow-lg"
-          style={{
-            paddingBottom: 'env(safe-area-inset-bottom, 16px)',
-            maxHeight: '45vh',
-          }}
-        >
-          <Terminal files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} />
+
+        {/* Terminal - always visible at bottom */}
+        <div className="flex-shrink-0 bg-gray-950 border-t-2 border-blue-500" style={{ paddingBottom: 'env(safe-area-inset-bottom, 8px)' }}>
+          <Terminal
+            files={files}
+            onFileSelect={(file) => {
+              handleFileSelect(file);
+              setTimeout(() => {
+                const el = document.getElementById('content-area');
+                if (el) el.scrollTo({ top: 0, behavior: 'smooth' });
+              }, 200);
+            }}
+            onOpenMicrosite={(tab) => {
+              handleOpenMicrosite(tab);
+              setTimeout(() => {
+                const el = document.getElementById('content-area');
+                if (el) el.scrollTo({ top: 0, behavior: 'smooth' });
+              }, 200);
+            }}
+          />
         </div>
       </div>
     );
