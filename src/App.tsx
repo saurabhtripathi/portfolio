@@ -1170,7 +1170,6 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
   // Mobile-only UI
   const [isMobile, setIsMobile] = React.useState(typeof window !== 'undefined' && window.innerWidth <= 640);
   const [contentChanged, setContentChanged] = React.useState(false);
-  const [mobileToast, setMobileToast] = React.useState('');
   const contentAreaRef = React.useRef<HTMLDivElement>(null);
 
   // Listen for resize to update isMobile
@@ -1180,68 +1179,42 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
-  // Watch for tab changes — show quick toast + scroll to top
+  // Watch for tab changes to show visual feedback
   React.useEffect(() => {
-    if (activeTabId !== 'welcome' && activeTab) {
+    if (activeTabId !== 'welcome') {
       setContentChanged(true);
-      setMobileToast(`✓ ${activeTab.title}`);
       // Scroll content area to top
       if (contentAreaRef.current) {
         contentAreaRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       }
-      // Toast disappears quickly
-      const timer = setTimeout(() => { setMobileToast(''); setContentChanged(false); }, 1200);
+      // Auto-hide notification after 2 seconds
+      const timer = setTimeout(() => setContentChanged(false), 2000);
       return () => clearTimeout(timer);
     }
-  }, [activeTabId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [activeTabId]);
 
   if (isMobile) {
-    const scrollToTerminal = () => {
-      const terminal = document.getElementById('mobile-terminal');
-      if (terminal) terminal.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    };
-
     return (
       <div className="h-screen w-screen flex flex-col bg-gray-900 text-gray-300" style={{ overflow: 'hidden' }}>
-        {/* Minimal top bar */}
-        <div className="bg-gray-800 border-b border-gray-700 px-3 py-1.5 flex items-center justify-between flex-shrink-0">
-          <button onClick={handleGoHome} className="text-white text-sm font-semibold truncate">
-            Saurabh Tripathi
-          </button>
-          <div className="flex items-center gap-2">
+        {/* Top bar — single slim line */}
+        <div className="bg-gray-800 border-b border-gray-700 px-3 py-1 flex items-center justify-between flex-shrink-0">
+          <button onClick={handleGoHome} className="text-white text-xs font-bold truncate">Saurabh Tripathi</button>
+          <div className="flex items-center gap-3 text-xs">
             {activeTabId !== 'welcome' && (
-              <button onClick={handleGoHome} className="text-blue-400 text-xs px-2 py-1 bg-gray-700 rounded">
-                🏠
-              </button>
+              <button onClick={handleGoHome} className="text-blue-400">Home</button>
             )}
-            <button
-              onClick={onNavigateNews}
-              className="flex items-center gap-1 px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded text-xs font-medium"
-            >
-              📰
-            </button>
+            <button onClick={onNavigateNews} className="text-blue-400">📰 News</button>
           </div>
         </div>
 
-        {/* Quick toast notification */}
-        {mobileToast && (
-          <div
-            className="bg-green-600 text-white px-3 py-1.5 text-center text-xs font-medium flex-shrink-0"
-            style={{ animation: 'fadeInOut 1.2s ease-in-out forwards' }}
-          >
-            {mobileToast}
+        {/* Content notification banner */}
+        {contentChanged && activeTab && activeTab.id !== 'welcome' && (
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 text-center text-xs font-medium animate-pulse flex-shrink-0">
+            ✓ Opened: {activeTab.title}
           </div>
         )}
-        <style>{`
-          @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(-4px); }
-            15% { opacity: 1; transform: translateY(0); }
-            70% { opacity: 1; }
-            100% { opacity: 0; transform: translateY(-4px); }
-          }
-        `}</style>
 
-        {/* Content area */}
+        {/* Content area - takes all remaining space above terminal */}
         <div
           id="content-area"
           ref={contentAreaRef}
@@ -1260,31 +1233,25 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           ) : activeTab ? (
             <CodeEditor content={activeTab.content} language={activeTab.language} title={activeTab.title} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} />
           ) : null}
-
-          {/* Jump to terminal button at end of content */}
-          {activeTabId !== 'welcome' && (
-            <div className="text-center py-4">
-              <button
-                onClick={scrollToTerminal}
-                className="text-gray-500 text-xs flex items-center gap-1 mx-auto px-3 py-1.5 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
-              >
-                ⌨ Jump to Terminal ↓
-              </button>
-            </div>
-          )}
         </div>
 
-        {/* Terminal — always visible at bottom */}
-        <div id="mobile-terminal" className="flex-shrink-0 bg-gray-950 border-t-2 border-blue-500" style={{ paddingBottom: 'env(safe-area-inset-bottom, 8px)' }}>
+        {/* Terminal - always visible at bottom */}
+        <div className="flex-shrink-0 bg-gray-950 border-t-2 border-blue-500" style={{ paddingBottom: 'env(safe-area-inset-bottom, 8px)' }}>
           <Terminal
             files={files}
             onFileSelect={(file) => {
               handleFileSelect(file);
-              setTimeout(() => contentAreaRef.current?.scrollTo({ top: 0, behavior: 'smooth' }), 150);
+              setTimeout(() => {
+                const el = document.getElementById('content-area');
+                if (el) el.scrollTo({ top: 0, behavior: 'smooth' });
+              }, 200);
             }}
             onOpenMicrosite={(tab) => {
               handleOpenMicrosite(tab);
-              setTimeout(() => contentAreaRef.current?.scrollTo({ top: 0, behavior: 'smooth' }), 150);
+              setTimeout(() => {
+                const el = document.getElementById('content-area');
+                if (el) el.scrollTo({ top: 0, behavior: 'smooth' });
+              }, 200);
             }}
           />
         </div>
