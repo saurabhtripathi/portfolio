@@ -1198,9 +1198,10 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
       if (contentAreaRef.current) {
         contentAreaRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       }
-      // Also scroll the outer wrapper so content-area is visible (not terminal)
-      if (mobileWrapperRef.current) {
-        mobileWrapperRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      // Scroll the content area element into view so user sees it (not the terminal)
+      const contentEl = document.getElementById('content-area');
+      if (contentEl) {
+        contentEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 150);
   }, []);
@@ -1210,7 +1211,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
       <div
         ref={mobileWrapperRef}
         className="h-screen w-screen flex flex-col bg-gray-900 text-gray-300"
-        style={{ overflow: 'hidden' }}
+        style={{ overflowY: 'auto', overflowX: 'hidden' }}
       >
         {/* Slim top bar — all items on one line */}
         <div className="bg-gray-800 border-b border-gray-700 px-3 flex items-center justify-between flex-shrink-0" style={{ height: '28px', minHeight: '28px' }}>
