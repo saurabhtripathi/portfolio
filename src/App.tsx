@@ -886,12 +886,6 @@ const Terminal: React.FC<{
         };
         onOpenMicrosite(newTab);
         addLine('success', '✓ Experience Timeline opened!');
-        setTimeout(() => {
-          const contentArea = document.getElementById('content-area');
-          if (contentArea) {
-            contentArea.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }, 300);
       } else {
         addLine('error', '✗ Error: experience data not found');
       }
@@ -912,13 +906,6 @@ const Terminal: React.FC<{
         };
         onOpenMicrosite(newTab);
         addLine('success', '✓ Skills Dashboard opened!');
-        // On mobile, scroll content area to top after a short delay
-        setTimeout(() => {
-          const contentArea = document.getElementById('content-area');
-          if (contentArea) {
-            contentArea.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }, 300);
       } else {
         addLine('error', '✗ Error: skills data not found');
       }
@@ -939,12 +926,6 @@ const Terminal: React.FC<{
         if (file) {
           onFileSelect(file);
           addLine('success', `✓ ${file.title} opened!`);
-          setTimeout(() => {
-            const contentArea = document.getElementById('content-area');
-            if (contentArea) {
-              contentArea.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-          }, 300);
           return;
         }
       }
