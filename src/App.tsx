@@ -725,27 +725,6 @@ const Terminal: React.FC<{
   ]);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const terminalRef = React.useRef<HTMLDivElement>(null);
-  
-  // Easter egg: Ant distraction message
-  const [showAntMessage, setShowAntMessage] = React.useState(false);
-  React.useEffect(() => {
-    // Show message periodically when ant is in the middle of the screen
-    const interval = setInterval(() => {
-      setShowAntMessage(true);
-      setTimeout(() => setShowAntMessage(false), 2500);
-    }, 12000); // Every 12 seconds (one ant cycle)
-    
-    // Show first message after 5 seconds
-    const firstTimeout = setTimeout(() => {
-      setShowAntMessage(true);
-      setTimeout(() => setShowAntMessage(false), 2500);
-    }, 5000);
-    
-    return () => {
-      clearInterval(interval);
-      clearTimeout(firstTimeout);
-    };
-  }, []);
 
   const addLine = (type: TerminalLine['type'], text: string) => {
     setHistory(prev => [...prev, { type, text }]);
@@ -965,27 +944,7 @@ const Terminal: React.FC<{
       className="bg-gray-950 border-t border-gray-700 font-mono text-sm"
       onClick={handleTerminalClick}
     >
-      <div className="flex items-center justify-between px-4 py-1.5 bg-gray-800 border-b border-gray-700 relative overflow-hidden">
-        {/* Crawling ant animation */}
-        <div 
-          className="absolute text-xs select-none pointer-events-none"
-          style={{
-            animation: 'crawl 12s linear infinite',
-            top: '50%',
-            transform: 'translateY(-50%)',
-          }}
-        >
-          🐜
-        </div>
-        <style>{`
-          @keyframes crawl {
-            0% { left: -20px; transform: translateY(-50%) scaleX(1); }
-            45% { left: calc(100% + 20px); transform: translateY(-50%) scaleX(1); }
-            50% { left: calc(100% + 20px); transform: translateY(-50%) scaleX(-1); }
-            95% { left: -20px; transform: translateY(-50%) scaleX(-1); }
-            100% { left: -20px; transform: translateY(-50%) scaleX(1); }
-          }
-        `}</style>
+      <div className="flex items-center justify-between px-4 py-1.5 bg-gray-800 border-b border-gray-700">
         <div className="flex items-center gap-2 text-xs text-gray-400">
           <span className="text-green-400">●</span>
           <span>TERMINAL</span>
@@ -1022,29 +981,21 @@ const Terminal: React.FC<{
         id="terminal-output"
         style={{ maxHeight: '80px' }}
       >
-        {history.map((line, idx) => {
-          // Easter egg: Replace the first hint message when ant is crawling
-          const isFirstHintLine = idx === 0 && line.text.includes('Type a command');
-          const displayText = isFirstHintLine && showAntMessage 
-            ? '🐜 Hey! Stop looking at the ant and type a command! 😄'
-            : line.text;
-          
-          return (
-            <div
-              key={idx}
-              data-line={idx}
-              className={`${
-                line.type === 'input' ? 'text-white' :
-                line.type === 'error' ? 'text-red-400' :
-                line.type === 'success' ? 'text-green-400 bg-green-900/30 rounded px-1 animate-pulse' :
-                'text-gray-400'
-              } ${isFirstHintLine && showAntMessage ? 'bg-yellow-500/20 text-yellow-300' : ''}`}
-              style={line.type === 'success' ? { animationDuration: '1.2s' } : {}}
-            >
-              {displayText}
-            </div>
-          );
-        })}
+        {history.map((line, idx) => (
+          <div
+            key={idx}
+            data-line={idx}
+            className={`${
+              line.type === 'input' ? 'text-white' :
+              line.type === 'error' ? 'text-red-400' :
+              line.type === 'success' ? 'text-green-400 bg-green-900/30 rounded px-1 animate-pulse' :
+              'text-gray-400'
+            }`}
+            style={line.type === 'success' ? { animationDuration: '1.2s' } : {}}
+          >
+            {line.text}
+          </div>
+        ))}
       </div>
       {/* Input form - always visible */}
       <form onSubmit={handleSubmit} className="flex items-center gap-2 px-3 py-2 bg-gray-900 border-t border-gray-800">
