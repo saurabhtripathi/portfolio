@@ -572,16 +572,16 @@ const WelcomeTab: React.FC<{
           <h1 className="text-2xl sm:text-4xl font-bold text-white mb-1 sm:mb-2">Saurabh Tripathi</h1>
           <h2 className="text-base sm:text-xl text-blue-400 mb-2 sm:mb-4">Senior Solutions Architect</h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
-            14+ years of experience building enterprise-level Drupal applications.
-            Specializing in headless CMS architectures, React frontends, and cloud deployments.
+            Full Stack Developer specializing in enterprise-level Drupal applications,
+            headless CMS architectures, React frontends, and cloud deployments.
           </p>
         </div>
 
         {/* Quick Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-10">
           <div className="bg-gray-800 p-3 sm:p-4 rounded text-center">
-            <div className="text-xl sm:text-2xl font-bold text-blue-400">14+</div>
-            <div className="text-xs text-gray-400">Years Experience</div>
+            <div className="text-xl sm:text-2xl font-bold text-blue-400">🚀</div>
+            <div className="text-xs text-gray-400">Full Stack Developer</div>
           </div>
           <div className="bg-gray-800 p-3 sm:p-4 rounded text-center">
             <div className="text-xl sm:text-2xl font-bold text-green-400">3x</div>
