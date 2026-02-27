@@ -645,6 +645,38 @@ const WelcomeTab: React.FC<{
           </div>
         </div>
 
+        {/* Mobile Navigation Tiles - square boxes like Quick Stats, shown above stats on mobile */}
+        <div className="grid grid-cols-4 gap-2 mb-4 sm:hidden">
+          <button
+            onClick={() => handleOpenFile('about')}
+            className="bg-gray-800 p-3 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
+          >
+            <div className="text-lg">👤</div>
+            <div className="text-[10px] text-gray-400 mt-1">About</div>
+          </button>
+          <button
+            onClick={handleOpenExperience}
+            className="bg-gray-800 p-3 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
+          >
+            <div className="text-lg">💼</div>
+            <div className="text-[10px] text-gray-400 mt-1">Work</div>
+          </button>
+          <button
+            onClick={handleOpenSkills}
+            className="bg-gray-800 p-3 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
+          >
+            <div className="text-lg">⚡</div>
+            <div className="text-[10px] text-gray-400 mt-1">Skills</div>
+          </button>
+          <button
+            onClick={() => handleOpenFile('project')}
+            className="bg-gray-800 p-3 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
+          >
+            <div className="text-lg">🚀</div>
+            <div className="text-[10px] text-gray-400 mt-1">Projects</div>
+          </button>
+        </div>
+
         {/* Quick Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-10">
           <div className="bg-gray-800 p-3 sm:p-4 rounded text-center">
@@ -677,8 +709,8 @@ const WelcomeTab: React.FC<{
           </div>
         </div>
 
-        {/* Navigation Cards */}
-        <div className="mb-10">
+        {/* Navigation Cards - hidden on mobile (replaced by square tiles above stats) */}
+        <div className="mb-10 hidden sm:block">
           <h3 className="text-sm text-gray-500 uppercase tracking-wider mb-3">Explore</h3>
           <div className="grid grid-cols-2 gap-4">
             <div
@@ -1355,7 +1387,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           <button
             onClick={() => setMobileTerminalOpen(true)}
             className="fixed right-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-3 py-1.5 rounded-full shadow-lg shadow-green-500/30 flex items-center gap-1.5 z-40"
-            style={{ bottom: 'calc(52px + env(safe-area-inset-bottom, 0px))' }}
+            style={{ bottom: 'calc(36px + env(safe-area-inset-bottom, 0px))' }}
           >
             <span>⌨️</span>
             <span className="text-xs font-medium">Terminal</span>
@@ -1375,7 +1407,8 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
               </span>
               <button
                 onClick={() => setMobileTerminalOpen(false)}
-                className="text-gray-300 hover:text-white hover:bg-red-600 rounded-sm px-1.5 py-0 text-xs font-medium transition-colors leading-tight"
+                className="bg-red-600 hover:bg-red-500 active:bg-red-700 text-white rounded px-2 py-0.5 text-[11px] font-bold leading-none"
+                style={{ boxShadow: '0 2px 6px rgba(220,38,38,0.5), 0 1px 2px rgba(0,0,0,0.4)', minWidth: '24px', textAlign: 'center' }}
               >
                 ✕
               </button>
@@ -1404,47 +1437,23 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           </div>
         )}
 
-        {/* Bottom Navigation Bar */}
+        {/* Bottom Bar - social links only */}
         <div
           className="flex-shrink-0 bg-gray-800 border-t border-gray-700"
           style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
         >
-          {/* Page navigation - tile style */}
-          <div className="flex items-stretch gap-1 px-1 pt-1">
-            {[
-              { key: 'home', icon: '🏠', label: 'Home', action: handleGoHome },
-              { key: 'about', icon: '👤', label: 'About', action: handleMobileNavAbout },
-              { key: 'experience', icon: '💼', label: 'Work', action: handleMobileNavExperience },
-              { key: 'skills', icon: '⚡', label: 'Skills', action: handleMobileNavSkills },
-              { key: 'projects', icon: '🚀', label: 'Projects', action: handleMobileNavProjects },
-            ].map(({ key, icon, label, action }) => (
-              <button
-                key={key}
-                onClick={() => { action(); scrollMobileToContent(); }}
-                className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded transition-colors border ${
-                  activeNav === key
-                    ? 'text-blue-400 bg-gray-700 border-blue-500'
-                    : 'text-gray-500 hover:text-gray-300 bg-gray-800 border-gray-700 hover:border-gray-500'
-                }`}
-              >
-                <span className="text-xs leading-none">{icon}</span>
-                <span className="text-[8px] mt-0.5 leading-none font-medium">{label}</span>
-              </button>
-            ))}
-          </div>
-          {/* Social links - horizontal row */}
-          <div className="flex items-center justify-center gap-3 px-2 py-1.5 border-t border-gray-700/50">
-            <a href="https://www.linkedin.com/in/saurabh-tripathi-a8b89945/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 text-[10px] flex items-center gap-1">
+          <div className="flex items-center justify-center gap-4 px-3 py-2">
+            <a href="https://www.linkedin.com/in/saurabh-tripathi-a8b89945/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 text-[11px] flex items-center gap-1 transition-colors">
               <span>💼</span><span>LinkedIn</span>
             </a>
-            <a href="https://github.com/saurabhtripathi" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 text-[10px] flex items-center gap-1">
+            <a href="https://github.com/saurabhtripathi" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 text-[11px] flex items-center gap-1 transition-colors">
               <span>🐙</span><span>GitHub</span>
             </a>
-            <a href="https://www.drupal.org/u/saurabhtripathics" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-200 text-[10px] flex items-center gap-1">
+            <a href="https://www.drupal.org/u/saurabhtripathics" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-200 text-[11px] flex items-center gap-1 transition-colors">
               <span>💧</span><span>Drupal.org</span>
             </a>
-            <a href="https://www.saurabh-tripathi.com/" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 text-[10px] flex items-center gap-1">
-              <span>🌐</span><span>Website</span>
+            <a href="https://www.saurabh-tripathi.com/" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 text-[11px] flex items-center gap-1 transition-colors">
+              <span>🌐</span><span>Web</span>
             </a>
           </div>
         </div>
