@@ -74,10 +74,10 @@ Singapore 🇸🇬
       ]
     },
     {
-      "title": "Senior Drupal Developer",
+      "title": "Software Engineer, Research and Development",
       "company": "Acquia Inc.",
       "period": "2016 - 2019",
-      "location": "Singapore",
+      "location": "India",
       "current": false,
       "responsibilities": [
         "Developed enterprise Drupal applications for Fortune 500 clients",
@@ -88,7 +88,7 @@ Singapore 🇸🇬
       ]
     },
     {
-      "title": "Drupal Developer",
+      "title": "Application Development Senior Analyst & Senior Drupal Developer",
       "company": "Accenture",
       "period": "2013 - 2016",
       "location": "India",
@@ -274,7 +274,7 @@ First Tamil-language digital news platform in Singapore.
 ---
 
 ## Enterprise E-commerce Platform
-**Role:** Senior Drupal Developer
+**Role:** Software Engineer, Research and Development
 **Duration:** 2017 - 2018
 **Technologies:** Drupal 8, Commerce, Salesforce
 
@@ -295,7 +295,7 @@ Multi-brand e-commerce platform for Fortune 500 company.
 ---
 
 ## Government Portal Migration
-**Role:** Drupal Developer
+**Role:** Application Development Senior Analyst & Senior Drupal Developer
 **Duration:** 2015 - 2016
 **Technologies:** Drupal 7, Drupal 8
 
