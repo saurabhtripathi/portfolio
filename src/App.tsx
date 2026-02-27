@@ -108,15 +108,15 @@ const TabBar: React.FC<{
 };
 
 const BackToHome: React.FC<{ onGoHome: () => void }> = ({ onGoHome }) => {
-  // Hide on mobile since we have the top nav bar
+  // Visible on all screen sizes — compact on mobile
   return (
-    <div className="px-4 py-2 bg-gray-800 border-b border-gray-700 items-center gap-4 hidden sm:flex">
+    <div className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-800 border-b border-gray-700 flex items-center gap-4">
       <button
         onClick={onGoHome}
-        className="flex items-center gap-1.5 text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors"
+        className="flex items-center gap-1.5 text-blue-400 hover:text-blue-300 text-xs sm:text-sm font-medium transition-colors"
       >
         <span>←</span>
-        <span>Back to Home</span>
+        <span>Home</span>
       </button>
     </div>
   );
@@ -604,13 +604,13 @@ const WelcomeTab: React.FC<{
             Full Stack Developer specializing in enterprise-level Drupal applications,
             headless CMS architectures, React frontends, and cloud deployments.
           </p>
-          {/* Social Links */}
-          <div className="flex justify-center flex-wrap gap-2 sm:gap-3 mt-3 sm:mt-4">
+          {/* Social Links - 2x2 tiles on mobile, row on desktop */}
+          <div className="grid grid-cols-2 sm:flex sm:justify-center gap-2 sm:gap-3 mt-3 sm:mt-4 max-w-xs sm:max-w-none mx-auto">
             <a
               href="https://www.linkedin.com/in/saurabh-tripathi-a8b89945/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-2 text-blue-400 hover:text-blue-300 sm:bg-blue-600 sm:hover:bg-blue-500 sm:text-white rounded-lg text-xs sm:text-sm transition-colors"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-blue-600 text-blue-400 hover:text-white rounded-lg text-xs sm:text-sm transition-colors border border-gray-700 hover:border-blue-500"
             >
               <span>💼</span>
               <span>LinkedIn</span>
@@ -619,7 +619,7 @@ const WelcomeTab: React.FC<{
               href="https://github.com/saurabhtripathi"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-2 text-gray-400 hover:text-gray-300 sm:bg-gray-700 sm:hover:bg-gray-600 sm:text-white rounded-lg text-xs sm:text-sm transition-colors"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white rounded-lg text-xs sm:text-sm transition-colors border border-gray-700 hover:border-gray-500"
             >
               <span>🐙</span>
               <span>GitHub</span>
@@ -628,7 +628,7 @@ const WelcomeTab: React.FC<{
               href="https://www.drupal.org/u/saurabhtripathics"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-2 text-blue-300 hover:text-blue-200 sm:bg-blue-800 sm:hover:bg-blue-700 sm:text-white rounded-lg text-xs sm:text-sm transition-colors"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-blue-800 text-blue-300 hover:text-white rounded-lg text-xs sm:text-sm transition-colors border border-gray-700 hover:border-blue-500"
             >
               <span>💧</span>
               <span>Drupal.org</span>
@@ -637,7 +637,7 @@ const WelcomeTab: React.FC<{
               href="https://www.saurabh-tripathi.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-2 text-purple-400 hover:text-purple-300 sm:bg-purple-600 sm:hover:bg-purple-500 sm:text-white rounded-lg text-xs sm:text-sm transition-colors"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-purple-600 text-purple-400 hover:text-white rounded-lg text-xs sm:text-sm transition-colors border border-gray-700 hover:border-purple-500"
             >
               <span>🌐</span>
               <span>Website</span>
@@ -729,8 +729,8 @@ const WelcomeTab: React.FC<{
           </div>
         </div>
 
-        {/* Recent Files */}
-        <div className="mb-8">
+        {/* Recent Files - desktop only, mobile uses bottom nav */}
+        <div className="mb-8 hidden sm:block">
           <h3 className="text-sm text-gray-500 uppercase tracking-wider mb-3">Quick Access</h3>
           <div className="flex flex-wrap gap-2">
             {files.slice(0, 5).map(file => (
@@ -1226,6 +1226,62 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
     }, 150);
   }, []);
 
+  // Mobile bottom nav helpers
+  const handleMobileNavAbout = React.useCallback(() => {
+    const aboutFile = files.find(f => f.title.toLowerCase().includes('readme') || f.title.toLowerCase().includes('about'));
+    if (aboutFile) handleFileSelect(aboutFile);
+    scrollMobileToContent();
+  }, [files, scrollMobileToContent]);
+
+  const handleMobileNavExperience = React.useCallback(() => {
+    const expFile = files.find(f => f.title.toLowerCase().includes('experience'));
+    if (expFile) {
+      handleOpenMicrosite({
+        id: 'experience-microsite',
+        title: 'Experience Timeline',
+        content: expFile.content,
+        language: 'microsite-experience',
+        icon: 'tsx',
+        type: 'microsite',
+      });
+    }
+    scrollMobileToContent();
+  }, [files, scrollMobileToContent]);
+
+  const handleMobileNavSkills = React.useCallback(() => {
+    const skillsFile = files.find(f => f.title.toLowerCase().includes('skill'));
+    if (skillsFile) {
+      handleOpenMicrosite({
+        id: 'skills-microsite',
+        title: 'Skills Dashboard',
+        content: skillsFile.content,
+        language: 'microsite-skills',
+        icon: 'tsx',
+        type: 'microsite',
+      });
+    }
+    scrollMobileToContent();
+  }, [files, scrollMobileToContent]);
+
+  const handleMobileNavProjects = React.useCallback(() => {
+    const projFile = files.find(f => f.title.toLowerCase().includes('project'));
+    if (projFile) handleFileSelect(projFile);
+    scrollMobileToContent();
+  }, [files, scrollMobileToContent]);
+
+  // Determine active bottom nav item
+  const getActiveNav = () => {
+    if (activeTabId === 'welcome') return 'home';
+    if (activeTabId === 'experience-microsite') return 'experience';
+    if (activeTabId === 'skills-microsite') return 'skills';
+    const tab = activeTab;
+    if (tab?.title?.toLowerCase().includes('readme') || tab?.title?.toLowerCase().includes('about')) return 'about';
+    if (tab?.title?.toLowerCase().includes('project')) return 'projects';
+    return '';
+  };
+
+  const activeNav = getActiveNav();
+
   if (isMobile) {
     return (
       <div
@@ -1233,13 +1289,10 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
         className="h-screen w-screen flex flex-col bg-gray-900 text-gray-300"
         style={{ overflowY: 'auto', overflowX: 'hidden' }}
       >
-        {/* Slim top bar — all items on one line */}
+        {/* Slim top bar */}
         <div className="bg-gray-800 border-b border-gray-700 px-3 flex items-center justify-between flex-shrink-0" style={{ height: '28px', minHeight: '28px' }}>
           <button onClick={handleGoHome} className="text-white font-bold truncate" style={{ fontSize: '11px' }}>Saurabh Tripathi</button>
           <div className="flex items-center gap-3" style={{ fontSize: '11px' }}>
-            {activeTabId !== 'welcome' && (
-              <button onClick={handleGoHome} className="text-blue-400">Home</button>
-            )}
             <button onClick={onNavigateNews} className="text-blue-400 whitespace-nowrap">📰 News</button>
           </div>
         </div>
@@ -1276,7 +1329,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           }
         `}</style>
 
-        {/* Content area - takes all remaining space above terminal */}
+        {/* Content area - takes all remaining space above bottom nav */}
         <div
           id="content-area"
           ref={contentAreaRef}
@@ -1297,15 +1350,15 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           ) : null}
         </div>
 
-        {/* Floating Terminal Toggle Button - shown when terminal is closed */}
+        {/* Floating Terminal Toggle Button - shown when terminal is closed, above bottom nav */}
         {!mobileTerminalOpen && (
           <button
             onClick={() => setMobileTerminalOpen(true)}
-            className="fixed bottom-4 right-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-2 rounded-full shadow-lg shadow-green-500/30 flex items-center gap-2 z-40"
-            style={{ paddingBottom: 'calc(8px + env(safe-area-inset-bottom, 0px))' }}
+            className="fixed right-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-3 py-1.5 rounded-full shadow-lg shadow-green-500/30 flex items-center gap-1.5 z-40"
+            style={{ bottom: 'calc(52px + env(safe-area-inset-bottom, 0px))' }}
           >
             <span>⌨️</span>
-            <span className="text-sm font-medium">Terminal</span>
+            <span className="text-xs font-medium">Terminal</span>
           </button>
         )}
 
@@ -1314,7 +1367,6 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           <div
             id="mobile-terminal"
             className="flex-shrink-0 bg-gray-950 border-t-2 border-green-500"
-            style={{ paddingBottom: 'env(safe-area-inset-bottom, 8px)' }}
           >
             {/* Terminal header with close button */}
             <div className="flex items-center justify-between px-3 py-1.5 bg-gray-800 border-b border-gray-700">
@@ -1351,6 +1403,33 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             />
           </div>
         )}
+
+        {/* Bottom Navigation Bar */}
+        <div
+          className="flex-shrink-0 bg-gray-800 border-t border-gray-700 flex items-stretch justify-around"
+          style={{ minHeight: '44px', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+        >
+          {[
+            { key: 'home', icon: '🏠', label: 'Home', action: handleGoHome },
+            { key: 'about', icon: '👤', label: 'About', action: handleMobileNavAbout },
+            { key: 'experience', icon: '💼', label: 'Work', action: handleMobileNavExperience },
+            { key: 'skills', icon: '⚡', label: 'Skills', action: handleMobileNavSkills },
+            { key: 'projects', icon: '🚀', label: 'Projects', action: handleMobileNavProjects },
+          ].map(({ key, icon, label, action }) => (
+            <button
+              key={key}
+              onClick={() => { action(); scrollMobileToContent(); }}
+              className={`flex-1 flex flex-col items-center justify-center py-1 transition-colors ${
+                activeNav === key
+                  ? 'text-blue-400 bg-gray-700/50'
+                  : 'text-gray-500 hover:text-gray-300'
+              }`}
+            >
+              <span className="text-sm leading-none">{icon}</span>
+              <span className="text-[9px] mt-0.5 leading-none font-medium">{label}</span>
+            </button>
+          ))}
+        </div>
       </div>
     );
   }
