@@ -757,10 +757,11 @@ const Terminal: React.FC<{
   files: FileItem[];
   onFileSelect: (file: FileItem) => void;
   onOpenMicrosite: (tab: Tab) => void;
-}> = ({ files, onFileSelect, onOpenMicrosite }) => {
+  onGoHome: () => void;
+}> = ({ files, onFileSelect, onOpenMicrosite, onGoHome }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<TerminalLine[]>([
-    { type: 'success', text: '💡 Type a command or tap a button above. Try: about, skills, experience, help' },
+    { type: 'success', text: '💡 Type a command or tap a button above. Try: home, about, skills, experience' },
   ]);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const terminalRef = React.useRef<HTMLDivElement>(null);
@@ -784,11 +785,19 @@ const Terminal: React.FC<{
       return;
     }
 
+    // Home command - go to welcome page
+    if (trimmedCmd === 'home' || trimmedCmd === 'welcome' || trimmedCmd === 'cd ~' || trimmedCmd === 'cd') {
+      onGoHome();
+      addLine('success', '🏠 Welcome page opened!');
+      return;
+    }
+
     // Help command
     if (trimmedCmd === 'help' || trimmedCmd === '?') {
       addLine('output', '');
       addLine('success', '📂 Navigation Commands:');
       addLine('output', '');
+      addLine('output', '  home           → Go to Welcome page');
       addLine('output', '  about          → Open my about page');
       addLine('output', '  experience     → View my experience timeline');
       addLine('output', '  skills         → View my skills dashboard');
@@ -995,6 +1004,7 @@ const Terminal: React.FC<{
         style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', alignItems: 'center', gap: '6px', overflowX: 'auto', whiteSpace: 'nowrap', fontSize: '12px', minHeight: '30px' }}
       >
         {[
+          { cmd: 'home', color: 'text-white' },
           { cmd: 'about', color: 'text-blue-400' },
           { cmd: 'experience', color: 'text-green-400' },
           { cmd: 'skills', color: 'text-green-400' },
@@ -1300,6 +1310,11 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
                 setMobileTerminalOpen(false); // Close terminal after action
                 scrollMobileToContent();
               }}
+              onGoHome={() => {
+                handleGoHome();
+                setMobileTerminalOpen(false);
+                scrollMobileToContent();
+              }}
             />
           </div>
         )}
@@ -1349,7 +1364,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
         </div>
       </div>
       {terminalOpen && (
-        <Terminal files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} />
+        <Terminal files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} />
       )}
       <StatusBar activeFile={activeTab?.title} onToggleTerminal={() => setTerminalOpen(!terminalOpen)} terminalOpen={terminalOpen} />
     </div>

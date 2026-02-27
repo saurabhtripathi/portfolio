@@ -51,7 +51,7 @@ Singapore 🇸🇬
 - GitHub: github.com/saurabhtripathi`,
     language: 'markdown',
     icon: 'md',
-    isActive: true,
+    isActive: false,
   },
   {
     id: '2',
