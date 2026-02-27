@@ -1121,6 +1121,9 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
   // Toast state for mobile
   const [mobileToast, setMobileToast] = React.useState<string | null>(null);
 
+  // Mobile terminal open/close state (closed by default)
+  const [mobileTerminalOpen, setMobileTerminalOpen] = React.useState(false);
+
   // Show a brief toast overlay instead of a banner
   const showMobileToast = React.useCallback((msg: string) => {
     setMobileToast(msg);
@@ -1156,22 +1159,6 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             {activeTabId !== 'welcome' && (
               <button onClick={handleGoHome} className="text-blue-400">Home</button>
             )}
-            <button
-              onClick={() => {
-                const terminal = document.getElementById('mobile-terminal');
-                if (terminal) {
-                  terminal.scrollIntoView({ behavior: 'smooth' });
-                  // Focus the input after scrolling
-                  setTimeout(() => {
-                    const input = terminal.querySelector('input');
-                    if (input) input.focus();
-                  }, 400);
-                }
-              }}
-              className="text-green-400 whitespace-nowrap"
-            >
-              ⌨️ Terminal
-            </button>
             <button onClick={onNavigateNews} className="text-blue-400 whitespace-nowrap">📰 News</button>
           </div>
         </div>
@@ -1227,42 +1214,56 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           ) : activeTab ? (
             <CodeEditor content={activeTab.content} language={activeTab.language} title={activeTab.title} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} />
           ) : null}
+        </div>
 
-          {/* Jump to Terminal button at bottom of content */}
-          {activeTab && activeTab.id !== 'welcome' && (
-            <div className="flex justify-center py-3">
+        {/* Floating Terminal Toggle Button - shown when terminal is closed */}
+        {!mobileTerminalOpen && (
+          <button
+            onClick={() => setMobileTerminalOpen(true)}
+            className="fixed bottom-4 right-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-2 rounded-full shadow-lg shadow-green-500/30 flex items-center gap-2 z-40"
+            style={{ paddingBottom: 'calc(8px + env(safe-area-inset-bottom, 0px))' }}
+          >
+            <span>⌨️</span>
+            <span className="text-sm font-medium">Terminal</span>
+          </button>
+        )}
+
+        {/* Terminal - collapsible at bottom */}
+        {mobileTerminalOpen && (
+          <div
+            id="mobile-terminal"
+            className="flex-shrink-0 bg-gray-950 border-t-2 border-green-500"
+            style={{ paddingBottom: 'env(safe-area-inset-bottom, 8px)' }}
+          >
+            {/* Terminal header with close button */}
+            <div className="flex items-center justify-between px-3 py-1 bg-gray-800 border-b border-gray-700">
+              <span className="text-xs text-gray-400 flex items-center gap-2">
+                <span className="text-green-400">●</span> TERMINAL
+              </span>
               <button
-                onClick={() => {
-                  document.getElementById('mobile-terminal')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="text-xs text-gray-500 border border-gray-700 rounded-full px-3 py-1"
+                onClick={() => setMobileTerminalOpen(false)}
+                className="text-gray-400 hover:text-white text-lg px-2"
               >
-                Jump to Terminal ↓
+                ✕
               </button>
             </div>
-          )}
-        </div>
-
-        {/* Terminal - always visible at bottom */}
-        <div
-          id="mobile-terminal"
-          className="flex-shrink-0 bg-gray-950 border-t-2 border-blue-500"
-          style={{ paddingBottom: 'env(safe-area-inset-bottom, 8px)' }}
-        >
-          <Terminal
-            files={files}
-            onFileSelect={(file) => {
-              handleFileSelect(file);
-              showMobileToast(`Opened: ${file.title}`);
-              scrollMobileToContent();
-            }}
-            onOpenMicrosite={(tab) => {
-              handleOpenMicrosite(tab);
-              showMobileToast(`Opened: ${tab.title}`);
-              scrollMobileToContent();
-            }}
-          />
-        </div>
+            <Terminal
+              files={files}
+              onFileSelect={(file) => {
+                handleFileSelect(file);
+                showMobileToast(`Opened: ${file.title}`);
+                setMobileTerminalOpen(false); // Close terminal after action
+                scrollMobileToContent();
+              }}
+              onOpenMicrosite={(tab) => {
+                handleOpenMicrosite(tab);
+                showMobileToast(`Opened: ${tab.title}`);
+                setMobileTerminalOpen(false); // Close terminal after action
+                scrollMobileToContent();
+              }}
+            />
+          </div>
+        )}
       </div>
     );
   }
