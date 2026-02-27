@@ -605,7 +605,7 @@ const WelcomeTab: React.FC<{
               <span className="hidden sm:inline">Drupal.org</span>
             </a>
             <a
-              href="https://saurabhtripathi.in"
+              href="https://www.saurabh-tripathi.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-3 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-sm transition-colors"
