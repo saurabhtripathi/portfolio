@@ -646,34 +646,34 @@ const WelcomeTab: React.FC<{
         </div>
 
         {/* Mobile Navigation Tiles - square boxes like Quick Stats, shown above stats on mobile */}
-        <div className="grid grid-cols-4 gap-2 mb-4 sm:hidden">
+        <div className="grid grid-cols-4 gap-1.5 mb-4 sm:hidden">
           <button
             onClick={() => handleOpenFile('about')}
-            className="bg-gray-800 p-3 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
+            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
           >
-            <div className="text-lg">👤</div>
-            <div className="text-[10px] text-gray-400 mt-1">About</div>
+            <div className="text-base">👤</div>
+            <div className="text-[9px] text-gray-400 mt-0.5 leading-tight">About</div>
           </button>
           <button
             onClick={handleOpenExperience}
-            className="bg-gray-800 p-3 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
+            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
           >
-            <div className="text-lg">💼</div>
-            <div className="text-[10px] text-gray-400 mt-1">Work</div>
+            <div className="text-base">💼</div>
+            <div className="text-[9px] text-gray-400 mt-0.5 leading-tight">Work</div>
           </button>
           <button
             onClick={handleOpenSkills}
-            className="bg-gray-800 p-3 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
+            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
           >
-            <div className="text-lg">⚡</div>
-            <div className="text-[10px] text-gray-400 mt-1">Skills</div>
+            <div className="text-base">⚡</div>
+            <div className="text-[9px] text-gray-400 mt-0.5 leading-tight">Skills</div>
           </button>
           <button
             onClick={() => handleOpenFile('project')}
-            className="bg-gray-800 p-3 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
+            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors overflow-hidden"
           >
-            <div className="text-lg">🚀</div>
-            <div className="text-[10px] text-gray-400 mt-1">Projects</div>
+            <div className="text-base">🚀</div>
+            <div className="text-[9px] text-gray-400 mt-0.5 leading-tight truncate">Projects</div>
           </button>
         </div>
 
@@ -820,7 +820,8 @@ const Terminal: React.FC<{
   onOpenMicrosite: (tab: Tab) => void;
   onGoHome: () => void;
   hideHeader?: boolean;
-}> = ({ files, onFileSelect, onOpenMicrosite, onGoHome, hideHeader }) => {
+  mobileCloseButton?: React.ReactNode;
+}> = ({ files, onFileSelect, onOpenMicrosite, onGoHome, hideHeader, mobileCloseButton }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<TerminalLine[]>([
     { type: 'success', text: '💡 Type a command or tap a button above. Try: home, about, skills, experience' },
@@ -1091,6 +1092,7 @@ const Terminal: React.FC<{
             {c}
           </button>
         ))}
+        {mobileCloseButton}
       </div>
       <div
         ref={terminalRef}
@@ -1400,20 +1402,17 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             id="mobile-terminal"
             className="flex-shrink-0 bg-gray-950 border-t-2 border-green-500"
           >
-            {/* Terminal header with close */}
-            <div className="flex items-center justify-between px-3 bg-gray-800 border-b border-gray-700" style={{ height: '22px', minHeight: '22px' }}>
-              <span className="text-[10px] text-gray-500 flex items-center gap-1.5">
-                <span className="text-green-400">●</span>TERMINAL
-              </span>
-              <button
-                onClick={() => setMobileTerminalOpen(false)}
-                className="text-red-400 hover:text-red-300 text-[10px] font-medium"
-              >
-                Close
-              </button>
-            </div>
             <Terminal
               hideHeader
+              mobileCloseButton={
+                <button
+                  onClick={() => setMobileTerminalOpen(false)}
+                  className="text-red-400 bg-red-900/40 border border-red-500/50 hover:bg-red-800/60 shrink-0"
+                  style={{ padding: '3px 10px', borderRadius: '4px', fontSize: '12px', fontWeight: 600 }}
+                >
+                  ✕ Close
+                </button>
+              }
               files={files}
               onFileSelect={(file) => {
                 handleFileSelect(file);
