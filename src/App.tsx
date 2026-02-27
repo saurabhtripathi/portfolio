@@ -1156,6 +1156,22 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             {activeTabId !== 'welcome' && (
               <button onClick={handleGoHome} className="text-blue-400">Home</button>
             )}
+            <button
+              onClick={() => {
+                const terminal = document.getElementById('mobile-terminal');
+                if (terminal) {
+                  terminal.scrollIntoView({ behavior: 'smooth' });
+                  // Focus the input after scrolling
+                  setTimeout(() => {
+                    const input = terminal.querySelector('input');
+                    if (input) input.focus();
+                  }, 400);
+                }
+              }}
+              className="text-green-400 whitespace-nowrap"
+            >
+              ⌨️ Terminal
+            </button>
             <button onClick={onNavigateNews} className="text-blue-400 whitespace-nowrap">📰 News</button>
           </div>
         </div>
