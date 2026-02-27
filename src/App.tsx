@@ -531,7 +531,8 @@ const SkillsMicrosite: React.FC<{ content: string; onGoHome?: () => void }> = ({
 const WelcomeTab: React.FC<{
   files: FileItem[];
   onFileSelect: (file: FileItem) => void;
-}> = ({ files, onFileSelect }) => {
+  onOpenMicrosite: (tab: Tab) => void;
+}> = ({ files, onFileSelect, onOpenMicrosite }) => {
   const findFileByName = (name: string) => {
     return files.find(f => f.title.toLowerCase().includes(name.toLowerCase()));
   };
@@ -542,6 +543,34 @@ const WelcomeTab: React.FC<{
       onFileSelect(file);
     } else if (files.length > 0) {
       onFileSelect(files[0]);
+    }
+  };
+
+  const handleOpenExperience = () => {
+    const expFile = findFileByName('experience');
+    if (expFile) {
+      onOpenMicrosite({
+        id: 'experience-microsite',
+        title: 'Experience Timeline',
+        content: expFile.content,
+        language: 'microsite-experience',
+        icon: 'tsx',
+        type: 'microsite',
+      });
+    }
+  };
+
+  const handleOpenSkills = () => {
+    const skillsFile = findFileByName('skill');
+    if (skillsFile) {
+      onOpenMicrosite({
+        id: 'skills-microsite',
+        title: 'Skills Dashboard',
+        content: skillsFile.content,
+        language: 'microsite-skills',
+        icon: 'tsx',
+        type: 'microsite',
+      });
     }
   };
 
@@ -576,42 +605,42 @@ const WelcomeTab: React.FC<{
             headless CMS architectures, React frontends, and cloud deployments.
           </p>
           {/* Social Links */}
-          <div className="flex justify-center flex-wrap gap-3 mt-4">
+          <div className="flex justify-center flex-wrap gap-2 sm:gap-3 mt-3 sm:mt-4">
             <a
               href="https://www.linkedin.com/in/saurabh-tripathi-a8b89945/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm transition-colors"
+              className="flex items-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-2 text-blue-400 hover:text-blue-300 sm:bg-blue-600 sm:hover:bg-blue-500 sm:text-white rounded-lg text-xs sm:text-sm transition-colors"
             >
               <span>💼</span>
-              <span className="hidden sm:inline">LinkedIn</span>
+              <span>LinkedIn</span>
             </a>
             <a
               href="https://github.com/saurabhtripathi"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
+              className="flex items-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-2 text-gray-400 hover:text-gray-300 sm:bg-gray-700 sm:hover:bg-gray-600 sm:text-white rounded-lg text-xs sm:text-sm transition-colors"
             >
               <span>🐙</span>
-              <span className="hidden sm:inline">GitHub</span>
+              <span>GitHub</span>
             </a>
             <a
               href="https://www.drupal.org/u/saurabhtripathics"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 bg-blue-800 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors"
+              className="flex items-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-2 text-blue-300 hover:text-blue-200 sm:bg-blue-800 sm:hover:bg-blue-700 sm:text-white rounded-lg text-xs sm:text-sm transition-colors"
             >
               <span>💧</span>
-              <span className="hidden sm:inline">Drupal.org</span>
+              <span>Drupal.org</span>
             </a>
             <a
               href="https://www.saurabh-tripathi.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-sm transition-colors"
+              className="flex items-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-2 text-purple-400 hover:text-purple-300 sm:bg-purple-600 sm:hover:bg-purple-500 sm:text-white rounded-lg text-xs sm:text-sm transition-colors"
             >
               <span>🌐</span>
-              <span className="hidden sm:inline">Website</span>
+              <span>Website</span>
             </a>
           </div>
         </div>
@@ -669,7 +698,7 @@ const WelcomeTab: React.FC<{
               <div className="text-xs text-gray-400">CNA, Berita, Seithi & more enterprise work</div>
             </div>
             <div
-              onClick={() => handleOpenFile('experience')}
+              onClick={handleOpenExperience}
               className="bg-gray-800 p-5 rounded-lg hover:bg-gray-700 cursor-pointer transition-colors border border-gray-700 hover:border-blue-500"
             >
               <div className="text-2xl mb-2">💼</div>
@@ -677,7 +706,7 @@ const WelcomeTab: React.FC<{
               <div className="text-xs text-gray-400">Mediacorp, Acquia, Accenture & more</div>
             </div>
             <div
-              onClick={() => handleOpenFile('skill')}
+              onClick={handleOpenSkills}
               className="bg-gray-800 p-5 rounded-lg hover:bg-gray-700 cursor-pointer transition-colors border border-gray-700 hover:border-blue-500"
             >
               <div className="text-2xl mb-2">⚡</div>
@@ -758,7 +787,8 @@ const Terminal: React.FC<{
   onFileSelect: (file: FileItem) => void;
   onOpenMicrosite: (tab: Tab) => void;
   onGoHome: () => void;
-}> = ({ files, onFileSelect, onOpenMicrosite, onGoHome }) => {
+  hideHeader?: boolean;
+}> = ({ files, onFileSelect, onOpenMicrosite, onGoHome, hideHeader }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<TerminalLine[]>([
     { type: 'success', text: '💡 Type a command or tap a button above. Try: home, about, skills, experience' },
@@ -991,6 +1021,7 @@ const Terminal: React.FC<{
 
   return (
     <div className="bg-gray-950 border-t border-gray-700 font-mono text-sm">
+      {!hideHeader && (
       <div className="flex items-center justify-between px-4 py-1.5 bg-gray-800 border-b border-gray-700">
         <div className="flex items-center gap-2 text-xs text-gray-400">
           <span className="text-green-400">●</span>
@@ -998,6 +1029,7 @@ const Terminal: React.FC<{
         </div>
         <div className="text-xs text-gray-500">bash</div>
       </div>
+      )}
       {/* Command hints bar */}
       <div
         className="bg-gray-900 border-b border-gray-800 px-2 py-1"
@@ -1255,7 +1287,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
               <div className="text-gray-400">Loading...</div>
             </div>
           ) : activeTab?.type === 'welcome' ? (
-            <WelcomeTab files={files} onFileSelect={handleFileSelect} />
+            <WelcomeTab files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} />
           ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-experience' ? (
             <ExperienceMicrosite content={activeTab.content} onGoHome={handleGoHome} />
           ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-skills' ? (
@@ -1285,18 +1317,19 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             style={{ paddingBottom: 'env(safe-area-inset-bottom, 8px)' }}
           >
             {/* Terminal header with close button */}
-            <div className="flex items-center justify-between px-3 py-1 bg-gray-800 border-b border-gray-700">
+            <div className="flex items-center justify-between px-3 py-1.5 bg-gray-800 border-b border-gray-700">
               <span className="text-xs text-gray-400 flex items-center gap-2">
                 <span className="text-green-400">●</span> TERMINAL
               </span>
               <button
                 onClick={() => setMobileTerminalOpen(false)}
-                className="text-gray-400 hover:text-white text-lg px-2"
+                className="text-white bg-red-600 hover:bg-red-500 active:bg-red-700 rounded px-2 py-0.5 text-sm font-bold shadow-sm"
               >
                 ✕
               </button>
             </div>
             <Terminal
+              hideHeader
               files={files}
               onFileSelect={(file) => {
                 handleFileSelect(file);
@@ -1352,7 +1385,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
                 <div className="text-gray-400">Loading...</div>
               </div>
             ) : activeTab?.type === 'welcome' ? (
-              <WelcomeTab files={files} onFileSelect={handleFileSelect} />
+              <WelcomeTab files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} />
             ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-experience' ? (
               <ExperienceMicrosite content={activeTab.content} onGoHome={handleGoHome} />
             ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-skills' ? (
