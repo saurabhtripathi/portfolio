@@ -604,13 +604,13 @@ const WelcomeTab: React.FC<{
             Full Stack Developer specializing in enterprise-level Drupal applications,
             headless CMS architectures, React frontends, and cloud deployments.
           </p>
-          {/* Social Links - 2x2 tiles on mobile, row on desktop */}
-          <div className="grid grid-cols-2 sm:flex sm:justify-center gap-2 sm:gap-3 mt-3 sm:mt-4 max-w-xs sm:max-w-none mx-auto">
+          {/* Social Links - hidden on mobile (in bottom nav), shown on desktop */}
+          <div className="hidden sm:flex sm:justify-center gap-3 mt-4">
             <a
               href="https://www.linkedin.com/in/saurabh-tripathi-a8b89945/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-blue-600 text-blue-400 hover:text-white rounded-lg text-xs sm:text-sm transition-colors border border-gray-700 hover:border-blue-500"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-blue-600 text-blue-400 hover:text-white rounded-lg text-sm transition-colors border border-gray-700 hover:border-blue-500"
             >
               <span>💼</span>
               <span>LinkedIn</span>
@@ -619,7 +619,7 @@ const WelcomeTab: React.FC<{
               href="https://github.com/saurabhtripathi"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white rounded-lg text-xs sm:text-sm transition-colors border border-gray-700 hover:border-gray-500"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white rounded-lg text-sm transition-colors border border-gray-700 hover:border-gray-500"
             >
               <span>🐙</span>
               <span>GitHub</span>
@@ -628,7 +628,7 @@ const WelcomeTab: React.FC<{
               href="https://www.drupal.org/u/saurabhtripathics"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-blue-800 text-blue-300 hover:text-white rounded-lg text-xs sm:text-sm transition-colors border border-gray-700 hover:border-blue-500"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-blue-800 text-blue-300 hover:text-white rounded-lg text-sm transition-colors border border-gray-700 hover:border-blue-500"
             >
               <span>💧</span>
               <span>Drupal.org</span>
@@ -637,7 +637,7 @@ const WelcomeTab: React.FC<{
               href="https://www.saurabh-tripathi.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-purple-600 text-purple-400 hover:text-white rounded-lg text-xs sm:text-sm transition-colors border border-gray-700 hover:border-purple-500"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-purple-600 text-purple-400 hover:text-white rounded-lg text-sm transition-colors border border-gray-700 hover:border-purple-500"
             >
               <span>🌐</span>
               <span>Website</span>
@@ -1369,13 +1369,13 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             className="flex-shrink-0 bg-gray-950 border-t-2 border-green-500"
           >
             {/* Terminal header with close button */}
-            <div className="flex items-center justify-between px-3 py-1.5 bg-gray-800 border-b border-gray-700">
+            <div className="flex items-center justify-between px-3 py-1 bg-gray-800 border-b border-gray-700">
               <span className="text-xs text-gray-400 flex items-center gap-2">
                 <span className="text-green-400">●</span> TERMINAL
               </span>
               <button
                 onClick={() => setMobileTerminalOpen(false)}
-                className="text-white bg-red-600 hover:bg-red-500 active:bg-red-700 rounded px-2 py-0.5 text-sm font-bold shadow-sm"
+                className="text-gray-300 hover:text-white hover:bg-red-600 rounded-sm px-1.5 py-0 text-xs font-medium transition-colors leading-tight"
               >
                 ✕
               </button>
@@ -1406,29 +1406,47 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
 
         {/* Bottom Navigation Bar */}
         <div
-          className="flex-shrink-0 bg-gray-800 border-t border-gray-700 flex items-stretch justify-around"
-          style={{ minHeight: '44px', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+          className="flex-shrink-0 bg-gray-800 border-t border-gray-700"
+          style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
         >
-          {[
-            { key: 'home', icon: '🏠', label: 'Home', action: handleGoHome },
-            { key: 'about', icon: '👤', label: 'About', action: handleMobileNavAbout },
-            { key: 'experience', icon: '💼', label: 'Work', action: handleMobileNavExperience },
-            { key: 'skills', icon: '⚡', label: 'Skills', action: handleMobileNavSkills },
-            { key: 'projects', icon: '🚀', label: 'Projects', action: handleMobileNavProjects },
-          ].map(({ key, icon, label, action }) => (
-            <button
-              key={key}
-              onClick={() => { action(); scrollMobileToContent(); }}
-              className={`flex-1 flex flex-col items-center justify-center py-1 transition-colors ${
-                activeNav === key
-                  ? 'text-blue-400 bg-gray-700/50'
-                  : 'text-gray-500 hover:text-gray-300'
-              }`}
-            >
-              <span className="text-sm leading-none">{icon}</span>
-              <span className="text-[9px] mt-0.5 leading-none font-medium">{label}</span>
-            </button>
-          ))}
+          {/* Page navigation - tile style */}
+          <div className="flex items-stretch gap-1 px-1 pt-1">
+            {[
+              { key: 'home', icon: '🏠', label: 'Home', action: handleGoHome },
+              { key: 'about', icon: '👤', label: 'About', action: handleMobileNavAbout },
+              { key: 'experience', icon: '💼', label: 'Work', action: handleMobileNavExperience },
+              { key: 'skills', icon: '⚡', label: 'Skills', action: handleMobileNavSkills },
+              { key: 'projects', icon: '🚀', label: 'Projects', action: handleMobileNavProjects },
+            ].map(({ key, icon, label, action }) => (
+              <button
+                key={key}
+                onClick={() => { action(); scrollMobileToContent(); }}
+                className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded transition-colors border ${
+                  activeNav === key
+                    ? 'text-blue-400 bg-gray-700 border-blue-500'
+                    : 'text-gray-500 hover:text-gray-300 bg-gray-800 border-gray-700 hover:border-gray-500'
+                }`}
+              >
+                <span className="text-xs leading-none">{icon}</span>
+                <span className="text-[8px] mt-0.5 leading-none font-medium">{label}</span>
+              </button>
+            ))}
+          </div>
+          {/* Social links - horizontal row */}
+          <div className="flex items-center justify-center gap-3 px-2 py-1.5 border-t border-gray-700/50">
+            <a href="https://www.linkedin.com/in/saurabh-tripathi-a8b89945/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 text-[10px] flex items-center gap-1">
+              <span>💼</span><span>LinkedIn</span>
+            </a>
+            <a href="https://github.com/saurabhtripathi" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 text-[10px] flex items-center gap-1">
+              <span>🐙</span><span>GitHub</span>
+            </a>
+            <a href="https://www.drupal.org/u/saurabhtripathics" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-200 text-[10px] flex items-center gap-1">
+              <span>💧</span><span>Drupal.org</span>
+            </a>
+            <a href="https://www.saurabh-tripathi.com/" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 text-[10px] flex items-center gap-1">
+              <span>🌐</span><span>Website</span>
+            </a>
+          </div>
         </div>
       </div>
     );
