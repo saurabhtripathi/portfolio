@@ -1068,6 +1068,7 @@ const Terminal: React.FC<{
         className="bg-gray-900 border-b border-gray-800 px-2 py-1"
         style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', alignItems: 'center', gap: '6px', overflowX: 'auto', whiteSpace: 'nowrap', fontSize: '12px', minHeight: '30px' }}
       >
+        {mobileCloseButton}
         {[
           { cmd: 'home', color: 'text-white' },
           { cmd: 'about', color: 'text-blue-400' },
@@ -1092,7 +1093,6 @@ const Terminal: React.FC<{
             {c}
           </button>
         ))}
-        {mobileCloseButton}
       </div>
       <div
         ref={terminalRef}
