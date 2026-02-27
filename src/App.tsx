@@ -1400,17 +1400,16 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             id="mobile-terminal"
             className="flex-shrink-0 bg-gray-950 border-t-2 border-green-500"
           >
-            {/* Terminal header with close button */}
-            <div className="flex items-center justify-between px-3 py-1 bg-gray-800 border-b border-gray-700">
-              <span className="text-xs text-gray-400 flex items-center gap-2">
-                <span className="text-green-400">●</span> TERMINAL
+            {/* Terminal header with close */}
+            <div className="flex items-center justify-between px-3 bg-gray-800 border-b border-gray-700" style={{ height: '22px', minHeight: '22px' }}>
+              <span className="text-[10px] text-gray-500 flex items-center gap-1.5">
+                <span className="text-green-400">●</span>TERMINAL
               </span>
               <button
                 onClick={() => setMobileTerminalOpen(false)}
-                className="bg-red-600 hover:bg-red-500 active:bg-red-700 text-white rounded px-2 py-0.5 text-[11px] font-bold leading-none"
-                style={{ boxShadow: '0 2px 6px rgba(220,38,38,0.5), 0 1px 2px rgba(0,0,0,0.4)', minWidth: '24px', textAlign: 'center' }}
+                className="text-red-400 hover:text-red-300 text-[10px] font-medium"
               >
-                ✕
+                Close
               </button>
             </div>
             <Terminal
@@ -1437,23 +1436,23 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           </div>
         )}
 
-        {/* Bottom Bar - social links only */}
+        {/* Bottom Bar - social links 2x2 */}
         <div
           className="flex-shrink-0 bg-gray-800 border-t border-gray-700"
           style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
         >
-          <div className="flex items-center justify-center gap-4 px-3 py-2">
-            <a href="https://www.linkedin.com/in/saurabh-tripathi-a8b89945/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 text-[11px] flex items-center gap-1 transition-colors">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-1 px-4 py-1.5">
+            <a href="https://www.linkedin.com/in/saurabh-tripathi-a8b89945/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 text-[11px] flex items-center gap-1 transition-colors justify-center">
               <span>💼</span><span>LinkedIn</span>
             </a>
-            <a href="https://github.com/saurabhtripathi" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 text-[11px] flex items-center gap-1 transition-colors">
+            <a href="https://github.com/saurabhtripathi" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 text-[11px] flex items-center gap-1 transition-colors justify-center">
               <span>🐙</span><span>GitHub</span>
             </a>
-            <a href="https://www.drupal.org/u/saurabhtripathics" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-200 text-[11px] flex items-center gap-1 transition-colors">
+            <a href="https://www.drupal.org/u/saurabhtripathics" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-200 text-[11px] flex items-center gap-1 transition-colors justify-center">
               <span>💧</span><span>Drupal.org</span>
             </a>
-            <a href="https://www.saurabh-tripathi.com/" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 text-[11px] flex items-center gap-1 transition-colors">
-              <span>🌐</span><span>Web</span>
+            <a href="https://www.saurabh-tripathi.com/" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 text-[11px] flex items-center gap-1 transition-colors justify-center">
+              <span>🌐</span><span>Website</span>
             </a>
           </div>
         </div>
