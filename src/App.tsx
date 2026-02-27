@@ -575,6 +575,45 @@ const WelcomeTab: React.FC<{
             Full Stack Developer specializing in enterprise-level Drupal applications,
             headless CMS architectures, React frontends, and cloud deployments.
           </p>
+          {/* Social Links */}
+          <div className="flex justify-center flex-wrap gap-3 mt-4">
+            <a
+              href="https://www.linkedin.com/in/saurabh-tripathi-a8b89945/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm transition-colors"
+            >
+              <span>💼</span>
+              <span className="hidden sm:inline">LinkedIn</span>
+            </a>
+            <a
+              href="https://github.com/saurabhtripathi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
+            >
+              <span>🐙</span>
+              <span className="hidden sm:inline">GitHub</span>
+            </a>
+            <a
+              href="https://www.drupal.org/u/saurabhtripathics"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 bg-blue-800 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors"
+            >
+              <span>💧</span>
+              <span className="hidden sm:inline">Drupal.org</span>
+            </a>
+            <a
+              href="https://saurabhtripathi.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-sm transition-colors"
+            >
+              <span>🌐</span>
+              <span className="hidden sm:inline">Website</span>
+            </a>
+          </div>
         </div>
 
         {/* Quick Stats */}
