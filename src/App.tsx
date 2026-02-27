@@ -934,16 +934,15 @@ const Terminal: React.FC<{
     }
   }, [history]);
 
-  // Focus input on click
-  const handleTerminalClick = () => {
+  // Focus input only when clicking specifically on the input area (not command buttons)
+  const handleTerminalInputAreaClick = (e: React.MouseEvent) => {
+    // Only focus if clicking directly on the input area, not on buttons
+    e.stopPropagation();
     inputRef.current?.focus();
   };
 
   return (
-    <div
-      className="bg-gray-950 border-t border-gray-700 font-mono text-sm"
-      onClick={handleTerminalClick}
-    >
+    <div className="bg-gray-950 border-t border-gray-700 font-mono text-sm">
       <div className="flex items-center justify-between px-4 py-1.5 bg-gray-800 border-b border-gray-700">
         <div className="flex items-center gap-2 text-xs text-gray-400">
           <span className="text-green-400">●</span>
@@ -967,7 +966,12 @@ const Terminal: React.FC<{
         ].map(({ cmd: c, color }) => (
           <button
             key={c}
-            onClick={() => { executeCommand(c); setInput(''); }}
+            onClick={(e) => {
+              e.stopPropagation(); // Don't trigger terminal focus
+              inputRef.current?.blur(); // Close keyboard if open
+              executeCommand(c);
+              setInput('');
+            }}
             className={`${color} hover:brightness-125 active:scale-95`}
             style={{ padding: '3px 7px', background: '#23272e', borderRadius: '4px', fontSize: '12px' }}
           >
@@ -977,9 +981,10 @@ const Terminal: React.FC<{
       </div>
       <div
         ref={terminalRef}
-        className="overflow-auto p-2 cursor-text"
+        className="overflow-auto p-2"
         id="terminal-output"
         style={{ maxHeight: '80px' }}
+        onClick={handleTerminalInputAreaClick}
       >
         {history.map((line, idx) => (
           <div
@@ -997,17 +1002,16 @@ const Terminal: React.FC<{
           </div>
         ))}
       </div>
-      {/* Input form - always visible */}
-      <form onSubmit={handleSubmit} className="flex items-center gap-2 px-3 py-2 bg-gray-900 border-t border-gray-800">
-        <span className="text-green-400 text-lg animate-pulse">$</span>
+      {/* Input form - tap to type */}
+      <form onSubmit={handleSubmit} onClick={handleTerminalInputAreaClick} className="flex items-center gap-2 px-3 py-2 bg-gray-900 border-t border-gray-800">
+        <span className="text-green-400 text-lg">$</span>
         <input
           ref={inputRef}
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="flex-1 bg-transparent outline-none text-white caret-yellow-400"
-          placeholder="Try 'about' or tap a button above…"
-          autoFocus
+          placeholder="Tap here to type a command…"
           style={{ caretColor: '#facc15', fontSize: '16px' }}
         />
       </form>
