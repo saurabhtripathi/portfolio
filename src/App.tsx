@@ -1323,11 +1323,48 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
         className="h-screen w-screen flex flex-col bg-gray-900 text-gray-300"
         style={{ overflowY: 'auto', overflowX: 'hidden' }}
       >
-        {/* Slim top bar */}
-        <div className="bg-gray-800 border-b border-gray-700 px-3 flex items-center justify-between flex-shrink-0" style={{ height: '28px', minHeight: '28px' }}>
-          <button onClick={handleGoHome} className="text-white font-bold truncate" style={{ fontSize: '11px' }}>Saurabh Tripathi</button>
-          <div className="flex items-center gap-3" style={{ fontSize: '11px' }}>
-            <button onClick={onNavigateNews} className="text-blue-400 whitespace-nowrap">📰 News</button>
+        {/* Top navigation bar with menu items */}
+        <div className="bg-gray-800 border-b border-gray-700 px-2 py-1.5 flex-shrink-0">
+          <div className="flex items-center justify-between gap-1 mb-1">
+            <button onClick={handleGoHome} className="text-white font-bold truncate flex-1 text-left" style={{ fontSize: '11px' }}>Saurabh Tripathi</button>
+            <button onClick={onNavigateNews} className="text-blue-400 whitespace-nowrap px-2 py-1 rounded hover:bg-gray-700 transition-colors" style={{ fontSize: '10px' }}>📰 News</button>
+          </div>
+          <div className="grid grid-cols-4 gap-1">
+            <button
+              onClick={() => {
+                handleGoHome();
+                scrollMobileToContent();
+              }}
+              className={`py-1.5 px-1 rounded text-center border text-[9px] transition-colors ${
+                activeNav === 'home' ? 'bg-blue-600/20 border-blue-500 text-blue-400 font-semibold' : 'bg-gray-700 border-gray-600 text-gray-300 hover:border-blue-500'
+              }`}
+            >
+              🏠 Home
+            </button>
+            <button
+              onClick={handleMobileNavAbout}
+              className={`py-1.5 px-1 rounded text-center border text-[9px] transition-colors ${
+                activeNav === 'about' ? 'bg-blue-600/20 border-blue-500 text-blue-400 font-semibold' : 'bg-gray-700 border-gray-600 text-gray-300 hover:border-blue-500'
+              }`}
+            >
+              👤 About
+            </button>
+            <button
+              onClick={handleMobileNavSkills}
+              className={`py-1.5 px-1 rounded text-center border text-[9px] transition-colors ${
+                activeNav === 'skills' ? 'bg-blue-600/20 border-blue-500 text-blue-400 font-semibold' : 'bg-gray-700 border-gray-600 text-gray-300 hover:border-blue-500'
+              }`}
+            >
+              ⚡ Skills
+            </button>
+            <button
+              onClick={handleMobileNavExperience}
+              className={`py-1.5 px-1 rounded text-center border text-[9px] transition-colors ${
+                activeNav === 'experience' ? 'bg-blue-600/20 border-blue-500 text-blue-400 font-semibold' : 'bg-gray-700 border-gray-600 text-gray-300 hover:border-blue-500'
+              }`}
+            >
+              � Work
+            </button>
           </div>
         </div>
 
@@ -1434,27 +1471,6 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             />
           </div>
         )}
-
-        {/* Bottom Bar - social links 2x2 */}
-        <div
-          className="flex-shrink-0 bg-gray-800 border-t border-gray-700"
-          style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
-        >
-          <div className="grid grid-cols-2 gap-x-4 gap-y-1 px-4 py-1.5">
-            <a href="https://www.linkedin.com/in/saurabh-tripathi-a8b89945/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 text-[11px] flex items-center gap-1 transition-colors justify-center">
-              <span>💼</span><span>LinkedIn</span>
-            </a>
-            <a href="https://github.com/saurabhtripathi" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 text-[11px] flex items-center gap-1 transition-colors justify-center">
-              <span>🐙</span><span>GitHub</span>
-            </a>
-            <a href="https://www.drupal.org/u/saurabhtripathics" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-200 text-[11px] flex items-center gap-1 transition-colors justify-center">
-              <span>💧</span><span>Drupal.org</span>
-            </a>
-            <a href="https://www.saurabh-tripathi.com/" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 text-[11px] flex items-center gap-1 transition-colors justify-center">
-              <span>🌐</span><span>Website</span>
-            </a>
-          </div>
-        </div>
       </div>
     );
   }

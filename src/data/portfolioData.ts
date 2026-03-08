@@ -88,7 +88,7 @@ Singapore 🇸🇬
       ]
     },
     {
-      "title": "Application Development Senior Analyst & Senior Drupal Developer",
+      "title": "Application Development Senior Analyst",
       "company": "Accenture",
       "period": "2013 - 2016",
       "location": "India",
@@ -117,8 +117,8 @@ Singapore 🇸🇬
   ],
   "education": {
     "degree": "Bachelor of Engineering in Computer Science",
-    "university": "University of Technology",
-    "year": "2010"
+    "university": "GBTU",
+    "year": ""
   }
 }`,
     language: 'json',
