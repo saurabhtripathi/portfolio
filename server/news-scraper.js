@@ -228,6 +228,7 @@ const fetchFeed = async (url) =>
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 app.get('/api/news', async (req, res) => {
   const sourceId = req.query.source;
@@ -285,6 +286,57 @@ app.get('/api/news', async (req, res) => {
 
 app.get('/api/news/health', (_req, res) => {
   res.json({ status: 'ok' });
+});
+
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+const RESUME_CONTEXT = `You are an AI assistant embedded in Saurabh Tripathi's VS Code-themed developer portfolio. Answer questions about Saurabh's professional background concisely and helpfully. Keep answers to 2-4 sentences. Sound professional but conversational.
+
+About: Senior Solutions Architect, 14+ years experience, Singapore.
+Email: saurabh.tripathi.cs@gmail.com | LinkedIn: linkedin.com/in/saurabh-tripathi
+
+Certifications: Acquia Certified Developer Drupal 10 & 11, Acquia Grand Master Drupal 8 & 9 (Triple Certified).
+
+Experience:
+- Mediacorp (2019-Present): Lead architect for CNA, Berita, Seithi platforms. Headless Drupal + React. Led team of 8. 99.9% uptime, 40% faster loads.
+- Acquia Inc (2016-2019): Enterprise Drupal for Fortune 500 clients. Integrations, technical leadership.
+- Accenture (2013-2016): Custom Drupal modules, enterprise integrations, migrations.
+- Various Agencies (2010-2013): PHP, MySQL, JavaScript.
+
+Skills: Drupal 7-11 (95%), PHP (90%), React (85%), TypeScript (80%), JavaScript (90%), AWS (75%), Acquia Cloud (90%), Docker (80%), Salesforce, Elasticsearch, Redis.
+
+Projects: CNA (Channel NewsAsia) millions of users; Berita Harian Malay news portal; Seithi Tamil news 50K+ users; Fortune 500 e-commerce $10M+ transactions.
+
+If asked something not in the resume, suggest contacting Saurabh at saurabh.tripathi.cs@gmail.com.`;
+
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { message, history = [] } = req.body;
+    if (!message) return res.status(400).json({ error: 'Message required' });
+
+    const contents = [
+      ...history.slice(-8).map((m) => ({
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: m.content }],
+      })),
+      { role: 'user', parts: [{ text: message }] },
+    ];
+
+    const response = await axios.post(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        system_instruction: { parts: [{ text: RESUME_CONTEXT }] },
+        contents,
+        generationConfig: { maxOutputTokens: 512, temperature: 0.7 },
+      }
+    );
+
+    const reply = response.data.candidates[0].content.parts[0].text;
+    res.json({ reply });
+  } catch (error) {
+    console.error('Chat error:', error.response?.data || error.message);
+    res.status(500).json({ error: 'Failed to get AI response.' });
+  }
 });
 
 app.listen(PORT, () => {

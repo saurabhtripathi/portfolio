@@ -11,6 +11,7 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
+    "axios": "^1.13.6",
     "cheerio": "1.0.0-rc.12",
     "cors": "^2.8.5",
     "express": "^4.19.2",
@@ -24,7 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:news": "node server/news-scraper.js",
+    "start:news": "GEMINI_API_KEY=$(grep GEMINI_API_KEY .env.development.local | cut -d= -f2) node server/news-scraper.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

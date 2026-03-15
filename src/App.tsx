@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DrupalNewsPage from './pages/DrupalNewsPage';
 import { portfolioFiles, FileItem } from './data/portfolioData';
+import AiChatPanel from './components/AiChatPanel';
 
 interface Tab {
   id: string;
@@ -788,17 +789,33 @@ const WelcomeTab: React.FC<{
   );
 };
 
-const StatusBar: React.FC<{ activeFile?: string; onToggleTerminal: () => void; terminalOpen: boolean }> = ({ activeFile, onToggleTerminal, terminalOpen }) => {
+const StatusBar: React.FC<{
+  activeFile?: string;
+  activePanel: 'terminal' | 'chat' | null;
+  onOpenPanel: (panel: 'terminal' | 'chat') => void;
+}> = ({ activeFile, activePanel, onOpenPanel }) => {
   return (
     <div className="bg-blue-600 text-white px-4 py-1 flex justify-between items-center text-xs">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <span>DDEV</span>
         <span>main</span>
         <button
-          onClick={onToggleTerminal}
-          className={`px-2 py-0.5 rounded text-xs transition-colors ${terminalOpen ? 'bg-blue-700' : 'hover:bg-blue-700'}`}
+          onClick={() => onOpenPanel('terminal')}
+          className={`flex items-center gap-1 px-2 py-0.5 rounded text-xs transition-colors ${
+            activePanel === 'terminal' ? 'bg-green-700 text-green-200' : 'hover:bg-blue-700'
+          }`}
         >
-          Terminal {terminalOpen ? '▼' : '▲'}
+          <span className="text-green-400">●</span>
+          <span>Terminal</span>
+        </button>
+        <button
+          onClick={() => onOpenPanel('chat')}
+          className={`flex items-center gap-1 px-2 py-0.5 rounded text-xs transition-colors ${
+            activePanel === 'chat' ? 'bg-purple-700 text-purple-200' : 'hover:bg-blue-700'
+          }`}
+        >
+          <span className="text-purple-400">✦</span>
+          <span>AI Chat</span>
         </button>
       </div>
       <div className="flex items-center gap-4">
@@ -1146,7 +1163,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
   }]);
   const [activeTabId, setActiveTabId] = useState('welcome');
   const [loading, setLoading] = useState(true);
-  const [terminalOpen, setTerminalOpen] = useState(true);
+  const [activePanel, setActivePanel] = useState<'terminal' | 'chat' | null>('terminal');
 
   useEffect(() => {
     loadFiles();
@@ -1238,6 +1255,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
 
   // Mobile terminal open/close state (closed by default)
   const [mobileTerminalOpen, setMobileTerminalOpen] = React.useState(false);
+  const [mobileAiChatOpen, setMobileAiChatOpen] = React.useState(false);
 
   // Show a brief toast overlay instead of a banner
   const showMobileToast = React.useCallback((msg: string) => {
@@ -1421,8 +1439,20 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           ) : null}
         </div>
 
-        {/* Floating Terminal Toggle Button - shown when terminal is closed, above bottom nav */}
-        {!mobileTerminalOpen && (
+        {/* Floating Ask AI button - left side, hidden when AI chat is open */}
+        {!mobileAiChatOpen && !mobileTerminalOpen && (
+          <button
+            onClick={() => setMobileAiChatOpen(true)}
+            className="fixed left-4 bg-gradient-to-r from-purple-600 to-violet-600 text-white px-3 py-1.5 rounded-full shadow-lg shadow-purple-500/30 flex items-center gap-1.5 z-40"
+            style={{ bottom: 'calc(36px + env(safe-area-inset-bottom, 0px))' }}
+          >
+            <span>✦</span>
+            <span className="text-xs font-medium">Ask AI</span>
+          </button>
+        )}
+
+        {/* Floating Terminal Toggle Button - right side, hidden when terminal is open */}
+        {!mobileTerminalOpen && !mobileAiChatOpen && (
           <button
             onClick={() => setMobileTerminalOpen(true)}
             className="fixed right-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-3 py-1.5 rounded-full shadow-lg shadow-green-500/30 flex items-center gap-1.5 z-40"
@@ -1454,13 +1484,13 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
               onFileSelect={(file) => {
                 handleFileSelect(file);
                 showMobileToast(`Opened: ${file.title}`);
-                setMobileTerminalOpen(false); // Close terminal after action
+                setMobileTerminalOpen(false);
                 scrollMobileToContent();
               }}
               onOpenMicrosite={(tab) => {
                 handleOpenMicrosite(tab);
                 showMobileToast(`Opened: ${tab.title}`);
-                setMobileTerminalOpen(false); // Close terminal after action
+                setMobileTerminalOpen(false);
                 scrollMobileToContent();
               }}
               onGoHome={() => {
@@ -1468,6 +1498,25 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
                 setMobileTerminalOpen(false);
                 scrollMobileToContent();
               }}
+            />
+          </div>
+        )}
+
+        {/* AI Chat - collapsible at bottom */}
+        {mobileAiChatOpen && (
+          <div className="flex-shrink-0 bg-gray-950 border-t-2 border-purple-500">
+            <AiChatPanel
+              onClose={() => setMobileAiChatOpen(false)}
+              mobileCloseButton={
+                <button
+                  onClick={() => setMobileAiChatOpen(false)}
+                  className="text-red-400 bg-red-900/40 border border-red-500/50 hover:bg-red-800/60 shrink-0"
+                  style={{ padding: '3px 10px', borderRadius: '4px', fontSize: '12px', fontWeight: 600 }}
+                >
+                  ✕ Close
+                </button>
+              }
+              hideHeader
             />
           </div>
         )}
@@ -1516,10 +1565,58 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           </div>
         </div>
       </div>
-      {terminalOpen && (
-        <Terminal files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} />
+      {/* Tabbed bottom panel */}
+      {activePanel !== null && (
+        <div className="border-t border-gray-700 flex-shrink-0">
+          {/* Panel tab bar */}
+          <div className="flex items-center bg-gray-800 border-b border-gray-700">
+            <button
+              onClick={() => setActivePanel('terminal')}
+              className={`flex items-center gap-1.5 px-4 py-1.5 text-xs border-t-2 transition-colors ${
+                activePanel === 'terminal'
+                  ? 'border-green-400 text-green-300 bg-gray-950'
+                  : 'border-transparent text-gray-500 hover:text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              <span className="text-green-400">●</span>
+              TERMINAL
+            </button>
+            <button
+              onClick={() => setActivePanel('chat')}
+              className={`flex items-center gap-1.5 px-4 py-1.5 text-xs border-t-2 transition-all ${
+                activePanel === 'chat'
+                  ? 'border-purple-400 text-purple-300 bg-gray-950'
+                  : 'border-purple-500 text-purple-300 bg-purple-900/20 hover:bg-purple-900/40'
+              }`}
+            >
+              <span className="text-purple-400">✦</span>
+              AI ASSISTANT
+              {activePanel !== 'chat' && (
+                <span className="ml-1.5 bg-purple-500 text-white rounded px-1 py-0.5 animate-pulse" style={{ fontSize: '9px', letterSpacing: '0.05em' }}>NEW</span>
+              )}
+            </button>
+            <div className="flex-1" />
+            <button
+              onClick={() => setActivePanel(null)}
+              className="px-3 py-1.5 text-gray-500 hover:text-gray-300 hover:bg-gray-700 text-xs transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+          {/* Panel content */}
+          <div style={{ display: activePanel === 'terminal' ? 'block' : 'none' }}>
+            <Terminal files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} hideHeader />
+          </div>
+          <div style={{ display: activePanel === 'chat' ? 'block' : 'none' }}>
+            <AiChatPanel onClose={() => setActivePanel(null)} hideHeader />
+          </div>
+        </div>
       )}
-      <StatusBar activeFile={activeTab?.title} onToggleTerminal={() => setTerminalOpen(!terminalOpen)} terminalOpen={terminalOpen} />
+      <StatusBar
+        activeFile={activeTab?.title}
+        activePanel={activePanel}
+        onOpenPanel={(panel) => setActivePanel(prev => prev === panel ? null : panel)}
+      />
     </div>
   );
 };
