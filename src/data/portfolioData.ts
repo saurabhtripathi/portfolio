@@ -104,7 +104,7 @@ Singapore 🇸🇬
     {
       "title": "Web Developer",
       "company": "Various Agencies",
-      "period": "2010 - 2013",
+      "period": "2011 - 2013",
       "location": "India",
       "current": false,
       "responsibilities": [

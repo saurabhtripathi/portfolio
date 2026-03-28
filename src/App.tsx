@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import DrupalNewsPage from './pages/DrupalNewsPage';
 import { portfolioFiles, FileItem } from './data/portfolioData';
 import AiChatPanel from './components/AiChatPanel';
+import ResumeDownload from './components/ResumeDownload';
+import ContactTab from './components/ContactTab';
+import DrupalContributions from './components/DrupalContributions';
+import OpenSourceTab from './components/OpenSourceTab';
 
 interface Tab {
   id: string;
@@ -533,7 +537,9 @@ const WelcomeTab: React.FC<{
   files: FileItem[];
   onFileSelect: (file: FileItem) => void;
   onOpenMicrosite: (tab: Tab) => void;
-}> = ({ files, onFileSelect, onOpenMicrosite }) => {
+  onOpenContact: () => void;
+  onOpenOpenSource: () => void;
+}> = ({ files, onFileSelect, onOpenMicrosite, onOpenContact, onOpenOpenSource }) => {
   const findFileByName = (name: string) => {
     return files.find(f => f.title.toLowerCase().includes(name.toLowerCase()));
   };
@@ -625,29 +631,26 @@ const WelcomeTab: React.FC<{
               <span>🐙</span>
               <span>GitHub</span>
             </a>
-            <a
-              href="https://www.drupal.org/u/saurabhtripathics"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-blue-800 text-blue-300 hover:text-white rounded-lg text-sm transition-colors border border-gray-700 hover:border-blue-500"
+            <button
+              onClick={onOpenOpenSource}
+              className="flex items-center justify-center gap-1 px-2 py-2 bg-gray-800 hover:bg-blue-800 text-blue-300 hover:text-white rounded-lg text-xs transition-colors border border-gray-700 hover:border-blue-500"
             >
               <span>💧</span>
-              <span>Drupal.org</span>
-            </a>
-            <a
-              href="https://www.saurabh-tripathi.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-purple-600 text-purple-400 hover:text-white rounded-lg text-sm transition-colors border border-gray-700 hover:border-purple-500"
+              <span>Open Source Contributions</span>
+            </button>
+            <ResumeDownload />
+            <button
+              onClick={onOpenContact}
+              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white rounded-lg text-sm transition-all shadow-lg hover:shadow-purple-500/25"
             >
-              <span>🌐</span>
-              <span>Website</span>
-            </a>
+              <span>📧</span>
+              <span>Contact</span>
+            </button>
           </div>
         </div>
 
         {/* Mobile Navigation Tiles - square boxes like Quick Stats, shown above stats on mobile */}
-        <div className="grid grid-cols-4 gap-1.5 mb-4 sm:hidden">
+        <div className="grid grid-cols-5 gap-1.5 mb-4 sm:hidden">
           <button
             onClick={() => handleOpenFile('about')}
             className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
@@ -675,6 +678,13 @@ const WelcomeTab: React.FC<{
           >
             <div className="text-base">🚀</div>
             <div className="text-[9px] text-gray-400 mt-0.5 leading-tight truncate">Projects</div>
+          </button>
+          <button
+            onClick={onOpenContact}
+            className="bg-gradient-to-br from-purple-900/50 to-violet-900/50 py-2 px-1 rounded-lg text-center border border-purple-500/50 hover:border-purple-400 active:bg-purple-800/50 transition-colors"
+          >
+            <div className="text-base">📧</div>
+            <div className="text-[9px] text-purple-300 mt-0.5 leading-tight">Contact</div>
           </button>
         </div>
 
@@ -760,6 +770,12 @@ const WelcomeTab: React.FC<{
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Open Source Contributions */}
+        <div className="mb-10">
+          <h3 className="text-sm text-gray-500 uppercase tracking-wider mb-3">Open Source Contributions</h3>
+          <DrupalContributions onViewAll={onOpenOpenSource} />
         </div>
 
         {/* Recent Files - desktop only, mobile uses bottom nav */}
@@ -1229,6 +1245,40 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
     setActiveTabId('welcome');
   };
 
+  const handleOpenContact = () => {
+    const contactTab: Tab = {
+      id: 'contact',
+      title: 'Contact',
+      content: '',
+      language: 'contact',
+      icon: 'tsx',
+      type: 'file',
+    };
+    setTabs(prevTabs => {
+      const existingTab = prevTabs.find(t => t.id === 'contact');
+      if (existingTab) return prevTabs;
+      return [...prevTabs, contactTab];
+    });
+    setActiveTabId('contact');
+  };
+
+  const handleOpenOpenSource = () => {
+    const openSourceTab: Tab = {
+      id: 'open-source',
+      title: 'Open Source',
+      content: '',
+      language: 'open-source',
+      icon: 'tsx',
+      type: 'file',
+    };
+    setTabs(prevTabs => {
+      const existingTab = prevTabs.find(t => t.id === 'open-source');
+      if (existingTab) return prevTabs;
+      return [...prevTabs, openSourceTab];
+    });
+    setActiveTabId('open-source');
+  };
+
   // Mobile-only UI
   const [isMobile, setIsMobile] = React.useState(typeof window !== 'undefined' && window.innerWidth <= 640);
   const contentAreaRef = React.useRef<HTMLDivElement>(null);
@@ -1326,6 +1376,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
     if (activeTabId === 'welcome') return 'home';
     if (activeTabId === 'experience-microsite') return 'experience';
     if (activeTabId === 'skills-microsite') return 'skills';
+    if (activeTabId === 'contact') return 'contact';
     const tab = activeTab;
     if (tab?.title?.toLowerCase().includes('readme') || tab?.title?.toLowerCase().includes('about')) return 'about';
     if (tab?.title?.toLowerCase().includes('project')) return 'projects';
@@ -1347,7 +1398,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             <button onClick={handleGoHome} className="text-white font-bold truncate flex-1 text-left" style={{ fontSize: '11px' }}>Saurabh Tripathi</button>
             <button onClick={onNavigateNews} className="text-blue-400 whitespace-nowrap px-2 py-1 rounded hover:bg-gray-700 transition-colors" style={{ fontSize: '10px' }}>📰 News</button>
           </div>
-          <div className="grid grid-cols-4 gap-1">
+          <div className="grid grid-cols-5 gap-1">
             <button
               onClick={() => {
                 handleGoHome();
@@ -1381,7 +1432,18 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
                 activeNav === 'experience' ? 'bg-blue-600/20 border-blue-500 text-blue-400 font-semibold' : 'bg-gray-700 border-gray-600 text-gray-300 hover:border-blue-500'
               }`}
             >
-              � Work
+              💼 Work
+            </button>
+            <button
+              onClick={() => {
+                handleOpenContact();
+                scrollMobileToContent();
+              }}
+              className={`py-1.5 px-1 rounded text-center border text-[9px] transition-colors ${
+                activeNav === 'contact' ? 'bg-purple-600/20 border-purple-500 text-purple-400 font-semibold' : 'bg-purple-900/30 border-purple-600 text-purple-300 hover:border-purple-400'
+              }`}
+            >
+              📧 Contact
             </button>
           </div>
         </div>
@@ -1429,7 +1491,11 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
               <div className="text-gray-400">Loading...</div>
             </div>
           ) : activeTab?.type === 'welcome' ? (
-            <WelcomeTab files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} />
+            <WelcomeTab files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} onOpenContact={handleOpenContact} onOpenOpenSource={handleOpenOpenSource} />
+          ) : activeTab?.id === 'contact' ? (
+            <ContactTab onOpenOpenSource={handleOpenOpenSource} />
+          ) : activeTab?.id === 'open-source' ? (
+            <OpenSourceTab />
           ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-experience' ? (
             <ExperienceMicrosite content={activeTab.content} onGoHome={handleGoHome} />
           ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-skills' ? (
@@ -1531,6 +1597,14 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           <span className="font-semibold">Visual Studio Code</span>
         </div>
         <div className="flex items-center gap-4 text-gray-400">
+          <ResumeDownload />
+          <button
+            onClick={handleOpenContact}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white rounded text-xs transition-all shadow-lg hover:shadow-purple-500/25"
+          >
+            <span>📧</span>
+            <span>Contact</span>
+          </button>
           <button
             onClick={onNavigateNews}
             className="group relative flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all hover:scale-105"
@@ -1554,7 +1628,11 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
                 <div className="text-gray-400">Loading...</div>
               </div>
             ) : activeTab?.type === 'welcome' ? (
-              <WelcomeTab files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} />
+              <WelcomeTab files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} onOpenContact={handleOpenContact} onOpenOpenSource={handleOpenOpenSource} />
+            ) : activeTab?.id === 'contact' ? (
+              <ContactTab onOpenOpenSource={handleOpenOpenSource} />
+            ) : activeTab?.id === 'open-source' ? (
+              <OpenSourceTab />
             ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-experience' ? (
               <ExperienceMicrosite content={activeTab.content} onGoHome={handleGoHome} />
             ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-skills' ? (
