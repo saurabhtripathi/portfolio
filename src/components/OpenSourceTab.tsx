@@ -206,7 +206,12 @@ const OpenSourceTab: React.FC = () => {
   };
 
   const ProjectCard: React.FC<{ project: DrupalProject }> = ({ project }) => (
-    <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 hover:border-blue-500/50 transition-colors">
+    <a
+      href={project.drupalUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 hover:border-blue-500/50 hover:bg-gray-800/70 transition-colors block"
+    >
       <div className="flex items-start justify-between mb-2">
         <div>
           <h4 className="font-semibold text-white text-sm">{project.name}</h4>
@@ -225,26 +230,11 @@ const OpenSourceTab: React.FC = () => {
       
       <div className="flex items-center justify-between">
         <span className="text-xs text-gray-500">{project.issues} issue{project.issues !== 1 ? 's' : ''}</span>
-        <div className="flex gap-2">
-          <a
-            href={project.drupalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
-          >
-            <span>💧</span> Project
-          </a>
-          <a
-            href={project.gitUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-orange-400 hover:text-orange-300 flex items-center gap-1"
-          >
-            <span>📦</span> Git Repo
-          </a>
-        </div>
+        <span className="text-xs text-blue-400 flex items-center gap-1">
+          View on Drupal.org →
+        </span>
       </div>
-    </div>
+    </a>
   );
 
   return (
@@ -290,15 +280,7 @@ const OpenSourceTab: React.FC = () => {
               rel="noopener noreferrer"
               className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1"
             >
-              💧 Drupal.org Profile →
-            </a>
-            <a
-              href="https://git.drupalcode.org/saurabhtripathics"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-orange-400 hover:text-orange-300 flex items-center gap-1"
-            >
-              📦 GitLab Profile →
+              💧 View Drupal.org Profile →
             </a>
           </div>
         </div>
