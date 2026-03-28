@@ -649,79 +649,103 @@ const WelcomeTab: React.FC<{
           </div>
         </div>
 
-        {/* Mobile Navigation Tiles - square boxes like Quick Stats, shown above stats on mobile */}
-        <div className="grid grid-cols-5 gap-1.5 mb-4 sm:hidden">
+                {/* Mobile Navigation Tiles */}
+        <div className="grid grid-cols-5 gap-1.5 mb-3 sm:hidden">
           <button
             onClick={() => handleOpenFile('about')}
-            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
+            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 active:bg-gray-700 transition-colors"
           >
             <div className="text-base">👤</div>
-            <div className="text-[9px] text-gray-400 mt-0.5 leading-tight">About</div>
+            <div className="text-[9px] text-gray-400 mt-0.5">About</div>
           </button>
-          <a
-            href="/resume/Saurabh_Tripathi_Resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 py-2 px-1 rounded-lg text-center border border-green-500/50 hover:border-green-400 active:bg-green-800/50 transition-colors"
-          >
-            <div className="text-base">�</div>
-            <div className="text-[9px] text-green-300 mt-0.5 leading-tight">Resume</div>
-          </a>
           <button
-            onClick={onOpenOpenSource}
-            className="bg-gradient-to-br from-blue-900/50 to-cyan-900/50 py-2 px-1 rounded-lg text-center border border-blue-500/50 hover:border-blue-400 active:bg-blue-800/50 transition-colors"
+            onClick={handleOpenExperience}
+            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 active:bg-gray-700 transition-colors"
           >
-            <div className="text-base">💧</div>
-            <div className="text-[9px] text-blue-300 mt-0.5 leading-tight">Open Source</div>
+            <div className="text-base">💼</div>
+            <div className="text-[9px] text-gray-400 mt-0.5">Work</div>
+          </button>
+          <button
+            onClick={handleOpenSkills}
+            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 active:bg-gray-700 transition-colors"
+          >
+            <div className="text-base">⚡</div>
+            <div className="text-[9px] text-gray-400 mt-0.5">Skills</div>
           </button>
           <button
             onClick={() => handleOpenFile('project')}
-            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors overflow-hidden"
+            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 active:bg-gray-700 transition-colors"
           >
             <div className="text-base">🚀</div>
-            <div className="text-[9px] text-gray-400 mt-0.5 leading-tight truncate">Projects</div>
+            <div className="text-[9px] text-gray-400 mt-0.5">Projects</div>
           </button>
           <button
-            onClick={onOpenContact}
-            className="bg-gradient-to-br from-purple-900/50 to-violet-900/50 py-2 px-1 rounded-lg text-center border border-purple-500/50 hover:border-purple-400 active:bg-purple-800/50 transition-colors"
+            onClick={() => handleOpenFile('about')}
+            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 active:bg-gray-700 transition-colors"
           >
-            <div className="text-base">📧</div>
-            <div className="text-[9px] text-purple-300 mt-0.5 leading-tight">Contact</div>
+            <div className="text-base">📋</div>
+            <div className="text-[9px] text-gray-400 mt-0.5">Certs</div>
           </button>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-10">
-          {/* Mobile: Work & Skills tiles, Desktop: Full Stack Developer */}
-          <button
-            onClick={handleOpenExperience}
-            className="bg-gray-800 p-3 sm:p-4 rounded text-center sm:hidden hover:bg-gray-700 active:bg-gray-600 transition-colors border border-gray-700 hover:border-blue-500"
+        {/* Mobile Action Tiles - Big buttons for Resume, Open Source, Contact */}
+        <div className="grid grid-cols-3 gap-2 mb-3 sm:hidden">
+          <a
+            href="/resume/Saurabh_Tripathi_Resume.pdf"
+            download="Saurabh_Tripathi_Resume.pdf"
+            className="bg-gradient-to-br from-green-900/70 to-emerald-900/70 p-3 rounded-lg text-center border border-green-500/50 active:bg-green-800/50 transition-colors block"
           >
-            <div className="text-xl font-bold text-blue-400">💼</div>
-            <div className="text-xs text-gray-400">Work Experience</div>
+            <div className="text-xl text-green-400">📄</div>
+            <div className="text-[10px] text-green-300 mt-1 font-medium">Download Resume</div>
+          </a>
+          <button
+            onClick={onOpenOpenSource}
+            className="bg-gradient-to-br from-blue-900/70 to-cyan-900/70 p-3 rounded-lg text-center border border-blue-500/50 active:bg-blue-800/50 transition-colors"
+          >
+            <div className="text-xl text-blue-400">💧</div>
+            <div className="text-[10px] text-blue-300 mt-1 font-medium">Open Source</div>
           </button>
-          <div className="bg-gray-800 p-3 sm:p-4 rounded text-center hidden sm:block">
-            <div className="text-xl sm:text-2xl font-bold text-blue-400">🚀</div>
+          <button
+            onClick={onOpenContact}
+            className="bg-gradient-to-br from-purple-900/70 to-violet-900/70 p-3 rounded-lg text-center border border-purple-500/50 active:bg-purple-800/50 transition-colors"
+          >
+            <div className="text-xl text-purple-400">📧</div>
+            <div className="text-[10px] text-purple-300 mt-1 font-medium">Contact Me</div>
+          </button>
+        </div>
+
+        {/* Mobile Quick Stats */}
+        <div className="grid grid-cols-3 gap-2 mb-6 sm:hidden">
+          <div className="bg-gray-800 p-2 rounded-lg text-center">
+            <div className="text-base font-bold text-green-400">3x</div>
+            <div className="text-[9px] text-gray-400">Triple Certified</div>
+          </div>
+          <div className="bg-gray-800 p-2 rounded-lg text-center">
+            <div className="text-base font-bold text-yellow-400">13+</div>
+            <div className="text-[9px] text-gray-400">Years Drupal</div>
+          </div>
+          <div className="bg-gray-800 p-2 rounded-lg text-center">
+            <div className="text-base font-bold text-purple-400">SG</div>
+            <div className="text-[9px] text-gray-400">Singapore</div>
+          </div>
+        </div>
+
+        {/* Desktop Quick Stats */}
+        <div className="hidden sm:grid grid-cols-4 gap-4 mb-10">
+          <div className="bg-gray-800 p-4 rounded text-center">
+            <div className="text-2xl font-bold text-blue-400">🚀</div>
             <div className="text-xs text-gray-400">Full Stack Developer</div>
           </div>
-          <div className="bg-gray-800 p-3 sm:p-4 rounded text-center">
-            <div className="text-xl sm:text-2xl font-bold text-green-400">3x</div>
+          <div className="bg-gray-800 p-4 rounded text-center">
+            <div className="text-2xl font-bold text-green-400">3x</div>
             <div className="text-xs text-gray-400">Triple Certified Drupal</div>
           </div>
-          {/* Mobile: Skills tile, Desktop: D7-11 */}
-          <button
-            onClick={handleOpenSkills}
-            className="bg-gray-800 p-3 sm:p-4 rounded text-center sm:hidden hover:bg-gray-700 active:bg-gray-600 transition-colors border border-gray-700 hover:border-blue-500"
-          >
-            <div className="text-xl font-bold text-yellow-400">⚡</div>
-            <div className="text-xs text-gray-400">Technical Skills</div>
-          </button>
-          <div className="bg-gray-800 p-3 sm:p-4 rounded text-center hidden sm:block">
-            <div className="text-xl sm:text-2xl font-bold text-yellow-400">D7-11</div>
+          <div className="bg-gray-800 p-4 rounded text-center">
+            <div className="text-2xl font-bold text-yellow-400">D7-11</div>
             <div className="text-xs text-gray-400">Drupal Versions</div>
           </div>
-          <div className="bg-gray-800 p-3 sm:p-4 rounded text-center">
-            <div className="text-xl sm:text-2xl font-bold text-purple-400">SG</div>
+          <div className="bg-gray-800 p-4 rounded text-center">
+            <div className="text-2xl font-bold text-purple-400">SG</div>
             <div className="text-xs text-gray-400">Singapore Based</div>
           </div>
         </div>
