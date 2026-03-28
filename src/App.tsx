@@ -658,19 +658,21 @@ const WelcomeTab: React.FC<{
             <div className="text-base">👤</div>
             <div className="text-[9px] text-gray-400 mt-0.5 leading-tight">About</div>
           </button>
-          <button
-            onClick={handleOpenExperience}
-            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
+          <a
+            href="/resume/Saurabh_Tripathi_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 py-2 px-1 rounded-lg text-center border border-green-500/50 hover:border-green-400 active:bg-green-800/50 transition-colors"
           >
-            <div className="text-base">💼</div>
-            <div className="text-[9px] text-gray-400 mt-0.5 leading-tight">Work</div>
-          </button>
+            <div className="text-base">�</div>
+            <div className="text-[9px] text-green-300 mt-0.5 leading-tight">Resume</div>
+          </a>
           <button
-            onClick={handleOpenSkills}
-            className="bg-gray-800 py-2 px-1 rounded-lg text-center border border-gray-700 hover:border-blue-500 active:bg-gray-700 transition-colors"
+            onClick={onOpenOpenSource}
+            className="bg-gradient-to-br from-blue-900/50 to-cyan-900/50 py-2 px-1 rounded-lg text-center border border-blue-500/50 hover:border-blue-400 active:bg-blue-800/50 transition-colors"
           >
-            <div className="text-base">⚡</div>
-            <div className="text-[9px] text-gray-400 mt-0.5 leading-tight">Skills</div>
+            <div className="text-base">💧</div>
+            <div className="text-[9px] text-blue-300 mt-0.5 leading-tight">Open Source</div>
           </button>
           <button
             onClick={() => handleOpenFile('project')}
@@ -690,7 +692,15 @@ const WelcomeTab: React.FC<{
 
         {/* Quick Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-10">
-          <div className="bg-gray-800 p-3 sm:p-4 rounded text-center">
+          {/* Mobile: Work & Skills tiles, Desktop: Full Stack Developer */}
+          <button
+            onClick={handleOpenExperience}
+            className="bg-gray-800 p-3 sm:p-4 rounded text-center sm:hidden hover:bg-gray-700 active:bg-gray-600 transition-colors border border-gray-700 hover:border-blue-500"
+          >
+            <div className="text-xl font-bold text-blue-400">💼</div>
+            <div className="text-xs text-gray-400">Work Experience</div>
+          </button>
+          <div className="bg-gray-800 p-3 sm:p-4 rounded text-center hidden sm:block">
             <div className="text-xl sm:text-2xl font-bold text-blue-400">🚀</div>
             <div className="text-xs text-gray-400">Full Stack Developer</div>
           </div>
@@ -698,7 +708,15 @@ const WelcomeTab: React.FC<{
             <div className="text-xl sm:text-2xl font-bold text-green-400">3x</div>
             <div className="text-xs text-gray-400">Triple Certified Drupal</div>
           </div>
-          <div className="bg-gray-800 p-3 sm:p-4 rounded text-center">
+          {/* Mobile: Skills tile, Desktop: D7-11 */}
+          <button
+            onClick={handleOpenSkills}
+            className="bg-gray-800 p-3 sm:p-4 rounded text-center sm:hidden hover:bg-gray-700 active:bg-gray-600 transition-colors border border-gray-700 hover:border-blue-500"
+          >
+            <div className="text-xl font-bold text-yellow-400">⚡</div>
+            <div className="text-xs text-gray-400">Technical Skills</div>
+          </button>
+          <div className="bg-gray-800 p-3 sm:p-4 rounded text-center hidden sm:block">
             <div className="text-xl sm:text-2xl font-bold text-yellow-400">D7-11</div>
             <div className="text-xs text-gray-400">Drupal Versions</div>
           </div>
