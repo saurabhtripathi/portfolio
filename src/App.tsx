@@ -691,9 +691,8 @@ const WelcomeTab: React.FC<{
         {/* Mobile Action Tiles - Big buttons for Resume, Open Source, Contact */}
         <div className="grid grid-cols-3 gap-2 mb-3 sm:hidden">
           <a
-            href="/resume/Saurabh_Tripathi_Resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="https://raw.githubusercontent.com/saurabhtripathi/portfolio/main/public/resume/Saurabh_Tripathi_Resume.pdf"
+            download="Saurabh_Tripathi_Resume.pdf"
             className="bg-gradient-to-br from-green-900/70 to-emerald-900/70 p-3 rounded-lg text-center border border-green-500/50 active:bg-green-800/50 transition-colors block"
           >
             <div className="text-xl text-green-400">📄</div>
