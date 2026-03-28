@@ -1,0 +1,5 @@
+# Serve static files directly
+/resume/*  /resume/:splat  200
+
+# SPA fallback - must be last
+/*  /index.html  200

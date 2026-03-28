@@ -2,7 +2,17 @@ import React from 'react';
 
 const ResumeDownload: React.FC = () => {
   const handleDownload = () => {
-    window.open('/resume/Saurabh_Tripathi_Resume.pdf', '_blank');
+    // Use process.env.PUBLIC_URL to get the correct base path
+    const pdfUrl = `${process.env.PUBLIC_URL}/resume/Saurabh_Tripathi_Resume.pdf`;
+    
+    // Create a temporary link and trigger download
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = 'Saurabh_Tripathi_Resume.pdf';
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (

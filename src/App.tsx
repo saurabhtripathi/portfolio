@@ -690,14 +690,22 @@ const WelcomeTab: React.FC<{
 
         {/* Mobile Action Tiles - Big buttons for Resume, Open Source, Contact */}
         <div className="grid grid-cols-3 gap-2 mb-3 sm:hidden">
-          <a
-            href="/resume/Saurabh_Tripathi_Resume.pdf"
-            download="Saurabh_Tripathi_Resume.pdf"
-            className="bg-gradient-to-br from-green-900/70 to-emerald-900/70 p-3 rounded-lg text-center border border-green-500/50 active:bg-green-800/50 transition-colors block"
+          <button
+            onClick={() => {
+              const pdfUrl = `${process.env.PUBLIC_URL}/resume/Saurabh_Tripathi_Resume.pdf`;
+              const link = document.createElement('a');
+              link.href = pdfUrl;
+              link.download = 'Saurabh_Tripathi_Resume.pdf';
+              link.target = '_blank';
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
+            className="bg-gradient-to-br from-green-900/70 to-emerald-900/70 p-3 rounded-lg text-center border border-green-500/50 active:bg-green-800/50 transition-colors"
           >
             <div className="text-xl text-green-400">📄</div>
             <div className="text-[10px] text-green-300 mt-1 font-medium">Download Resume</div>
-          </a>
+          </button>
           <button
             onClick={onOpenOpenSource}
             className="bg-gradient-to-br from-blue-900/70 to-cyan-900/70 p-3 rounded-lg text-center border border-blue-500/50 active:bg-blue-800/50 transition-colors"
