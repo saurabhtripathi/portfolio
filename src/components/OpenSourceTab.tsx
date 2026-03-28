@@ -285,6 +285,54 @@ const OpenSourceTab: React.FC = () => {
           </div>
         </div>
 
+        {/* Git Repositories Section */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-orange-400 text-lg">📦</span>
+            <h2 className="text-lg font-semibold text-white">Git Repositories</h2>
+            <span className="text-xs text-gray-500">({maintainedProjects.length + contributedProjects.length} repos)</span>
+          </div>
+          <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+            <p className="text-gray-400 text-sm mb-4">All project source code is hosted on Drupal's GitLab instance at git.drupalcode.org</p>
+            
+            {/* Maintained Repos */}
+            <div className="mb-4">
+              <h4 className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-2">Maintained Projects</h4>
+              <div className="flex flex-wrap gap-2">
+                {maintainedProjects.map((project) => (
+                  <a
+                    key={project.machineName}
+                    href={project.gitUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs bg-green-900/30 text-green-300 px-3 py-1.5 rounded-md hover:bg-green-900/50 transition-colors border border-green-700/50 flex items-center gap-1"
+                  >
+                    <span>📦</span> {project.machineName}
+                  </a>
+                ))}
+              </div>
+            </div>
+            
+            {/* Contributed Repos */}
+            <div>
+              <h4 className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">Contributed Projects</h4>
+              <div className="flex flex-wrap gap-2">
+                {contributedProjects.map((project) => (
+                  <a
+                    key={project.machineName}
+                    href={project.gitUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs bg-blue-900/30 text-blue-300 px-3 py-1.5 rounded-md hover:bg-blue-900/50 transition-colors border border-blue-700/50 flex items-center gap-1"
+                  >
+                    <span>📦</span> {project.machineName}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Maintained Projects */}
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
