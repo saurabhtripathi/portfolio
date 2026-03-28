@@ -3,7 +3,7 @@ import React from 'react';
 const ResumeDownload: React.FC = () => {
   return (
     <a
-      href="https://saurabh-tripathi.com/resume/Saurabh_Tripathi_Resume.pdf"
+      href="/resume/Saurabh_Tripathi_Resume.pdf"
       target="_blank"
       rel="noopener noreferrer"
       className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded font-medium transition-all shadow-lg hover:shadow-green-500/25 text-xs"
