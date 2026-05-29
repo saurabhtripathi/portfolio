@@ -62,7 +62,7 @@ Singapore 🇸🇬
     {
       "title": "Senior Solutions Architect",
       "company": "Mediacorp Pte Ltd",
-      "period": "2019 - Present",
+      "period": "June 2021 - Present",
       "location": "Singapore",
       "current": true,
       "responsibilities": [
@@ -76,7 +76,7 @@ Singapore 🇸🇬
     {
       "title": "Software Engineer, Research and Development",
       "company": "Acquia Inc.",
-      "period": "2016 - 2019",
+      "period": "April 2019 - June 2021",
       "location": "India",
       "current": false,
       "responsibilities": [
@@ -90,7 +90,7 @@ Singapore 🇸🇬
     {
       "title": "Application Development Senior Analyst",
       "company": "Accenture",
-      "period": "2013 - 2016",
+      "period": "February 2017 - April 2019",
       "location": "India",
       "current": false,
       "responsibilities": [
@@ -102,16 +102,42 @@ Singapore 🇸🇬
       ]
     },
     {
-      "title": "Web Developer",
-      "company": "Various Agencies",
-      "period": "2011 - 2013",
+      "title": "Software Engineer",
+      "company": "Faichi Solutions",
+      "period": "October 2014 - February 2017",
       "location": "India",
       "current": false,
       "responsibilities": [
-        "Developed websites using PHP, MySQL, and JavaScript",
-        "Created responsive designs and user interfaces",
-        "Maintained client websites and provided support",
-        "Learned Drupal and modern web development practices"
+        "Worked on Drupal 8 projects for clients including Ixia and Haivision",
+        "Handled multilingual website support and created Drush commands",
+        "Implemented feed integration, module development, and theme customization",
+        "Led configuration management initiatives"
+      ]
+    },
+    {
+      "title": "Software Developer",
+      "company": "Iksula",
+      "period": "January 2013 - September 2014",
+      "location": "India",
+      "current": false,
+      "responsibilities": [
+        "Developed Drupal Commerce solutions and custom modules",
+        "Worked with Panels/Contexts and other contributed modules",
+        "Implemented discount structure logic for eBay.in project",
+        "Developed projects including bigbazaardirect.com and gitanjaligifts.com"
+      ]
+    },
+    {
+      "title": "Software Engineer",
+      "company": "Corpus Software",
+      "period": "June 2011 - December 2012",
+      "location": "India",
+      "current": false,
+      "responsibilities": [
+        "Developed responsive websites using PHP, MySQL, JavaScript, and Drupal",
+        "Created custom themes and maintained client websites",
+        "Provided technical support and training for government corporations",
+        "Conducted training sessions on ERP workflows"
       ]
     }
   ],
@@ -162,6 +188,19 @@ Singapore 🇸🇬
       { "name": "DDEV", "level": 85 }
     ]
   },
+  "ai_ml": {
+    "label": "AI & Machine Learning",
+    "skills": [
+      { "name": "LangChain", "level": 85 },
+      { "name": "LangGraph", "level": 80 },
+      { "name": "Google Gemini AI", "level": 85 },
+      { "name": "OpenAI GPT", "level": 80 },
+      { "name": "FAISS Vector Search", "level": 75 },
+      { "name": "RAG Pipelines", "level": 80 },
+      { "name": "Selenium", "level": 75 },
+      { "name": "BeautifulSoup", "level": 80 }
+    ]
+  },
   "integrations": {
     "label": "Integrations",
     "skills": [
@@ -171,7 +210,10 @@ Singapore 🇸🇬
       "Elasticsearch",
       "Redis",
       "Varnish",
-      "CDN (CloudFront, Fastly)"
+      "CDN (CloudFront, Fastly)",
+      "WebSockets",
+      "FastAPI",
+      "mitmproxy"
     ]
   },
   "tools": {
@@ -208,17 +250,63 @@ Singapore 🇸🇬
     title: 'projects.md',
     content: `# Major Projects
 
+## Ask CNA - AI-Powered News Search
+**Role:** Solutions Architect
+**Duration:** 2025
+**Technologies:** FastAPI, Google Gemini 2.0, FAISS, Selenium, WebSockets, mitmproxy
+
+### Overview
+AI-powered conversational search experience for Channel NewsAsia that transforms traditional search into intelligent Q&A with real-time streaming responses.
+
+### Key Responsibilities
+- Architected end-to-end RAG (Retrieval-Augmented Generation) pipeline
+- Implemented transparent proxy using mitmproxy to inject custom UI into CNA search
+- Built WebSocket-based streaming backend with FastAPI for progressive response delivery
+- Developed semantic article ranking using SentenceTransformers and FAISS vector search
+- Created parallel web scraping system with Selenium for real-time article retrieval
+
+### Achievements
+- Real-time AI answer generation with live progress updates
+- Semantic search with top 5 article citations as sources
+- Sub-2-second response time including scraping and AI generation
+- Zero infrastructure changes to existing CNA platform
+
+---
+
+## WhatsApp Support Bot - AI Agent Framework
+**Role:** Technical Lead
+**Duration:** 2025
+**Technologies:** LangChain, LangGraph, Google Gemini, FAISS, Azure OpenAI, Python
+
+### Overview
+Modular AI agent framework with WhatsApp chat history analysis as primary use case, demonstrating multi-turn conversation memory and RAG-based customer support.
+
+### Key Responsibilities
+- Built reusable agent framework with tools, middleware, and structured responses
+- Implemented conversation memory using LangGraph checkpointers
+- Created vector store from WhatsApp export files for semantic search
+- Developed multi-LLM provider support (Gemini, Azure OpenAI, Ollama)
+- Built token cost tracking middleware across different LLM providers
+
+### Achievements
+- Structured response format for machine-parseable outputs
+- Multi-turn conversation context with persistent memory
+- Cost-efficient queries at ~$0.001 per interaction with Gemini Flash
+- Fully modular and reusable framework for other agent applications
+
+---
+
 ## CNA (Channel NewsAsia) Platform
 **Role:** Lead Solutions Architect
-**Duration:** 2019 - Present
+**Duration:** June 2021 - Present
 **Technologies:** Drupal 9/10, React, TypeScript, AWS
 
 ### Overview
 Singapore's leading English-language news platform serving millions of users across Southeast Asia.
 
 ### Key Responsibilities
-- Architected headless Drupal CMS with React frontend
-- Implemented real-time news publishing workflow
+- Implemented headless Drupal CMS with React frontend
+- Led real-time news publishing workflow development
 - Optimized for high traffic (millions of daily visitors)
 - Integrated with video streaming and live broadcasting systems
 - Led team of 8 developers
@@ -231,7 +319,7 @@ Singapore's leading English-language news platform serving millions of users acr
 
 ---
 
-## Berita Harian Digital Platform
+## Berita
 **Role:** Senior Solutions Architect
 **Duration:** 2020 - Present
 **Technologies:** Drupal 10, React, Next.js
