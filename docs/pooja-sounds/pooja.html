@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pooja Sounds - Motion Detector</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .status {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .start-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .start-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .sound-indicators {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .sound-card {
+            flex: 1;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .sound-card.active {
+            background: rgba(76, 175, 80, 0.5);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
+        }
+
+        .sound-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .sound-card .gesture {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .instructions h3 {
+            margin-bottom: 10px;
+        }
+
+        .instructions ul {
+            list-style-position: inside;
+        }
+
+        .error {
+            background: rgba(244, 67, 54, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pooja Sounds</h1>
+
+        <div class="status" id="status">
+            Tap "Start" to begin
+        </div>
+
+        <button class="start-btn" id="startBtn">Start Motion Detection</button>
+
+        <div class="sound-indicators">
+            <div class="sound-card" id="bellCard">
+                <h3>Bell</h3>
+                <div class="gesture">Vertical shake</div>
+            </div>
+            <div class="sound-card" id="damruCard">
+                <h3>Damru</h3>
+                <div class="gesture">Side to side shake</div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to use:</h3>
+            <ul>
+                <li>Tap "Start" to enable motion detection</li>
+                <li>Shake phone up and down for bell sound</li>
+                <li>Shake phone side to side for damru sound</li>
+                <li>The app will automatically detect the gesture</li>
+            </ul>
+        </div>
+
+        <div class="error" id="error"></div>
+    </div>
+
+    <script>
+        let isActive = false;
+        let lastShakeTime = 0;
+        let lastX = 0, lastY = 0, lastZ = 0;
+        const shakeThreshold = 15;
+        const shakeDelay = 500; // Minimum time between sounds in ms
+
+        // Audio elements
+        const bellAudio = new Audio();
+        const damruAudio = new Audio();
+
+        // Using free sounds from freesound.org or similar
+        // For now, we'll use Web Audio API to generate simple tones
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playBell() {
+            const now = Date.now();
+            if (now - lastShakeTime < shakeDelay) return;
+            lastShakeTime = now;
+
+            // Bell sound - high frequency with decay
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 1);
+
+            // Visual feedback
+            document.getElementById('bellCard').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('bellCard').classList.remove('active');
+            }, 300);
+        }
+
+        function playDamru() {
+            const now = Date.now();
+            if (now - lastShakeTime < shakeDelay) return;
+            lastShakeTime = now;
+
+            // Damru sound - double beat pattern
+            [0, 0.15].forEach(delay => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                oscillator.frequency.value = 300;
+                oscillator.type = 'square';
+
+                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime + delay);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + delay + 0.1);
+
+                oscillator.start(audioContext.currentTime + delay);
+                oscillator.stop(audioContext.currentTime + delay + 0.1);
+            });
+
+            // Visual feedback
+            document.getElementById('damruCard').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('damruCard').classList.remove('active');
+            }, 300);
+        }
+
+        function handleMotion(event) {
+            if (!isActive) return;
+
+            const acc = event.accelerationIncludingGravity;
+            if (!acc) return;
+
+            const x = acc.x || 0;
+            const y = acc.y || 0;
+            const z = acc.z || 0;
+
+            const deltaX = Math.abs(x - lastX);
+            const deltaY = Math.abs(y - lastY);
+            const deltaZ = Math.abs(z - lastZ);
+
+            // Detect vertical shake (bell) - strong Y-axis movement
+            if (deltaY > shakeThreshold && deltaY > deltaX && deltaY > deltaZ) {
+                playBell();
+                document.getElementById('status').textContent = 'Bell ringing!';
+            }
+            // Detect horizontal shake (damru) - strong X-axis movement
+            else if (deltaX > shakeThreshold && deltaX > deltaY && deltaX > deltaZ) {
+                playDamru();
+                document.getElementById('status').textContent = 'Damru playing!';
+            }
+
+            lastX = x;
+            lastY = y;
+            lastZ = z;
+
+            // Reset status after a delay
+            setTimeout(() => {
+                if (document.getElementById('status').textContent !== 'Listening for motion...') {
+                    document.getElementById('status').textContent = 'Listening for motion...';
+                }
+            }, 1000);
+        }
+
+        document.getElementById('startBtn').addEventListener('click', async () => {
+            const startBtn = document.getElementById('startBtn');
+            const statusDiv = document.getElementById('status');
+            const errorDiv = document.getElementById('error');
+
+            try {
+                if (!isActive) {
+                    // Request permission for iOS 13+
+                    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+                        const permission = await DeviceMotionEvent.requestPermission();
+                        if (permission !== 'granted') {
+                            throw new Error('Motion permission denied');
+                        }
+                    }
+
+                    window.addEventListener('devicemotion', handleMotion);
+                    isActive = true;
+                    startBtn.textContent = 'Stop Motion Detection';
+                    startBtn.style.background = '#f44336';
+                    statusDiv.textContent = 'Listening for motion...';
+                    errorDiv.style.display = 'none';
+                } else {
+                    window.removeEventListener('devicemotion', handleMotion);
+                    isActive = false;
+                    startBtn.textContent = 'Start Motion Detection';
+                    startBtn.style.background = '#4CAF50';
+                    statusDiv.textContent = 'Motion detection stopped';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorDiv.textContent = 'Error: ' + error.message + '. Please ensure you are using HTTPS or localhost.';
+                errorDiv.style.display = 'block';
+            }
+        });
+
+        // Check if device motion is supported
+        if (!window.DeviceMotionEvent) {
+            document.getElementById('error').textContent = 'Device motion is not supported on this device.';
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('startBtn').disabled = true;
+        }
+    </script>
+</body>
+</html>
