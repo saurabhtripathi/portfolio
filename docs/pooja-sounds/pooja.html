@@ -140,12 +140,12 @@
 
         <div class="sound-indicators">
             <div class="sound-card" id="bellCard">
-                <h3>Bell</h3>
-                <div class="gesture">Vertical shake</div>
+                <h3>🔔 Aarti Bell</h3>
+                <div class="gesture">Move up & down</div>
             </div>
             <div class="sound-card" id="damruCard">
-                <h3>Damru</h3>
-                <div class="gesture">Side to side shake</div>
+                <h3>🪘 Shiva Damru</h3>
+                <div class="gesture">Twist side to side</div>
             </div>
         </div>
 
@@ -153,8 +153,8 @@
             <h3>How to use:</h3>
             <ul>
                 <li>Tap "Start" to enable motion detection</li>
-                <li>Shake phone up and down for bell sound</li>
-                <li>Shake phone side to side for damru sound</li>
+                <li>Move phone up and down for aarti bell sound</li>
+                <li>Twist phone side to side for damru sound</li>
                 <li>The app will automatically detect the gesture</li>
             </ul>
         </div>
@@ -169,34 +169,22 @@
         const shakeThreshold = 15;
         const shakeDelay = 500; // Minimum time between sounds in ms
 
-        // Audio elements
-        const bellAudio = new Audio();
-        const damruAudio = new Audio();
+        // Audio elements - Load real sound files
+        const bellAudio = new Audio('sounds/bell.mp3');
+        const damruAudio = new Audio('sounds/damru.mp3');
 
-        // Using free sounds from freesound.org or similar
-        // For now, we'll use Web Audio API to generate simple tones
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        // Set volume
+        bellAudio.volume = 0.7;
+        damruAudio.volume = 0.7;
 
         function playBell() {
             const now = Date.now();
             if (now - lastShakeTime < shakeDelay) return;
             lastShakeTime = now;
 
-            // Bell sound - high frequency with decay
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-
-            oscillator.frequency.value = 800;
-            oscillator.type = 'sine';
-
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
-
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 1);
+            // Reset and play bell sound
+            bellAudio.currentTime = 0;
+            bellAudio.play().catch(e => console.log('Bell audio play failed:', e));
 
             // Visual feedback
             document.getElementById('bellCard').classList.add('active');
@@ -210,23 +198,9 @@
             if (now - lastShakeTime < shakeDelay) return;
             lastShakeTime = now;
 
-            // Damru sound - double beat pattern
-            [0, 0.15].forEach(delay => {
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-
-                oscillator.frequency.value = 300;
-                oscillator.type = 'square';
-
-                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime + delay);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + delay + 0.1);
-
-                oscillator.start(audioContext.currentTime + delay);
-                oscillator.stop(audioContext.currentTime + delay + 0.1);
-            });
+            // Reset and play damru sound
+            damruAudio.currentTime = 0;
+            damruAudio.play().catch(e => console.log('Damru audio play failed:', e));
 
             // Visual feedback
             document.getElementById('damruCard').classList.add('active');
