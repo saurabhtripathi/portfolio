@@ -1,3 +1,2 @@
-# SPA fallback - serve index.html for all non-file routes
-# Static files (including .html in subdirectories) are served directly
-</^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json|webp|html)$)([^.]+$)/>  /index.html  200
+# SPA fallback - serve index.html for all routes except static files
+/*  /index.html  200
