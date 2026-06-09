@@ -178,49 +178,51 @@
     <script>
         let isActive = false;
         let lastShakeTime = 0;
+        let lastMovementTime = 0;
         let lastX = 0, lastY = 0, lastZ = 0;
         const shakeThreshold = 15;
         const shakeDelay = 500; // Minimum time between sounds in ms
+        const stopDelay = 2000; // Stop sound after 2 seconds of no movement
         let selectedMode = 'bell'; // Default mode
+        let stopTimer = null;
 
         // Audio elements - Load real sound files
         const bellAudio = new Audio('sounds/bell.mp3');
         const damruAudio = new Audio('sounds/damru.mp3');
 
-        // Set volume
+        // Set volume and loop
         bellAudio.volume = 0.7;
         damruAudio.volume = 0.7;
+        bellAudio.loop = true;
+        damruAudio.loop = true;
+
+        function stopAllSounds() {
+            bellAudio.pause();
+            damruAudio.pause();
+            document.getElementById('bellCard').classList.remove('active');
+            document.getElementById('damruCard').classList.remove('active');
+        }
 
         function playBell() {
-            const now = Date.now();
-            if (now - lastShakeTime < shakeDelay) return;
-            lastShakeTime = now;
-
-            // Reset and play bell sound
-            bellAudio.currentTime = 0;
-            bellAudio.play().catch(e => console.log('Bell audio play failed:', e));
+            // Start playing if not already playing
+            if (bellAudio.paused) {
+                bellAudio.currentTime = 0;
+                bellAudio.play().catch(e => console.log('Bell audio play failed:', e));
+            }
 
             // Visual feedback
             document.getElementById('bellCard').classList.add('active');
-            setTimeout(() => {
-                document.getElementById('bellCard').classList.remove('active');
-            }, 300);
         }
 
         function playDamru() {
-            const now = Date.now();
-            if (now - lastShakeTime < shakeDelay) return;
-            lastShakeTime = now;
-
-            // Reset and play damru sound
-            damruAudio.currentTime = 0;
-            damruAudio.play().catch(e => console.log('Damru audio play failed:', e));
+            // Start playing if not already playing
+            if (damruAudio.paused) {
+                damruAudio.currentTime = 0;
+                damruAudio.play().catch(e => console.log('Damru audio play failed:', e));
+            }
 
             // Visual feedback
             document.getElementById('damruCard').classList.add('active');
-            setTimeout(() => {
-                document.getElementById('damruCard').classList.remove('active');
-            }, 300);
         }
 
         // Mode selection handlers
@@ -257,6 +259,8 @@
             const maxDelta = Math.max(deltaX, deltaY, deltaZ);
 
             if (maxDelta > shakeThreshold) {
+                lastMovementTime = Date.now();
+
                 if (selectedMode === 'bell') {
                     playBell();
                     document.getElementById('status').textContent = 'Bell ringing!';
@@ -264,18 +268,22 @@
                     playDamru();
                     document.getElementById('status').textContent = 'Damru playing!';
                 }
+
+                // Clear existing stop timer
+                if (stopTimer) {
+                    clearTimeout(stopTimer);
+                }
+
+                // Set new timer to stop sound after 2 seconds of no movement
+                stopTimer = setTimeout(() => {
+                    stopAllSounds();
+                    document.getElementById('status').textContent = 'Listening for motion...';
+                }, stopDelay);
             }
 
             lastX = x;
             lastY = y;
             lastZ = z;
-
-            // Reset status after a delay
-            setTimeout(() => {
-                if (document.getElementById('status').textContent !== 'Listening for motion...') {
-                    document.getElementById('status').textContent = 'Listening for motion...';
-                }
-            }, 1000);
         }
 
         document.getElementById('startBtn').addEventListener('click', async () => {
@@ -302,6 +310,8 @@
                 } else {
                     window.removeEventListener('devicemotion', handleMotion);
                     isActive = false;
+                    stopAllSounds(); // Stop all sounds when stopping detection
+                    if (stopTimer) clearTimeout(stopTimer);
                     startBtn.textContent = 'Start Motion Detection';
                     startBtn.style.background = '#4CAF50';
                     statusDiv.textContent = 'Motion detection stopped';
