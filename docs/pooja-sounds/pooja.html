@@ -84,6 +84,19 @@
             border-radius: 10px;
             text-align: center;
             transition: all 0.3s;
+            cursor: pointer;
+            opacity: 0.5;
+            border: 2px solid transparent;
+        }
+
+        .sound-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .sound-card.selected {
+            opacity: 1;
+            border: 2px solid rgba(76, 175, 80, 0.8);
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .sound-card.active {
@@ -136,8 +149,6 @@
             Tap "Start" to begin
         </div>
 
-        <button class="start-btn" id="startBtn">Start Motion Detection</button>
-
         <div class="sound-indicators">
             <div class="sound-card" id="bellCard">
                 <h3>🔔 Aarti Bell</h3>
@@ -149,13 +160,15 @@
             </div>
         </div>
 
+        <button class="start-btn" id="startBtn">Start Motion Detection</button>
+
         <div class="instructions">
             <h3>How to use:</h3>
             <ul>
+                <li>Select a sound by tapping the card above</li>
                 <li>Tap "Start" to enable motion detection</li>
-                <li>Move phone up and down for aarti bell sound</li>
-                <li>Twist phone side to side for damru sound</li>
-                <li>The app will automatically detect the gesture</li>
+                <li><strong>Bell:</strong> Move phone up and down</li>
+                <li><strong>Damru:</strong> Twist phone side to side</li>
             </ul>
         </div>
 
@@ -168,6 +181,7 @@
         let lastX = 0, lastY = 0, lastZ = 0;
         const shakeThreshold = 15;
         const shakeDelay = 500; // Minimum time between sounds in ms
+        let selectedMode = 'bell'; // Default mode
 
         // Audio elements - Load real sound files
         const bellAudio = new Audio('sounds/bell.mp3');
@@ -209,6 +223,22 @@
             }, 300);
         }
 
+        // Mode selection handlers
+        document.getElementById('bellCard').addEventListener('click', () => {
+            selectedMode = 'bell';
+            document.getElementById('bellCard').classList.add('selected');
+            document.getElementById('damruCard').classList.remove('selected');
+        });
+
+        document.getElementById('damruCard').addEventListener('click', () => {
+            selectedMode = 'damru';
+            document.getElementById('damruCard').classList.add('selected');
+            document.getElementById('bellCard').classList.remove('selected');
+        });
+
+        // Set default selection
+        document.getElementById('bellCard').classList.add('selected');
+
         function handleMotion(event) {
             if (!isActive) return;
 
@@ -223,15 +253,17 @@
             const deltaY = Math.abs(y - lastY);
             const deltaZ = Math.abs(z - lastZ);
 
-            // Detect vertical shake (bell) - strong Y-axis movement
-            if (deltaY > shakeThreshold && deltaY > deltaX && deltaY > deltaZ) {
-                playBell();
-                document.getElementById('status').textContent = 'Bell ringing!';
-            }
-            // Detect horizontal shake (damru) - strong X-axis movement
-            else if (deltaX > shakeThreshold && deltaX > deltaY && deltaX > deltaZ) {
-                playDamru();
-                document.getElementById('status').textContent = 'Damru playing!';
+            // Only play the selected sound based on any strong movement
+            const maxDelta = Math.max(deltaX, deltaY, deltaZ);
+
+            if (maxDelta > shakeThreshold) {
+                if (selectedMode === 'bell') {
+                    playBell();
+                    document.getElementById('status').textContent = 'Bell ringing!';
+                } else if (selectedMode === 'damru') {
+                    playDamru();
+                    document.getElementById('status').textContent = 'Damru playing!';
+                }
             }
 
             lastX = x;
