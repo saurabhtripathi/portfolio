@@ -1,2 +1,5 @@
+# Serve static HTML files directly
+/pooja-sounds/* /pooja-sounds/:splat 200
+
 # SPA fallback - serve index.html for all routes except static files
 /*  /index.html  200
