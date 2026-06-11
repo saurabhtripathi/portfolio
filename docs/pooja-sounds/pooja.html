@@ -406,11 +406,9 @@
         }
 
         function playDamru() {
-            const now = Date.now();
-            // Only play if enough time passed for natural rhythm
-            if (now - lastDamruPlay >= minDamruInterval) {
-                lastDamruPlay = now;
-
+            // Only play if damru is not currently playing (for smooth rhythm)
+            // Check if audio is paused or ended
+            if (damruAudio.paused || damruAudio.ended) {
                 // Reset and play from start
                 damruAudio.currentTime = 0;
                 damruAudio.play().catch(e => console.log('Damru audio play failed:', e));
@@ -420,7 +418,11 @@
                 setTimeout(() => {
                     document.getElementById('damruCard').classList.remove('active');
                 }, 300);
+
+                // Update last play time
+                lastDamruPlay = Date.now();
             }
+            // If damru is already playing, let it continue without interruption
         }
 
         // Mode selection handlers
