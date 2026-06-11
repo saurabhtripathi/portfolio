@@ -301,10 +301,12 @@
 
         <div class="install-instructions" id="installInstructions">
             <div id="androidInstructions" style="display:none;">
-                <strong>Android:</strong> Tap the button above or use Menu (⋮) → "Install app"
+                <strong>Android:</strong> Tap the button above or use Menu (⋮) → "Install app"<br>
+                <em style="font-size: 0.9em; opacity: 0.9;">Note: App icon may take 1-2 minutes to appear on home screen</em>
             </div>
             <div id="iosInstructions" style="display:none;">
-                <strong>iOS:</strong> Tap Share (□↑) → "Add to Home Screen"
+                <strong>iOS:</strong> Tap Share (□↑) → "Add to Home Screen"<br>
+                <em style="font-size: 0.9em; opacity: 0.9;">Note: Icon appears instantly on iOS</em>
             </div>
         </div>
 
@@ -599,10 +601,16 @@
             if (deferredPrompt) {
                 const installBtn = document.getElementById('installBtn');
 
-                // Show loading state
+                // Show loading state with helpful message
                 installBtn.classList.add('installing');
-                installBtn.innerHTML = '<span class="spinner"></span>Waiting for confirmation...';
+                installBtn.innerHTML = '<span class="spinner"></span>Please wait...';
                 installBtn.disabled = true;
+
+                // Small delay to show the waiting message
+                await new Promise(resolve => setTimeout(resolve, 300));
+
+                // Update message before showing prompt
+                installBtn.innerHTML = '<span class="spinner"></span>Look for browser popup above...';
 
                 // Show install prompt
                 deferredPrompt.prompt();
@@ -613,22 +621,25 @@
 
                 if (outcome === 'accepted') {
                     // Show installing animation
-                    installBtn.innerHTML = '<span class="spinner"></span>Installing to home screen...';
+                    installBtn.innerHTML = '<span class="spinner"></span>Installing...';
 
                     // Hide instructions
                     document.getElementById('installInstructions').style.display = 'none';
 
-                    // After 2 seconds, show success message
+                    // After 1 second, show detailed success message
                     setTimeout(() => {
-                        installBtn.innerHTML = '✓ Installed! Check your home screen';
+                        installBtn.innerHTML = '✓ Success! Icon will appear on home screen in 1-2 minutes. You can close this page.';
                         installBtn.classList.remove('installing');
                         installBtn.style.cursor = 'default';
+                        installBtn.style.background = '#4CAF50';
+                        installBtn.style.fontSize = '0.95em';
+                        installBtn.style.padding = '15px';
 
-                        // Keep success message for 30 seconds then hide
+                        // Keep success message visible longer (60 seconds)
                         setTimeout(() => {
                             installBtn.style.display = 'none';
-                        }, 30000);
-                    }, 2000);
+                        }, 60000);
+                    }, 1000);
                 } else {
                     // User cancelled - restore button
                     installBtn.classList.remove('installing');
