@@ -78,6 +78,25 @@
             transform: scale(1);
         }
 
+        .install-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .install-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
         .sound-indicators {
             display: flex;
             gap: 15px;
@@ -152,6 +171,8 @@
     <div class="container">
         <h1>Pooja Sounds</h1>
 
+        <button class="install-btn" id="installBtn">📲 Install App</button>
+
         <button class="start-btn" id="startBtn">Start</button>
 
         <div class="status" id="status">
@@ -192,6 +213,7 @@
         const stopDelay = 1500; // Stop sound after 1.5 seconds of no movement
         let selectedMode = 'bell'; // Default mode
         let stopTimer = null;
+        let deferredPrompt = null; // Store install prompt
 
         // Audio elements - Load real sound files
         const bellAudio = new Audio('sounds/bell.m4a');
@@ -206,7 +228,8 @@
         // Track last play time to create rhythm
         let lastBellPlay = 0;
         let lastDamruPlay = 0;
-        const minPlayInterval = 200; // Minimum 200ms between rings for rhythm
+        const minBellInterval = 200; // Minimum 200ms between bell rings
+        const minDamruInterval = 400; // Minimum 400ms between damru plays (longer sound)
 
         function stopAllSounds() {
             bellAudio.pause();
@@ -218,7 +241,7 @@
         function playBell() {
             const now = Date.now();
             // Only play if enough time passed for natural rhythm
-            if (now - lastBellPlay >= minPlayInterval) {
+            if (now - lastBellPlay >= minBellInterval) {
                 lastBellPlay = now;
 
                 // Reset and play from start for crisp sound
@@ -236,7 +259,7 @@
         function playDamru() {
             const now = Date.now();
             // Only play if enough time passed for natural rhythm
-            if (now - lastDamruPlay >= minPlayInterval) {
+            if (now - lastDamruPlay >= minDamruInterval) {
                 lastDamruPlay = now;
 
                 // Reset and play from start
@@ -355,6 +378,40 @@
             document.getElementById('error').style.display = 'block';
             document.getElementById('startBtn').disabled = true;
         }
+
+        // PWA Install prompt handler
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent default install prompt
+            e.preventDefault();
+            // Store the event
+            deferredPrompt = e;
+            // Show install button
+            document.getElementById('installBtn').style.display = 'block';
+        });
+
+        // Install button click handler
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Show install prompt
+                deferredPrompt.prompt();
+                // Wait for user response
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response: ${outcome}`);
+
+                if (outcome === 'accepted') {
+                    // Show success message
+                    const installBtn = document.getElementById('installBtn');
+                    installBtn.textContent = '✓ App Installed! Check your home screen';
+                    installBtn.style.background = '#4CAF50';
+                    setTimeout(() => {
+                        installBtn.style.display = 'none';
+                    }, 5000);
+                }
+
+                // Clear the prompt
+                deferredPrompt = null;
+            }
+        });
 
         // Register Service Worker for PWA
         if ('serviceWorker' in navigator) {
