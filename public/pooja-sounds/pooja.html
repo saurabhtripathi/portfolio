@@ -197,11 +197,16 @@
         const bellAudio = new Audio('sounds/bell.m4a');
         const damruAudio = new Audio('sounds/damru.mp3');
 
-        // Set volume and loop
+        // Set volume - no looping for natural rhythm
         bellAudio.volume = 0.7;
         damruAudio.volume = 0.7;
-        bellAudio.loop = true;
-        damruAudio.loop = true;
+        bellAudio.loop = false;
+        damruAudio.loop = false;
+
+        // Track last play time to create rhythm
+        let lastBellPlay = 0;
+        let lastDamruPlay = 0;
+        const minPlayInterval = 200; // Minimum 200ms between rings for rhythm
 
         function stopAllSounds() {
             bellAudio.pause();
@@ -211,25 +216,39 @@
         }
 
         function playBell() {
-            // Start playing if not already playing
-            if (bellAudio.paused) {
+            const now = Date.now();
+            // Only play if enough time passed for natural rhythm
+            if (now - lastBellPlay >= minPlayInterval) {
+                lastBellPlay = now;
+
+                // Reset and play from start for crisp sound
                 bellAudio.currentTime = 0;
                 bellAudio.play().catch(e => console.log('Bell audio play failed:', e));
-            }
 
-            // Visual feedback
-            document.getElementById('bellCard').classList.add('active');
+                // Visual feedback
+                document.getElementById('bellCard').classList.add('active');
+                setTimeout(() => {
+                    document.getElementById('bellCard').classList.remove('active');
+                }, 300);
+            }
         }
 
         function playDamru() {
-            // Start playing if not already playing
-            if (damruAudio.paused) {
+            const now = Date.now();
+            // Only play if enough time passed for natural rhythm
+            if (now - lastDamruPlay >= minPlayInterval) {
+                lastDamruPlay = now;
+
+                // Reset and play from start
                 damruAudio.currentTime = 0;
                 damruAudio.play().catch(e => console.log('Damru audio play failed:', e));
-            }
 
-            // Visual feedback
-            document.getElementById('damruCard').classList.add('active');
+                // Visual feedback
+                document.getElementById('damruCard').classList.add('active');
+                setTimeout(() => {
+                    document.getElementById('damruCard').classList.remove('active');
+                }, 300);
+            }
         }
 
         // Mode selection handlers
@@ -270,22 +289,22 @@
 
                 if (selectedMode === 'bell') {
                     playBell();
-                    document.getElementById('status').textContent = 'Playing...';
                 } else if (selectedMode === 'damru') {
                     playDamru();
-                    document.getElementById('status').textContent = 'Playing...';
                 }
 
-                // Clear existing stop timer
+                // Update status temporarily
+                document.getElementById('status').textContent = 'Playing...';
+
+                // Clear existing timer
                 if (stopTimer) {
                     clearTimeout(stopTimer);
                 }
 
-                // Set new timer to stop sound after 1.5 seconds of no movement
+                // Reset status after short delay
                 stopTimer = setTimeout(() => {
-                    stopAllSounds();
                     document.getElementById('status').textContent = 'Listening...';
-                }, stopDelay);
+                }, 500);
             }
 
             lastX = x;
