@@ -368,7 +368,7 @@
 
         // Audio elements - Load real sound files
         const bellAudio = new Audio('sounds/bell.m4a');
-        const damruAudio = new Audio('sounds/damru.mp3');
+        const damruAudio = new Audio('sounds/damru.m4a');
 
         // Set volume - no looping for natural rhythm
         bellAudio.volume = 0.7;
@@ -426,7 +426,7 @@
                 lastDamruPlay = now;
 
                 // Create a NEW audio instance for each shake (allows overlapping)
-                const newDamru = new Audio('sounds/damru.mp3');
+                const newDamru = new Audio('sounds/damru.m4a');
                 newDamru.volume = 0.7;
 
                 // Play the new instance

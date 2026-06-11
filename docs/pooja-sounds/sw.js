@@ -1,9 +1,9 @@
 // Service Worker for Pooja Sounds PWA
-const CACHE_NAME = 'pooja-sounds-v2';
+const CACHE_NAME = 'pooja-sounds-v3';
 const urlsToCache = [
   './pooja.html',
   './sounds/bell.m4a',
-  './sounds/damru.mp3',
+  './sounds/damru.m4a',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'
