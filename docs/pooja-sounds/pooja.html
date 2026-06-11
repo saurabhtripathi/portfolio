@@ -254,6 +254,43 @@
             display: block;
             margin-top: 5px;
         }
+
+        .shake-demo {
+            display: none;
+            text-align: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 10px;
+            border: 2px solid rgba(76, 175, 80, 0.4);
+        }
+
+        .shake-demo.show {
+            display: block;
+        }
+
+        .shake-icon {
+            font-size: 3em;
+            display: inline-block;
+            animation: shakeAnimation 1.5s ease-in-out infinite;
+        }
+
+        @keyframes shakeAnimation {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            10% { transform: translateX(-10px) rotate(-5deg); }
+            20% { transform: translateX(10px) rotate(5deg); }
+            30% { transform: translateX(-10px) rotate(-5deg); }
+            40% { transform: translateX(10px) rotate(5deg); }
+            50% { transform: translateX(-5px) rotate(-3deg); }
+            60% { transform: translateX(5px) rotate(3deg); }
+            70% { transform: translateX(0) rotate(0deg); }
+        }
+
+        .shake-demo p {
+            margin-top: 10px;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -275,6 +312,11 @@
 
         <div class="status" id="status">
             Idle
+        </div>
+
+        <div class="shake-demo" id="shakeDemo">
+            <div class="shake-icon">📱</div>
+            <p>Press "Start" then shake your phone!</p>
         </div>
 
         <div class="sound-indicators">
@@ -397,6 +439,9 @@
                 setTimeout(() => {
                     statusDiv.textContent = 'Listening...';
                 }, 1000);
+            } else {
+                // Show shake demo when not listening
+                document.getElementById('shakeDemo').classList.add('show');
             }
         });
 
@@ -415,11 +460,16 @@
                 setTimeout(() => {
                     statusDiv.textContent = 'Listening...';
                 }, 1000);
+            } else {
+                // Show shake demo when not listening
+                document.getElementById('shakeDemo').classList.add('show');
             }
         });
 
         // Set default selection
         document.getElementById('bellCard').classList.add('selected');
+        // Show shake demo on page load
+        document.getElementById('shakeDemo').classList.add('show');
 
         function handleMotion(event) {
             if (!isActive) return;
@@ -489,6 +539,8 @@
                     startBtn.style.background = '#f44336';
                     statusDiv.textContent = 'Listening...';
                     errorDiv.style.display = 'none';
+                    // Hide shake demo when listening starts
+                    document.getElementById('shakeDemo').classList.remove('show');
                 } else {
                     window.removeEventListener('devicemotion', handleMotion);
                     isActive = false;
@@ -497,6 +549,8 @@
                     startBtn.textContent = 'Start';
                     startBtn.style.background = '#4CAF50';
                     statusDiv.textContent = 'Idle';
+                    // Show shake demo again when stopped
+                    document.getElementById('shakeDemo').classList.add('show');
                 }
             } catch (error) {
                 console.error('Error:', error);
