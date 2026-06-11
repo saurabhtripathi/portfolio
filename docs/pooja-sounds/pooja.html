@@ -169,6 +169,13 @@
             opacity: 1;
             border: 2px solid rgba(76, 175, 80, 0.8);
             background: rgba(255, 255, 255, 0.25);
+            animation: selectPulse 0.4s ease-out;
+        }
+
+        @keyframes selectPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         .sound-card.active {
@@ -376,15 +383,39 @@
 
         // Mode selection handlers
         document.getElementById('bellCard').addEventListener('click', () => {
+            // Stop all sounds when switching mode
+            stopAllSounds();
+
             selectedMode = 'bell';
             document.getElementById('bellCard').classList.add('selected');
             document.getElementById('damruCard').classList.remove('selected');
+
+            // Show brief feedback message when switching while listening
+            if (isActive) {
+                const statusDiv = document.getElementById('status');
+                statusDiv.textContent = 'Switched to Aarti Bell';
+                setTimeout(() => {
+                    statusDiv.textContent = 'Listening...';
+                }, 1000);
+            }
         });
 
         document.getElementById('damruCard').addEventListener('click', () => {
+            // Stop all sounds when switching mode
+            stopAllSounds();
+
             selectedMode = 'damru';
             document.getElementById('damruCard').classList.add('selected');
             document.getElementById('bellCard').classList.remove('selected');
+
+            // Show brief feedback message when switching while listening
+            if (isActive) {
+                const statusDiv = document.getElementById('status');
+                statusDiv.textContent = 'Switched to Shiva Damru';
+                setTimeout(() => {
+                    statusDiv.textContent = 'Listening...';
+                }, 1000);
+            }
         });
 
         // Set default selection
