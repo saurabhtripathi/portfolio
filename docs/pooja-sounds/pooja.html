@@ -439,13 +439,22 @@
                 console.log(`User response: ${outcome}`);
 
                 if (outcome === 'accepted') {
-                    // Show success message
+                    // Show success message with better guidance
                     const installBtn = document.getElementById('installBtn');
-                    installBtn.textContent = '✓ App Installed! Check your home screen';
+                    installBtn.textContent = '✓ Installing... Icon will appear on home screen shortly';
                     installBtn.style.background = '#4CAF50';
+                    installBtn.style.cursor = 'default';
+
+                    // Hide instructions
+                    document.getElementById('installInstructions').style.display = 'none';
+
+                    // Keep message visible longer (30 seconds) then hide
                     setTimeout(() => {
                         installBtn.style.display = 'none';
-                    }, 5000);
+                    }, 30000);
+                } else {
+                    // User cancelled, keep button visible
+                    console.log('Installation cancelled');
                 }
 
                 // Clear the prompt
