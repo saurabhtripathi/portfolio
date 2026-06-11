@@ -97,6 +97,20 @@
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
+        .install-instructions {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.85em;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .install-instructions strong {
+            color: #fff;
+        }
+
         .sound-indicators {
             display: flex;
             gap: 15px;
@@ -172,6 +186,15 @@
         <h1>Pooja Sounds</h1>
 
         <button class="install-btn" id="installBtn">📲 Install App</button>
+
+        <div class="install-instructions" id="installInstructions">
+            <div id="androidInstructions" style="display:none;">
+                <strong>Android:</strong> Tap the button above or use Menu (⋮) → "Install app"
+            </div>
+            <div id="iosInstructions" style="display:none;">
+                <strong>iOS:</strong> Tap Share (□↑) → "Add to Home Screen"
+            </div>
+        </div>
 
         <button class="start-btn" id="startBtn">Start</button>
 
@@ -379,13 +402,29 @@
             document.getElementById('startBtn').disabled = true;
         }
 
-        // PWA Install prompt handler
+        // Detect platform and show appropriate install instructions
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isAndroid = /Android/.test(navigator.userAgent);
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+        // Show install instructions if not already installed
+        if (!isStandalone) {
+            document.getElementById('installInstructions').style.display = 'block';
+
+            if (isIOS) {
+                document.getElementById('iosInstructions').style.display = 'block';
+            } else if (isAndroid) {
+                document.getElementById('androidInstructions').style.display = 'block';
+            }
+        }
+
+        // PWA Install prompt handler (Android/Desktop)
         window.addEventListener('beforeinstallprompt', (e) => {
             // Prevent default install prompt
             e.preventDefault();
             // Store the event
             deferredPrompt = e;
-            // Show install button
+            // Show install button (Android only)
             document.getElementById('installBtn').style.display = 'block';
         });
 
