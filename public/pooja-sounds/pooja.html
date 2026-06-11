@@ -145,30 +145,30 @@
     <div class="container">
         <h1>Pooja Sounds</h1>
 
+        <button class="start-btn" id="startBtn">Start</button>
+
         <div class="status" id="status">
-            Tap "Start" to begin
+            Idle
         </div>
 
         <div class="sound-indicators">
             <div class="sound-card" id="bellCard">
                 <h3>🔔 Aarti Bell</h3>
-                <div class="gesture">Move up & down</div>
+                <div class="gesture">Shake or move phone</div>
             </div>
             <div class="sound-card" id="damruCard">
                 <h3>🪘 Shiva Damru</h3>
-                <div class="gesture">Twist side to side</div>
+                <div class="gesture">Shake or move phone</div>
             </div>
         </div>
-
-        <button class="start-btn" id="startBtn">Start Motion Detection</button>
 
         <div class="instructions">
             <h3>How to use:</h3>
             <ul>
-                <li>Select a sound by tapping the card above</li>
-                <li>Tap "Start" to enable motion detection</li>
-                <li><strong>Bell:</strong> Move phone up and down</li>
-                <li><strong>Damru:</strong> Twist phone side to side</li>
+                <li>Tap a sound card to select it</li>
+                <li>Press "Start" button above</li>
+                <li>Shake or move your phone</li>
+                <li>Sound stops 1.5s after you stop moving</li>
             </ul>
         </div>
 
@@ -263,10 +263,10 @@
 
                 if (selectedMode === 'bell') {
                     playBell();
-                    document.getElementById('status').textContent = 'Bell ringing!';
+                    document.getElementById('status').textContent = 'Playing...';
                 } else if (selectedMode === 'damru') {
                     playDamru();
-                    document.getElementById('status').textContent = 'Damru playing!';
+                    document.getElementById('status').textContent = 'Playing...';
                 }
 
                 // Clear existing stop timer
@@ -274,10 +274,10 @@
                     clearTimeout(stopTimer);
                 }
 
-                // Set new timer to stop sound after 2 seconds of no movement
+                // Set new timer to stop sound after 1.5 seconds of no movement
                 stopTimer = setTimeout(() => {
                     stopAllSounds();
-                    document.getElementById('status').textContent = 'Listening for motion...';
+                    document.getElementById('status').textContent = 'Listening...';
                 }, stopDelay);
             }
 
@@ -303,18 +303,18 @@
 
                     window.addEventListener('devicemotion', handleMotion);
                     isActive = true;
-                    startBtn.textContent = 'Stop Motion Detection';
+                    startBtn.textContent = 'Stop';
                     startBtn.style.background = '#f44336';
-                    statusDiv.textContent = 'Listening for motion...';
+                    statusDiv.textContent = 'Listening...';
                     errorDiv.style.display = 'none';
                 } else {
                     window.removeEventListener('devicemotion', handleMotion);
                     isActive = false;
                     stopAllSounds(); // Stop all sounds when stopping detection
                     if (stopTimer) clearTimeout(stopTimer);
-                    startBtn.textContent = 'Start Motion Detection';
+                    startBtn.textContent = 'Start';
                     startBtn.style.background = '#4CAF50';
-                    statusDiv.textContent = 'Motion detection stopped';
+                    statusDiv.textContent = 'Idle';
                 }
             } catch (error) {
                 console.error('Error:', error);
