@@ -184,9 +184,94 @@
             box-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
         }
 
+        .sound-card.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            background: rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .sound-card.disabled:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
         .sound-card h3 {
             margin-bottom: 10px;
             font-size: 1.3em;
+        }
+
+        .tooltip {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(244, 67, 54, 0.95);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            white-space: nowrap;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(244, 67, 54, 0.95);
+        }
+
+        .sound-card.disabled .tooltip.show {
+            display: block;
+        }
+
+        .multi-mode-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #4CAF50;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(26px);
         }
 
         .sound-card .gesture {
@@ -321,12 +406,21 @@
             <p>Press "Start" then shake your phone!</p>
         </div>
 
+        <div class="multi-mode-toggle">
+            <span>Play Multiple Instruments</span>
+            <div class="toggle-switch" id="multiModeToggle">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+
         <div class="sound-indicators">
             <div class="sound-card" id="bellCard">
+                <div class="tooltip" id="bellTooltip">Stop playing first!</div>
                 <h3>🔔 Aarti Bell</h3>
                 <div class="gesture">Shake or move phone</div>
             </div>
             <div class="sound-card" id="damruCard">
+                <div class="tooltip" id="damruTooltip">Stop playing first!</div>
                 <h3>🪘 Shiva Damru</h3>
                 <div class="gesture">Shake or move phone</div>
             </div>
@@ -335,6 +429,7 @@
         <div class="instructions">
             <h3>How to use:</h3>
             <ul>
+                <li>Toggle multi-instrument mode if you want both to play together</li>
                 <li>Tap a sound card to select it</li>
                 <li>Press "Start" button above</li>
                 <li>Shake or move your phone</li>
@@ -363,6 +458,9 @@
         const shakeDelay = 500; // Minimum time between sounds in ms
         const stopDelay = 1500; // Stop sound after 1.5 seconds of no movement
         let selectedMode = 'bell'; // Default mode
+        let multiMode = false; // Multi-instrument mode off by default
+        let bellSelected = true; // Bell selected by default
+        let damruSelected = false; // Damru not selected by default
         let stopTimer = null;
         let deferredPrompt = null; // Store install prompt
 
@@ -447,44 +545,143 @@
             }
         }
 
-        // Mode selection handlers
-        document.getElementById('bellCard').addEventListener('click', () => {
-            // Stop all sounds when switching mode
-            stopAllSounds();
+        // Multi-mode toggle handler
+        document.getElementById('multiModeToggle').addEventListener('click', () => {
+            multiMode = !multiMode;
+            const toggle = document.getElementById('multiModeToggle');
 
-            selectedMode = 'bell';
-            document.getElementById('bellCard').classList.add('selected');
-            document.getElementById('damruCard').classList.remove('selected');
-
-            // Show brief feedback message when switching while listening
-            if (isActive) {
-                const statusDiv = document.getElementById('status');
-                statusDiv.textContent = 'Switched to Aarti Bell';
-                setTimeout(() => {
-                    statusDiv.textContent = 'Listening...';
-                }, 1000);
+            if (multiMode) {
+                toggle.classList.add('active');
+                // Enable both instruments
+                bellSelected = true;
+                damruSelected = true;
+                document.getElementById('bellCard').classList.add('selected');
+                document.getElementById('damruCard').classList.add('selected');
+                document.getElementById('bellCard').classList.remove('disabled');
+                document.getElementById('damruCard').classList.remove('disabled');
             } else {
+                toggle.classList.remove('active');
+                // Revert to single mode - keep currently playing or default to bell
+                if (isActive) {
+                    // Keep the one that's currently playing
+                    if (selectedMode === 'bell') {
+                        bellSelected = true;
+                        damruSelected = false;
+                        document.getElementById('bellCard').classList.add('selected');
+                        document.getElementById('damruCard').classList.remove('selected');
+                        document.getElementById('damruCard').classList.add('disabled');
+                    } else {
+                        bellSelected = false;
+                        damruSelected = true;
+                        document.getElementById('bellCard').classList.remove('selected');
+                        document.getElementById('damruCard').classList.add('selected');
+                        document.getElementById('bellCard').classList.add('disabled');
+                    }
+                } else {
+                    // Default to bell
+                    bellSelected = true;
+                    damruSelected = false;
+                    document.getElementById('bellCard').classList.add('selected');
+                    document.getElementById('damruCard').classList.remove('selected');
+                    document.getElementById('bellCard').classList.remove('disabled');
+                    document.getElementById('damruCard').classList.remove('disabled');
+                }
+            }
+        });
+
+        // Bell card click handler
+        document.getElementById('bellCard').addEventListener('click', () => {
+            const bellCard = document.getElementById('bellCard');
+            const damruCard = document.getElementById('damruCard');
+
+            // If disabled, show tooltip
+            if (bellCard.classList.contains('disabled')) {
+                const tooltip = document.getElementById('bellTooltip');
+                tooltip.classList.add('show');
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                }, 2000);
+                return;
+            }
+
+            if (multiMode) {
+                // In multi-mode, toggle selection
+                bellSelected = !bellSelected;
+                if (bellSelected) {
+                    bellCard.classList.add('selected');
+                } else {
+                    bellCard.classList.remove('selected');
+                }
+            } else {
+                // In single mode
+                if (isActive) {
+                    // If playing, show tooltip - can't switch
+                    const tooltip = document.getElementById('bellTooltip');
+                    tooltip.classList.add('show');
+                    setTimeout(() => {
+                        tooltip.classList.remove('show');
+                    }, 2000);
+                    return;
+                }
+
+                // Stop all sounds when switching mode
+                stopAllSounds();
+
+                selectedMode = 'bell';
+                bellSelected = true;
+                damruSelected = false;
+                bellCard.classList.add('selected');
+                damruCard.classList.remove('selected');
+
                 // Show shake demo when not listening
                 document.getElementById('shakeDemo').classList.add('show');
             }
         });
 
+        // Damru card click handler
         document.getElementById('damruCard').addEventListener('click', () => {
-            // Stop all sounds when switching mode
-            stopAllSounds();
+            const bellCard = document.getElementById('bellCard');
+            const damruCard = document.getElementById('damruCard');
 
-            selectedMode = 'damru';
-            document.getElementById('damruCard').classList.add('selected');
-            document.getElementById('bellCard').classList.remove('selected');
-
-            // Show brief feedback message when switching while listening
-            if (isActive) {
-                const statusDiv = document.getElementById('status');
-                statusDiv.textContent = 'Switched to Shiva Damru';
+            // If disabled, show tooltip
+            if (damruCard.classList.contains('disabled')) {
+                const tooltip = document.getElementById('damruTooltip');
+                tooltip.classList.add('show');
                 setTimeout(() => {
-                    statusDiv.textContent = 'Listening...';
-                }, 1000);
+                    tooltip.classList.remove('show');
+                }, 2000);
+                return;
+            }
+
+            if (multiMode) {
+                // In multi-mode, toggle selection
+                damruSelected = !damruSelected;
+                if (damruSelected) {
+                    damruCard.classList.add('selected');
+                } else {
+                    damruCard.classList.remove('selected');
+                }
             } else {
+                // In single mode
+                if (isActive) {
+                    // If playing, show tooltip - can't switch
+                    const tooltip = document.getElementById('damruTooltip');
+                    tooltip.classList.add('show');
+                    setTimeout(() => {
+                        tooltip.classList.remove('show');
+                    }, 2000);
+                    return;
+                }
+
+                // Stop all sounds when switching mode
+                stopAllSounds();
+
+                selectedMode = 'damru';
+                bellSelected = false;
+                damruSelected = true;
+                bellCard.classList.remove('selected');
+                damruCard.classList.add('selected');
+
                 // Show shake demo when not listening
                 document.getElementById('shakeDemo').classList.add('show');
             }
@@ -515,10 +712,22 @@
             if (maxDelta > shakeThreshold) {
                 lastMovementTime = Date.now();
 
-                if (selectedMode === 'bell') {
-                    playBell();
-                } else if (selectedMode === 'damru') {
-                    playDamru();
+                // Play selected instruments based on mode
+                if (multiMode) {
+                    // In multi-mode, play all selected instruments
+                    if (bellSelected) {
+                        playBell();
+                    }
+                    if (damruSelected) {
+                        playDamru();
+                    }
+                } else {
+                    // In single mode, play the selected instrument
+                    if (selectedMode === 'bell') {
+                        playBell();
+                    } else if (selectedMode === 'damru') {
+                        playDamru();
+                    }
                 }
 
                 // Update status temporarily
@@ -565,6 +774,15 @@
                     errorDiv.style.display = 'none';
                     // Hide shake demo when listening starts
                     document.getElementById('shakeDemo').classList.remove('show');
+
+                    // In single mode, disable the non-selected instrument
+                    if (!multiMode) {
+                        if (selectedMode === 'bell') {
+                            document.getElementById('damruCard').classList.add('disabled');
+                        } else {
+                            document.getElementById('bellCard').classList.add('disabled');
+                        }
+                    }
                 } else {
                     window.removeEventListener('devicemotion', handleMotion);
                     isActive = false;
@@ -575,6 +793,10 @@
                     statusDiv.textContent = 'Idle';
                     // Show shake demo again when stopped
                     document.getElementById('shakeDemo').classList.add('show');
+
+                    // Re-enable both cards when stopped
+                    document.getElementById('bellCard').classList.remove('disabled');
+                    document.getElementById('damruCard').classList.remove('disabled');
                 }
             } catch (error) {
                 console.error('Error:', error);
