@@ -424,10 +424,12 @@
                     clearTimeout(stopTimer);
                 }
 
-                // Reset status after short delay
+                // Reset status and stop sounds after stopDelay (1.5s)
                 stopTimer = setTimeout(() => {
                     document.getElementById('status').textContent = 'Listening...';
-                }, 500);
+                    // Stop all sounds when movement stops
+                    stopAllSounds();
+                }, stopDelay);
             }
 
             lastX = x;
