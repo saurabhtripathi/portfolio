@@ -11,6 +11,16 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Pooja Sounds">
     <title>Pooja Sounds - Motion Detector</title>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-YOUR_MEASUREMENT_ID');
+    </script>
+
     <style>
         * {
             margin: 0;
@@ -220,6 +230,23 @@
         .developer-credit a:hover {
             text-decoration: underline;
         }
+
+        .download-counter {
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .download-counter .count {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4CAF50;
+            display: block;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -265,6 +292,11 @@
         </div>
 
         <div class="error" id="error"></div>
+
+        <div class="download-counter">
+            App Installs
+            <span class="count" id="installCount">0</span>
+        </div>
 
         <div class="developer-credit">
             Developer: <a href="https://saurabh-tripathi.com" target="_blank">Saurabh Tripathi</a>
@@ -519,6 +551,57 @@
                 deferredPrompt = null;
             }
         });
+
+        // Track app installation
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('App was installed');
+
+            // Track with Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'app_installed', {
+                    'event_category': 'PWA',
+                    'event_label': 'Pooja Sounds App'
+                });
+            }
+
+            // Increment local counter
+            let installCount = parseInt(localStorage.getItem('poojaAppInstallCount') || '0');
+            installCount++;
+            localStorage.setItem('poojaAppInstallCount', installCount.toString());
+            updateInstallCounter();
+        });
+
+        // Function to update install counter display
+        function updateInstallCounter() {
+            // Get local install count
+            let localCount = parseInt(localStorage.getItem('poojaAppInstallCount') || '0');
+
+            // Try to fetch global count from a simple counter API (optional)
+            // For now, we'll just show local count with a note
+            const installCountElement = document.getElementById('installCount');
+            installCountElement.textContent = localCount;
+
+            // If you want to track globally, you can use a service like:
+            // - Firebase Realtime Database
+            // - Simple counter API (https://api.countapi.xyz/)
+            // - Your own backend endpoint
+
+            // Example with countapi.xyz (optional - uncomment to use):
+            /*
+            fetch('https://api.countapi.xyz/hit/pooja-sounds-app/installs')
+                .then(res => res.json())
+                .then(data => {
+                    installCountElement.textContent = data.value;
+                })
+                .catch(err => {
+                    console.log('Could not fetch global count:', err);
+                    installCountElement.textContent = localCount;
+                });
+            */
+        }
+
+        // Initialize counter on page load
+        updateInstallCounter();
 
         // Register Service Worker for PWA
         if ('serviceWorker' in navigator) {
