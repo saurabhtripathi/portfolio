@@ -380,7 +380,7 @@
         let lastBellPlay = 0;
         let lastDamruPlay = 0;
         const minBellInterval = 200; // Minimum 200ms between bell rings
-        const minDamruInterval = 300; // Minimum 300ms between damru plays for responsive feel
+        const minDamruInterval = 200; // Minimum 200ms between damru beats - same as bell for consistent feel
 
         // Array to track active damru sounds
         let activeDamruSounds = [];
@@ -425,36 +425,25 @@
             if (now - lastDamruPlay >= minDamruInterval) {
                 lastDamruPlay = now;
 
-                // Create a NEW audio instance for each shake (allows overlapping)
-                const newDamru = new Audio('sounds/damru.m4a');
-                newDamru.volume = 0.7;
-
-                // Play the new instance
-                newDamru.play().catch(e => console.log('Damru audio play failed:', e));
-
-                // Add to active sounds array
-                activeDamruSounds.push(newDamru);
-
-                // Remove from array when finished playing
-                newDamru.addEventListener('ended', () => {
-                    const index = activeDamruSounds.indexOf(newDamru);
-                    if (index > -1) {
-                        activeDamruSounds.splice(index, 1);
-                    }
+                // Stop ALL previous damru sounds for clean "dum" beat like real damru
+                activeDamruSounds.forEach(sound => {
+                    sound.pause();
+                    sound.currentTime = 0;
                 });
+                activeDamruSounds = [];
+
+                // Also stop the main damru audio
+                damruAudio.pause();
+                damruAudio.currentTime = 0;
+
+                // Play fresh damru sound
+                damruAudio.play().catch(e => console.log('Damru audio play failed:', e));
 
                 // Visual feedback
                 document.getElementById('damruCard').classList.add('active');
                 setTimeout(() => {
                     document.getElementById('damruCard').classList.remove('active');
                 }, 300);
-
-                // Cleanup old instances (prevent memory leak - keep max 3 overlapping sounds)
-                if (activeDamruSounds.length > 3) {
-                    const oldSound = activeDamruSounds.shift();
-                    oldSound.pause();
-                    oldSound.currentTime = 0;
-                }
             }
         }
 
