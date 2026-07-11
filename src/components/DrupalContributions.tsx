@@ -428,12 +428,6 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
             <span>DrupalCon Asia 2016 Attendee</span>
           </div>
           <div className="flex items-start gap-2">
-            <span className="text-purple-400">📝</span>
-            <a href="https://saurabhtripathitech.wordpress.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300">
-              Technical Blog →
-            </a>
-          </div>
-          <div className="flex items-start gap-2">
             <span className="text-yellow-400">🏢</span>
             <span>Previously at Acquia, Accenture</span>
           </div>
