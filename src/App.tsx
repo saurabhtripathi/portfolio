@@ -588,15 +588,15 @@ const WelcomeTab: React.FC<{
   ];
 
   const skills = [
-    { name: 'Drupal', icon: '🎯' },
-    { name: 'PHP', icon: '🐘' },
-    { name: 'JavaScript', icon: '🟨' },
-    { name: 'jQuery', icon: '📜' },
+    { name: 'LangChain', icon: '🔗' },
+    { name: 'LangGraph', icon: '🕸️' },
+    { name: 'Gemini AI', icon: '✨' },
+    { name: 'FAISS', icon: '🔍' },
+    { name: 'Python', icon: '🐍' },
+    { name: 'FastAPI', icon: '⚡' },
     { name: 'React', icon: '⚛️' },
     { name: 'TypeScript', icon: '📘' },
-    { name: 'HTML/CSS', icon: '🎨' },
-    { name: 'Acquia Cloud', icon: '🅰️' },
-    { name: 'AWS', icon: '☁️' },
+    { name: 'GCP/AWS', icon: '☁️' },
     { name: 'Docker', icon: '🐳' },
   ];
 
@@ -606,10 +606,10 @@ const WelcomeTab: React.FC<{
         {/* Hero Section */}
         <div className="mb-6 sm:mb-10 text-center">
           <h1 className="text-2xl sm:text-4xl font-bold text-white mb-1 sm:mb-2">Saurabh Tripathi</h1>
-          <h2 className="text-base sm:text-xl text-blue-400 mb-2 sm:mb-4">Senior Solutions Architect</h2>
+          <h2 className="text-base sm:text-xl text-blue-400 mb-2 sm:mb-4">Senior Solutions Architect & Full Stack AI Engineer</h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
-            Full Stack Developer specializing in enterprise-level Drupal applications,
-            headless CMS architectures, React frontends, and cloud deployments.
+            Full Stack AI Engineer specializing in RAG pipelines, multi-agent systems, conversational AI,
+            and enterprise applications using LangChain, LangGraph, and modern LLMs.
           </p>
           {/* Social Links - hidden on mobile (in bottom nav), shown on desktop */}
           <div className="hidden sm:flex sm:justify-center gap-3 mt-4">
@@ -717,12 +717,12 @@ const WelcomeTab: React.FC<{
         {/* Mobile Quick Stats */}
         <div className="grid grid-cols-3 gap-2 mb-6 sm:hidden">
           <div className="bg-gray-800 p-2 rounded-lg text-center">
-            <div className="text-base font-bold text-green-400">3x</div>
-            <div className="text-[9px] text-gray-400">Triple Certified</div>
+            <div className="text-base font-bold text-green-400">RAG</div>
+            <div className="text-[9px] text-gray-400">AI Pipelines</div>
           </div>
           <div className="bg-gray-800 p-2 rounded-lg text-center">
-            <div className="text-base font-bold text-yellow-400">13+</div>
-            <div className="text-[9px] text-gray-400">Years Drupal</div>
+            <div className="text-base font-bold text-yellow-400">LLM</div>
+            <div className="text-[9px] text-gray-400">Multi-Agent</div>
           </div>
           <div className="bg-gray-800 p-2 rounded-lg text-center">
             <div className="text-base font-bold text-purple-400">SG</div>
@@ -733,16 +733,16 @@ const WelcomeTab: React.FC<{
         {/* Desktop Quick Stats */}
         <div className="hidden sm:grid grid-cols-4 gap-4 mb-10">
           <div className="bg-gray-800 p-4 rounded text-center">
-            <div className="text-2xl font-bold text-blue-400">🚀</div>
-            <div className="text-xs text-gray-400">Full Stack Developer</div>
+            <div className="text-2xl font-bold text-blue-400">🤖</div>
+            <div className="text-xs text-gray-400">Full Stack AI Engineer</div>
           </div>
           <div className="bg-gray-800 p-4 rounded text-center">
-            <div className="text-2xl font-bold text-green-400">3x</div>
-            <div className="text-xs text-gray-400">Triple Certified Drupal</div>
+            <div className="text-2xl font-bold text-green-400">RAG</div>
+            <div className="text-xs text-gray-400">Pipelines & Vector Search</div>
           </div>
           <div className="bg-gray-800 p-4 rounded text-center">
-            <div className="text-2xl font-bold text-yellow-400">D7-11</div>
-            <div className="text-xs text-gray-400">Drupal Versions</div>
+            <div className="text-2xl font-bold text-yellow-400">LLM</div>
+            <div className="text-xs text-gray-400">Gemini, OpenAI, Azure</div>
           </div>
           <div className="bg-gray-800 p-4 rounded text-center">
             <div className="text-2xl font-bold text-purple-400">SG</div>
@@ -772,7 +772,7 @@ const WelcomeTab: React.FC<{
             >
               <div className="text-2xl mb-2">👤</div>
               <div className="text-white font-medium mb-1">About Me</div>
-              <div className="text-xs text-gray-400">Background, certifications & achievements</div>
+              <div className="text-xs text-gray-400">AI Engineer background & certifications</div>
             </div>
             <div
               onClick={() => handleOpenFile('project')}
@@ -780,7 +780,7 @@ const WelcomeTab: React.FC<{
             >
               <div className="text-2xl mb-2">🚀</div>
               <div className="text-white font-medium mb-1">Projects</div>
-              <div className="text-xs text-gray-400">CNA, Berita, Seithi & more enterprise work</div>
+              <div className="text-xs text-gray-400">AI search, multi-agent platforms & media platforms</div>
             </div>
             <div
               onClick={handleOpenExperience}
@@ -788,7 +788,7 @@ const WelcomeTab: React.FC<{
             >
               <div className="text-2xl mb-2">💼</div>
               <div className="text-white font-medium mb-1">Experience</div>
-              <div className="text-xs text-gray-400">Mediacorp, Acquia, Accenture & more</div>
+              <div className="text-xs text-gray-400">AI Engineer at Mediacorp & enterprise roles</div>
             </div>
             <div
               onClick={handleOpenSkills}
@@ -796,7 +796,7 @@ const WelcomeTab: React.FC<{
             >
               <div className="text-2xl mb-2">⚡</div>
               <div className="text-white font-medium mb-1">Skills</div>
-              <div className="text-xs text-gray-400">Technical expertise & proficiency levels</div>
+              <div className="text-xs text-gray-400">AI/ML, LangChain, RAG & full-stack expertise</div>
             </div>
           </div>
         </div>
@@ -839,8 +839,8 @@ const WelcomeTab: React.FC<{
 
         {/* Footer */}
         <div className="text-center text-gray-600 text-xs mt-10 pt-6 border-t border-gray-800">
-          <p>Built with Drupal (Headless CMS) + React + TypeScript</p>
-          <p className="mt-1">Demonstrating modern headless architecture</p>
+          <p>Built with React + TypeScript + AI-powered features</p>
+          <p className="mt-1">Demonstrating modern full-stack AI engineering</p>
         </div>
       </div>
     </div>
@@ -973,8 +973,8 @@ const Terminal: React.FC<{
     if (trimmedCmd === 'whoami') {
       addLine('output', '');
       addLine('success', '👤 Saurabh Tripathi');
-      addLine('output', '   Senior Solutions Architect');
-      addLine('output', '   14+ years in Drupal & Web Development');
+      addLine('output', '   Full Stack AI Engineer');
+      addLine('output', '   14+ years in AI/ML & Full-Stack Development');
       addLine('output', '   Singapore 🇸🇬');
       addLine('output', '');
       return;

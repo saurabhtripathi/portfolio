@@ -12,11 +12,11 @@ export const portfolioFiles: FileItem[] = [
     id: '1',
     title: 'README.md',
     content: `# Saurabh Tripathi
-## Senior Solutions Architect
+## Senior Solutions Architect & Full Stack AI Engineer
 
 ### About Me
 
-I am a Senior Solutions Architect with years of experience in building enterprise-level web applications. My expertise lies in Drupal development, headless CMS architectures, and modern frontend technologies.
+I am a Senior Solutions Architect & Full Stack AI Engineer with years of experience in building AI-powered applications and enterprise-level web solutions. My expertise spans from traditional CMS development to cutting-edge AI/ML implementations, specializing in RAG pipelines, conversational AI, and intelligent automation systems.
 
 ### Certifications
 
@@ -26,19 +26,20 @@ I am a Senior Solutions Architect with years of experience in building enterpris
 
 ### Core Expertise
 
-- Drupal Development (D7, D8, D9, D10, D11)
-- Headless CMS Architecture
-- React & TypeScript
-- PHP & Symfony
-- Cloud Deployments (AWS, Acquia Cloud)
-- DevOps & Docker
+- **AI/ML:** LangChain, LangGraph, RAG Pipelines, Vector Search (FAISS), Semantic Embeddings
+- **LLM Integration:** Google Gemini AI, OpenAI GPT, Azure OpenAI, Prompt Engineering
+- **Backend:** Python (FastAPI), PHP, Node.js, WebSocket Streaming, API Development
+- **Frontend:** React, TypeScript, Modern JavaScript
+- **CMS:** Headless CMS Architecture, Content Management Systems
+- **Cloud & DevOps:** AWS, Docker, CI/CD Pipelines
 
 ### Career Highlights
 
+- Built AI-powered conversational search (Ask CNA) using RAG, Gemini AI, and FAISS
+- Developed intelligent WhatsApp Support Bot with multi-turn conversation memory
 - Led development of major media platforms (CNA, Berita, Seithi)
-- Architected headless Drupal solutions for enterprise clients
-- Mentored development teams across multiple projects
-- Contributed to Drupal community and open-source projects
+- Architected AI-assisted feature development workflows for engineering teams
+- Contributed to open-source projects and CMS community
 
 ### Location
 
@@ -66,11 +67,11 @@ Singapore 🇸🇬
       "location": "Singapore",
       "current": true,
       "responsibilities": [
-        "Lead architect for CNA, Berita, and Seithi media platforms",
-        "Design and implement headless Drupal solutions with React frontends",
-        "Mentor development teams and establish best practices",
-        "Optimize performance and scalability for high-traffic applications",
-        "Collaborate with stakeholders to define technical roadmaps"
+        "Architect and implement AI-powered features including conversational search using RAG, LLMs, and vector databases",
+        "Lead development of major media platforms (CNA, Berita, Seithi) serving millions of users",
+        "Design headless CMS solutions with React frontends and AI integrations",
+        "Build intelligent automation systems using LangChain, LangGraph, and Gemini AI",
+        "Mentor development teams on AI/ML best practices and modern architecture patterns"
       ]
     },
     {
@@ -158,12 +159,13 @@ Singapore 🇸🇬
   "backend": {
     "label": "Backend Development",
     "skills": [
-      { "name": "Drupal (7-11)", "level": 95 },
-      { "name": "PHP 7/8", "level": 90 },
-      { "name": "Symfony", "level": 85 },
+      { "name": "Python (FastAPI)", "level": 90 },
+      { "name": "PHP", "level": 90 },
+      { "name": "Node.js", "level": 85 },
+      { "name": "CMS (Drupal 7-11)", "level": 95 },
       { "name": "MySQL/MariaDB", "level": 85 },
       { "name": "RESTful APIs", "level": 90 },
-      { "name": "GraphQL", "level": 75 }
+      { "name": "WebSocket", "level": 85 }
     ]
   },
   "frontend": {
@@ -180,12 +182,12 @@ Singapore 🇸🇬
   "devops": {
     "label": "DevOps & Cloud",
     "skills": [
-      { "name": "AWS", "level": 75 },
-      { "name": "Acquia Cloud", "level": 90 },
-      { "name": "Docker", "level": 80 },
+      { "name": "AWS (EC2, S3, Lambda)", "level": 80 },
+      { "name": "Docker", "level": 85 },
       { "name": "Git/GitHub", "level": 90 },
-      { "name": "CI/CD", "level": 75 },
-      { "name": "DDEV", "level": 85 }
+      { "name": "CI/CD", "level": 80 },
+      { "name": "mitmproxy", "level": 75 },
+      { "name": "Uvicorn/ASGI", "level": 85 }
     ]
   },
   "ai_ml": {
@@ -202,18 +204,18 @@ Singapore 🇸🇬
     ]
   },
   "integrations": {
-    "label": "Integrations",
+    "label": "Integrations & Tools",
     "skills": [
-      "Salesforce",
-      "Adobe Analytics",
+      "Selenium (Web Scraping)",
+      "BeautifulSoup4",
       "Google Cloud Platform",
       "Elasticsearch",
       "Redis",
-      "Varnish",
-      "CDN (CloudFront, Fastly)",
-      "WebSockets",
-      "FastAPI",
-      "mitmproxy"
+      "CDN (CloudFront)",
+      "Adobe Analytics",
+      "Pydantic",
+      "Poetry",
+      "Salesforce"
     ]
   },
   "tools": {
@@ -251,113 +253,143 @@ Singapore 🇸🇬
     content: `# Major Projects
 
 ## Ask CNA - AI-Powered News Search
-**Role:** Solutions Architect
+**Role:** Solutions Architect & AI Engineer
 **Duration:** 2025
-**Technologies:** FastAPI, Google Gemini 2.0, FAISS, Selenium, WebSockets, mitmproxy
+**Technologies:** FastAPI, Google Gemini 2.0 Flash, FAISS, Selenium, WebSockets, mitmproxy, SentenceTransformers, BeautifulSoup4, Pydantic
 
 ### Overview
-AI-powered conversational search experience for Channel NewsAsia that transforms traditional search into intelligent Q&A with real-time streaming responses.
+AI-powered conversational search experience for Channel NewsAsia that transforms traditional search into intelligent Q&A with real-time streaming responses using RAG (Retrieval-Augmented Generation) pipeline.
 
 ### Key Responsibilities
-- Architected end-to-end RAG (Retrieval-Augmented Generation) pipeline
-- Implemented transparent proxy using mitmproxy to inject custom UI into CNA search
+- Architected end-to-end RAG pipeline with semantic search and answer generation
+- Implemented transparent proxy using mitmproxy to inject custom UI into CNA search without modifying servers
 - Built WebSocket-based streaming backend with FastAPI for progressive response delivery
-- Developed semantic article ranking using SentenceTransformers and FAISS vector search
-- Created parallel web scraping system with Selenium for real-time article retrieval
+- Developed semantic article ranking using SentenceTransformers embeddings and FAISS vector search
+- Created parallel web scraping system with Selenium for real-time article retrieval across multiple pages
 
 ### Achievements
-- Real-time AI answer generation with live progress updates
-- Semantic search with top 5 article citations as sources
-- Sub-2-second response time including scraping and AI generation
-- Zero infrastructure changes to existing CNA platform
+- Real-time AI answer generation with live progress updates and streaming tokens
+- Semantic search with top 5 article citations as sources using L2 distance ranking
+- Sub-2-second response time including scraping, embedding, and AI generation
+- Zero infrastructure changes to existing CNA platform via proxy injection
+
+---
+
+## mewatch Conversational Experience Platform (mewatch-cep)
+**Role:** AI Engineer & Solutions Architect
+**Duration:** 2026
+**Technologies:** LangGraph, LangChain, Google Vertex AI (Gemini 2.5/3.0), Cloud SQL (PostgreSQL), Vertex AI Search, FastAPI, GCP Cloud Run, Apigee
+
+### Overview
+Multi-agent conversational platform for mewatch content discovery with supervisor-led orchestration, client-side tool relay, long-term memory, and robust error handling. Handles VOD catalogue search, personalized recommendations, FIFA World Cup history, IFAB Football Rules, and FAQ queries.
+
+### Key Responsibilities
+- Built multi-agent architecture using LangGraph with orchestrator, FIFA agent, content search, and recommendation agents
+- Implemented client-side tool relay via SSE for watch history and personalized features
+- Integrated Vertex AI Search and custom RAG engine for football rules and FAQ queries
+- Developed Cloud SQL-backed conversation memory and long-term semantic user facts storage
+- Created modular FastAPI backend with semantic versioning and automated GCP Cloud Run deployments
+
+### Achievements
+- Supervisor-led multi-agent orchestration with safety recovery for Vertex AI recitation blocks
+- Semantic search using RAG for football rules with citation support
+- Client-side tool execution pattern for secure personalized features
+- Production deployment pipeline with staging, feature-branch, and semantic release workflows
 
 ---
 
 ## WhatsApp Support Bot - AI Agent Framework
-**Role:** Technical Lead
+**Role:** Technical Lead & AI Engineer
 **Duration:** 2025
-**Technologies:** LangChain, LangGraph, Google Gemini, FAISS, Azure OpenAI, Python
+**Technologies:** LangChain, LangGraph, Google Gemini, FAISS, Azure OpenAI, Python, FastAPI
 
 ### Overview
-Modular AI agent framework with WhatsApp chat history analysis as primary use case, demonstrating multi-turn conversation memory and RAG-based customer support.
+Modular AI agent framework with WhatsApp chat history analysis as primary use case, demonstrating multi-turn conversation memory and RAG-based customer support with multi-LLM provider support.
 
 ### Key Responsibilities
 - Built reusable agent framework with tools, middleware, and structured responses
-- Implemented conversation memory using LangGraph checkpointers
-- Created vector store from WhatsApp export files for semantic search
-- Developed multi-LLM provider support (Gemini, Azure OpenAI, Ollama)
-- Built token cost tracking middleware across different LLM providers
+- Implemented conversation memory using LangGraph checkpointers for multi-turn context
+- Created vector store from WhatsApp export files for semantic search across chat history
+- Developed multi-LLM provider support (Gemini, Azure OpenAI, Ollama) with unified interface
+- Built token cost tracking middleware across different LLM providers for budget management
 
 ### Achievements
-- Structured response format for machine-parseable outputs
-- Multi-turn conversation context with persistent memory
+- Structured response format for machine-parseable outputs with citations
+- Multi-turn conversation context with persistent memory across sessions
 - Cost-efficient queries at ~$0.001 per interaction with Gemini Flash
-- Fully modular and reusable framework for other agent applications
+- Fully modular and reusable framework adaptable for other agent applications
 
 ---
 
 ## CNA (Channel NewsAsia) Platform
 **Role:** Lead Solutions Architect
 **Duration:** June 2021 - Present
-**Technologies:** Drupal 9/10, React, TypeScript, AWS
+**Technologies:** CMS (Drupal 9/10/11), React, TypeScript, AWS, AI Integrations (OpenAI, Beyond Words TTS)
 
 ### Overview
-Singapore's leading English-language news platform serving millions of users across Southeast Asia.
+Singapore's leading English-language news platform serving millions of users across Southeast Asia with modern CMS architecture and AI-powered features.
 
 ### Key Responsibilities
-- Implemented headless Drupal CMS with React frontend
-- Led real-time news publishing workflow development
-- Optimized for high traffic (millions of daily visitors)
-- Integrated with video streaming and live broadcasting systems
-- Led team of 8 developers
+- Implemented CMS architecture with React frontend and TypeScript
+- Integrated AI for editor experience: title improvement, description enhancement, content suggestions
+- Deployed AI services including OpenAI modules and Beyond Words text-to-speech for accessibility
+- Led real-time news publishing workflow development for breaking news
+- Optimized for high traffic (millions of daily visitors) with AWS infrastructure
+- Led team of 8 developers (backend, frontend, QA, support)
 
 ### Achievements
-- 99.9% uptime
-- 40% improvement in page load times
-- Seamless migration from Drupal 7 to Drupal 10
-- Successfully handled traffic spikes during breaking news
+- 99.9% uptime serving millions of daily visitors
+- 40% improvement in page load times through optimization
+- Seamless migrations from CMS 7 to 9 to 10 to 11
+- Successfully integrated AI-powered search, TTS, and editor assistance features
+- Handled traffic spikes during major breaking news events
 
 ---
 
 ## Berita
 **Role:** Senior Solutions Architect
 **Duration:** 2020 - Present
-**Technologies:** Drupal 10, React, Next.js
+**Technologies:** CMS (Drupal 10/11), React, Next.js, AI-assisted development workflows, AI editor tools
 
 ### Overview
-Leading Malay-language news portal in Singapore.
+Leading Malay-language news portal in Singapore with modern architecture, AI-assisted development processes, and AI-enhanced editorial experience.
 
 ### Key Responsibilities
-- Designed multi-lingual content management system
-- Implemented progressive web app (PWA) features
+- Designed multi-lingual content management system with AI-powered editor assistance
+- Integrated AI for editor experience: title optimization, description improvement, content enhancement
+- Implemented progressive web app (PWA) features for mobile optimization
+- Created AI-assisted feature development workflows using GitHub Copilot and custom prompts
 - Integrated social media and user engagement features
-- Optimized SEO and performance
+- Optimized SEO and performance for international audiences
 
 ### Achievements
-- 60% increase in mobile engagement
-- Improved SEO rankings across all key metrics
-- Reduced infrastructure costs by 30%
+- 60% increase in mobile engagement through PWA implementation
+- Improved SEO rankings across all key metrics with AI-enhanced content
+- Reduced infrastructure costs by 30% through optimization
+- Streamlined editorial and development workflow with AI-assisted tools
 
 ---
 
 ## Seithi Tamil News Platform
 **Role:** Technical Lead
 **Duration:** 2020 - 2022
-**Technologies:** Drupal 9, React, GraphQL
+**Technologies:** CMS (Drupal 9), React, GraphQL, AI editor tools
 
 ### Overview
-First Tamil-language digital news platform in Singapore.
+First Tamil-language digital news platform in Singapore built from scratch with AI-enhanced editorial features.
 
 ### Key Responsibilities
-- Built from scratch using headless Drupal architecture
-- Implemented Tamil language support and RTL features
-- Created custom video player integration
-- Designed scalable content delivery system
+- Built from scratch using CMS architecture with GraphQL API
+- Integrated AI for editor experience: title suggestions, description enhancement, content optimization
+- Implemented Tamil language support with RTL (right-to-left) features
+- Created custom video player integration for multimedia content
+- Designed scalable content delivery system for growing audience
 
 ### Achievements
 - Launched on time and under budget
-- Award-winning user experience
-- 50K+ active monthly users
+- Award-winning user experience design
+- 50K+ active monthly users within first year
+- Successfully integrated AI tools for Tamil content editorial workflow
 
 ---
 
