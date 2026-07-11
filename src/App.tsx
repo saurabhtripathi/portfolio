@@ -622,15 +622,13 @@ const WelcomeTab: React.FC<{
               <span>💼</span>
               <span>LinkedIn</span>
             </a>
-            <a
-              href="https://github.com/saurabhtripathi"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={onOpenOpenSource}
               className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white rounded-lg text-sm transition-colors border border-gray-700 hover:border-gray-500"
             >
               <span>🐙</span>
-              <span>GitHub</span>
-            </a>
+              <span>Git Repos</span>
+            </button>
             <button
               onClick={onOpenOpenSource}
               className="flex items-center justify-center gap-1 px-2 py-2 bg-gray-800 hover:bg-blue-800 text-blue-300 hover:text-white rounded-lg text-xs transition-colors border border-gray-700 hover:border-blue-500"

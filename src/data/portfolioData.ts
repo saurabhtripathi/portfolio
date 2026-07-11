@@ -195,18 +195,24 @@ Singapore 🇸🇬
     "label": "AI & Machine Learning",
     "skills": [
       { "name": "LangChain", "level": 85 },
-      { "name": "LangGraph", "level": 80 },
-      { "name": "Google Gemini AI", "level": 85 },
-      { "name": "OpenAI GPT", "level": 80 },
-      { "name": "FAISS Vector Search", "level": 75 },
-      { "name": "RAG Pipelines", "level": 80 },
-      { "name": "Selenium", "level": 75 },
-      { "name": "BeautifulSoup", "level": 80 }
+      { "name": "LangGraph", "level": 85 },
+      { "name": "Google Gemini AI", "level": 90 },
+      { "name": "OpenAI GPT", "level": 85 },
+      { "name": "Azure OpenAI", "level": 80 },
+      { "name": "Ollama", "level": 75 },
+      { "name": "RAG Pipelines", "level": 85 },
+      { "name": "FAISS Vector Search", "level": 80 },
+      { "name": "Vertex AI Search", "level": 80 },
+      { "name": "Prompt Engineering", "level": 85 },
+      { "name": "SentenceTransformers", "level": 80 }
     ]
   },
   "integrations": {
     "label": "Integrations & Tools",
     "skills": [
+      "Apigee (API Gateway)",
+      "GCP Log Explorer",
+      "GCP Secret Manager",
       "Selenium 4 (Web Scraping)",
       "BeautifulSoup4",
       "BigQuery",

@@ -8,6 +8,7 @@ interface DrupalProject {
   issues: number;
   drupalUrl: string;
   gitUrl: string;
+  isAI?: boolean;
 }
 
 interface DrupalContributionsProps {
@@ -25,6 +26,7 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
       issues: 11,
       drupalUrl: 'https://www.drupal.org/project/aiml_parser',
       gitUrl: 'https://git.drupalcode.org/project/aiml_parser',
+      isAI: true,
     },
     {
       name: 'Bulk delete 301',
@@ -52,6 +54,7 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/dail',
       gitUrl: 'https://git.drupalcode.org/project/dail',
+      isAI: true,
     },
     {
       name: 'drubot',
@@ -61,6 +64,7 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/drubot',
       gitUrl: 'https://git.drupalcode.org/project/drubot',
+      isAI: true,
     },
     {
       name: 'PasswordResetTabs',
@@ -218,11 +222,18 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
       className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 hover:border-blue-500/50 hover:bg-gray-800/70 transition-colors block"
     >
       <div className="flex items-start justify-between mb-2">
-        <div>
-          <h4 className="font-semibold text-white text-sm">{project.name}</h4>
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-1">
+            <h4 className="font-semibold text-white text-sm">{project.name}</h4>
+            {project.isAI && (
+              <span className="text-xs px-1.5 py-0.5 rounded bg-purple-900/50 text-purple-300 border border-purple-700">
+                AI
+              </span>
+            )}
+          </div>
           <code className="text-xs text-gray-500">{project.machineName}</code>
         </div>
-        <span className={`text-xs px-2 py-0.5 rounded ${
+        <span className={`text-xs px-2 py-0.5 rounded whitespace-nowrap ${
           project.role === 'maintainer'
             ? 'bg-green-900/50 text-green-400 border border-green-700'
             : 'bg-blue-900/50 text-blue-400 border border-blue-700'
