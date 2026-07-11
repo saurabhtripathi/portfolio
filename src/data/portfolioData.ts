@@ -10,259 +10,6 @@ export interface FileItem {
 export const portfolioFiles: FileItem[] = [
   {
     id: '1',
-    title: 'README.md',
-    content: `# Saurabh Tripathi
-## Senior Solutions Architect & Full Stack AI Engineer
-
-### About Me
-
-I am a Senior Solutions Architect & Full Stack AI Engineer with years of experience in building AI-powered applications and enterprise-level web solutions. My expertise spans from traditional CMS development to cutting-edge AI/ML implementations, specializing in RAG pipelines, conversational AI, and intelligent automation systems.
-
-### Certifications
-
-- **Triple Certified CMS Expert** (Drupal 10, 11)
-- **Triple Certified CMS Expert** (Drupal 9)
-- **Triple Certified CMS Expert** (Drupal 8)
-
-### Core Expertise
-
-- **AI/ML:** LangChain, LangGraph, RAG Pipelines, Vector Search (FAISS), Semantic Embeddings
-- **LLM Integration:** Google Gemini AI, OpenAI GPT, Azure OpenAI, Prompt Engineering
-- **Backend:** Python (FastAPI), PHP, Node.js, WebSocket Streaming, API Development
-- **Frontend:** React, TypeScript, Modern JavaScript
-- **CMS:** Headless CMS Architecture, Content Management Systems
-- **Cloud & DevOps:** AWS, Docker, CI/CD Pipelines
-
-### Career Highlights
-
-- Built AI-powered conversational search (Ask CNA) using RAG, Gemini AI, and FAISS
-- Developed intelligent WhatsApp Support Bot with multi-turn conversation memory
-- Led development of major media platforms (CNA, Berita, Seithi)
-- Architected AI-assisted feature development workflows for engineering teams
-- Contributed to open-source projects and CMS community
-
-### Location
-
-Singapore 🇸🇬
-
-### Contact
-
-- Email: saurabh.tripathi.cs@gmail.com
-- LinkedIn: linkedin.com/in/saurabh-tripathi
-- GitHub: github.com/saurabhtripathi`,
-    language: 'markdown',
-    icon: 'md',
-    isActive: false,
-  },
-  {
-    id: '2',
-    title: 'experience.json',
-    content: `{
-  "totalYears": "14+",
-  "positions": [
-    {
-      "title": "Senior Solutions Architect",
-      "company": "Mediacorp Pte Ltd",
-      "period": "June 2021 - Present",
-      "location": "Singapore",
-      "current": true,
-      "responsibilities": [
-        "Architect and implement AI-powered features including conversational search using RAG, LLMs, and vector databases",
-        "Lead development of major media platforms (CNA, Berita, Seithi) serving millions of users",
-        "Design headless CMS solutions with React frontends and AI integrations",
-        "Build intelligent automation systems using LangChain, LangGraph, and Gemini AI",
-        "Mentor development teams on AI/ML best practices and modern architecture patterns"
-      ]
-    },
-    {
-      "title": "Software Engineer, Research and Development",
-      "company": "Acquia Inc.",
-      "period": "April 2019 - June 2021",
-      "location": "India",
-      "current": false,
-      "responsibilities": [
-        "Developed enterprise CMS applications for Fortune 500 clients",
-        "Implemented complex integrations with third-party systems",
-        "Optimized CMS performance and caching strategies",
-        "Provided technical leadership on client projects",
-        "Conducted code reviews and knowledge sharing sessions"
-      ]
-    },
-    {
-      "title": "Application Development Senior Analyst",
-      "company": "Accenture",
-      "period": "February 2017 - April 2019",
-      "location": "India",
-      "current": false,
-      "responsibilities": [
-        "Created chatbot using shell scripts and Python for automating developer workflows and updating configurations",
-        "Built custom CMS modules and themes for enterprise clients",
-        "Integrated CMS with enterprise systems and third-party APIs",
-        "Performed site migrations and upgrades across multiple platforms",
-        "Collaborated with cross-functional teams and delivered projects on time"
-      ]
-    },
-    {
-      "title": "Software Engineer",
-      "company": "Faichi Solutions",
-      "period": "October 2014 - February 2017",
-      "location": "India",
-      "current": false,
-      "responsibilities": [
-        "Created Drubot chatbot using Artificial Intelligence Markup Language (AIML) for automated developer assistance and workflow optimization",
-        "Developed enterprise CMS applications for Fortune 500 clients including Ixia and Haivision",
-        "Handled multilingual website support and created command-line automation tools",
-        "Implemented feed integration, custom module development, and theme customization",
-        "Led configuration management and deployment automation initiatives"
-      ]
-    },
-    {
-      "title": "Software Developer",
-      "company": "Iksula",
-      "period": "January 2013 - September 2014",
-      "location": "India",
-      "current": false,
-      "responsibilities": [
-        "Integrated e-commerce solutions into CMS platforms with custom module development",
-        "Worked with open-source modules for layout management and contextual content display",
-        "Implemented complex discount structure logic for eBay.in project",
-        "Developed and deployed projects including bigbazaardirect.com and gitanjaligifts.com"
-      ]
-    },
-    {
-      "title": "Software Engineer",
-      "company": "Corpus Software",
-      "period": "June 2011 - December 2012",
-      "location": "India",
-      "current": false,
-      "responsibilities": [
-        "Created shell scripts and PHP scripts for importing data into MySQL databases",
-        "Developed responsive websites using PHP, MySQL, JavaScript, and CMS platforms",
-        "Built custom themes and maintained client websites with ongoing enhancements",
-        "Provided technical support and training for government corporations",
-        "Conducted training sessions on ERP workflows and system administration"
-      ]
-    }
-  ],
-  "education": {
-    "degree": "Bachelor of Engineering in Computer Science",
-    "university": "GBTU",
-    "year": ""
-  }
-}`,
-    language: 'json',
-    icon: 'json',
-    isActive: false,
-  },
-  {
-    id: '3',
-    title: 'skills.json',
-    content: `{
-  "backend": {
-    "label": "Backend Development",
-    "skills": [
-      { "name": "Python (FastAPI)", "level": 90 },
-      { "name": "PHP", "level": 90 },
-      { "name": "Node.js", "level": 85 },
-      { "name": "CMS (Drupal 7-11)", "level": 95 },
-      { "name": "MySQL/MariaDB", "level": 85 },
-      { "name": "RESTful APIs", "level": 90 },
-      { "name": "WebSocket", "level": 85 }
-    ]
-  },
-  "frontend": {
-    "label": "Frontend Development",
-    "skills": [
-      { "name": "React", "level": 85 },
-      { "name": "TypeScript", "level": 80 },
-      { "name": "JavaScript (ES6+)", "level": 90 },
-      { "name": "HTML5/CSS3", "level": 90 },
-      { "name": "Tailwind CSS", "level": 80 },
-      { "name": "jQuery", "level": 85 }
-    ]
-  },
-  "devops": {
-    "label": "DevOps & Cloud",
-    "skills": [
-      { "name": "GCP (Vertex AI, Cloud Run)", "level": 85 },
-      { "name": "AWS (EC2, S3, Lambda)", "level": 80 },
-      { "name": "Docker", "level": 85 },
-      { "name": "Git/GitHub Actions", "level": 90 },
-      { "name": "CI/CD Pipelines", "level": 80 },
-      { "name": "BigQuery", "level": 75 },
-      { "name": "Uvicorn/ASGI", "level": 85 }
-    ]
-  },
-  "ai_ml": {
-    "label": "AI & Machine Learning",
-    "skills": [
-      { "name": "LangChain", "level": 85 },
-      { "name": "LangGraph", "level": 85 },
-      { "name": "Google Gemini AI", "level": 90 },
-      { "name": "OpenAI GPT", "level": 85 },
-      { "name": "Azure OpenAI", "level": 80 },
-      { "name": "Ollama", "level": 75 },
-      { "name": "RAG Pipelines", "level": 85 },
-      { "name": "FAISS Vector Search", "level": 80 },
-      { "name": "Vertex AI Search", "level": 80 },
-      { "name": "Prompt Engineering", "level": 85 },
-      { "name": "SentenceTransformers", "level": 80 }
-    ]
-  },
-  "integrations": {
-    "label": "Integrations & Tools",
-    "skills": [
-      "Apigee (API Gateway)",
-      "GCP Log Explorer",
-      "GCP Secret Manager",
-      "Selenium 4 (Web Scraping)",
-      "BeautifulSoup4",
-      "BigQuery",
-      "Cloud SQL (PostgreSQL)",
-      "Elasticsearch",
-      "Redis",
-      "Pydantic",
-      "Poetry / uv",
-      "deepeval / pytest",
-      "Pandas / NumPy",
-      "mitmproxy",
-      "Playwright",
-      "Salesforce",
-      "SAML / OAuth",
-      "Payment Gateways"
-    ]
-  },
-  "tools": {
-    "label": "Tools & Methodologies",
-    "skills": [
-      "Agile/Scrum",
-      "JIRA",
-      "Confluence",
-      "PHPStorm",
-      "VS Code",
-      "Postman",
-      "New Relic",
-      "Datadog"
-    ]
-  },
-  "soft": {
-    "label": "Soft Skills",
-    "skills": [
-      "Technical Leadership",
-      "Team Mentoring",
-      "Client Communication",
-      "Problem Solving",
-      "Agile Methodology",
-      "Code Review"
-    ]
-  }
-}`,
-    language: 'json',
-    icon: 'json',
-    isActive: false,
-  },
-  {
-    id: '4',
     title: 'projects.md',
     content: `# Major Projects
 
@@ -448,6 +195,259 @@ Migrated large government portal from Drupal 7 to Drupal 8.
 - Improved content editor experience`,
     language: 'markdown',
     icon: 'md',
+    isActive: false,
+  },
+  {
+    id: '2',
+    title: 'README.md',
+    content: `# Saurabh Tripathi
+## Senior Solutions Architect & Full Stack AI Engineer
+
+### About Me
+
+I am a Senior Solutions Architect & Full Stack AI Engineer with years of experience in building AI-powered applications and enterprise-level web solutions. My expertise spans from traditional CMS development to cutting-edge AI/ML implementations, specializing in RAG pipelines, conversational AI, and intelligent automation systems.
+
+### Certifications
+
+- **Triple Certified CMS Expert** (Drupal 10, 11)
+- **Triple Certified CMS Expert** (Drupal 9)
+- **Triple Certified CMS Expert** (Drupal 8)
+
+### Core Expertise
+
+- **AI/ML:** LangChain, LangGraph, RAG Pipelines, Vector Search (FAISS), Semantic Embeddings
+- **LLM Integration:** Google Gemini AI, OpenAI GPT, Azure OpenAI, Prompt Engineering
+- **Backend:** Python (FastAPI), PHP, Node.js, WebSocket Streaming, API Development
+- **Frontend:** React, TypeScript, Modern JavaScript
+- **CMS:** Headless CMS Architecture, Content Management Systems
+- **Cloud & DevOps:** AWS, Docker, CI/CD Pipelines
+
+### Career Highlights
+
+- Built AI-powered conversational search (Ask CNA) using RAG, Gemini AI, and FAISS
+- Developed intelligent WhatsApp Support Bot with multi-turn conversation memory
+- Led development of major media platforms (CNA, Berita, Seithi)
+- Architected AI-assisted feature development workflows for engineering teams
+- Contributed to open-source projects and CMS community
+
+### Location
+
+Singapore 🇸🇬
+
+### Contact
+
+- Email: saurabh.tripathi.cs@gmail.com
+- LinkedIn: linkedin.com/in/saurabh-tripathi
+- GitHub: github.com/saurabhtripathi`,
+    language: 'markdown',
+    icon: 'md',
+    isActive: false,
+  },
+  {
+    id: '3',
+    title: 'experience.json',
+    content: `{
+  "totalYears": "14+",
+  "positions": [
+    {
+      "title": "Senior Solutions Architect",
+      "company": "Mediacorp Pte Ltd",
+      "period": "June 2021 - Present",
+      "location": "Singapore",
+      "current": true,
+      "responsibilities": [
+        "Architect and implement AI-powered features including conversational search using RAG, LLMs, and vector databases",
+        "Lead development of major media platforms (CNA, Berita, Seithi) serving millions of users",
+        "Design headless CMS solutions with React frontends and AI integrations",
+        "Build intelligent automation systems using LangChain, LangGraph, and Gemini AI",
+        "Mentor development teams on AI/ML best practices and modern architecture patterns"
+      ]
+    },
+    {
+      "title": "Software Engineer, Research and Development",
+      "company": "Acquia Inc.",
+      "period": "April 2019 - June 2021",
+      "location": "India",
+      "current": false,
+      "responsibilities": [
+        "Developed enterprise CMS applications for Fortune 500 clients",
+        "Implemented complex integrations with third-party systems",
+        "Optimized CMS performance and caching strategies",
+        "Provided technical leadership on client projects",
+        "Conducted code reviews and knowledge sharing sessions"
+      ]
+    },
+    {
+      "title": "Application Development Senior Analyst",
+      "company": "Accenture",
+      "period": "February 2017 - April 2019",
+      "location": "India",
+      "current": false,
+      "responsibilities": [
+        "Created chatbot using shell scripts and Python for automating developer workflows and updating configurations",
+        "Built custom CMS modules and themes for enterprise clients",
+        "Integrated CMS with enterprise systems and third-party APIs",
+        "Performed site migrations and upgrades across multiple platforms",
+        "Collaborated with cross-functional teams and delivered projects on time"
+      ]
+    },
+    {
+      "title": "Software Engineer",
+      "company": "Faichi Solutions",
+      "period": "October 2014 - February 2017",
+      "location": "India",
+      "current": false,
+      "responsibilities": [
+        "Created Drubot chatbot using Artificial Intelligence Markup Language (AIML) for automated developer assistance and workflow optimization",
+        "Developed enterprise CMS applications for Fortune 500 clients including Ixia and Haivision",
+        "Handled multilingual website support and created command-line automation tools",
+        "Implemented feed integration, custom module development, and theme customization",
+        "Led configuration management and deployment automation initiatives"
+      ]
+    },
+    {
+      "title": "Software Developer",
+      "company": "Iksula",
+      "period": "January 2013 - September 2014",
+      "location": "India",
+      "current": false,
+      "responsibilities": [
+        "Integrated e-commerce solutions into CMS platforms with custom module development",
+        "Worked with open-source modules for layout management and contextual content display",
+        "Implemented complex discount structure logic for eBay.in project",
+        "Developed and deployed projects including bigbazaardirect.com and gitanjaligifts.com"
+      ]
+    },
+    {
+      "title": "Software Engineer",
+      "company": "Corpus Software",
+      "period": "June 2011 - December 2012",
+      "location": "India",
+      "current": false,
+      "responsibilities": [
+        "Created shell scripts and PHP scripts for importing data into MySQL databases",
+        "Developed responsive websites using PHP, MySQL, JavaScript, and CMS platforms",
+        "Built custom themes and maintained client websites with ongoing enhancements",
+        "Provided technical support and training for government corporations",
+        "Conducted training sessions on ERP workflows and system administration"
+      ]
+    }
+  ],
+  "education": {
+    "degree": "Bachelor of Engineering in Computer Science",
+    "university": "GBTU",
+    "year": ""
+  }
+}`,
+    language: 'json',
+    icon: 'json',
+    isActive: false,
+  },
+  {
+    id: '4',
+    title: 'skills.json',
+    content: `{
+  "backend": {
+    "label": "Backend Development",
+    "skills": [
+      { "name": "Python (FastAPI)", "level": 90 },
+      { "name": "PHP", "level": 90 },
+      { "name": "Node.js", "level": 85 },
+      { "name": "CMS (Drupal 7-11)", "level": 95 },
+      { "name": "MySQL/MariaDB", "level": 85 },
+      { "name": "RESTful APIs", "level": 90 },
+      { "name": "WebSocket", "level": 85 }
+    ]
+  },
+  "frontend": {
+    "label": "Frontend Development",
+    "skills": [
+      { "name": "React", "level": 85 },
+      { "name": "TypeScript", "level": 80 },
+      { "name": "JavaScript (ES6+)", "level": 90 },
+      { "name": "HTML5/CSS3", "level": 90 },
+      { "name": "Tailwind CSS", "level": 80 },
+      { "name": "jQuery", "level": 85 }
+    ]
+  },
+  "devops": {
+    "label": "DevOps & Cloud",
+    "skills": [
+      { "name": "GCP (Vertex AI, Cloud Run)", "level": 85 },
+      { "name": "AWS (EC2, S3, Lambda)", "level": 80 },
+      { "name": "Docker", "level": 85 },
+      { "name": "Git/GitHub Actions", "level": 90 },
+      { "name": "CI/CD Pipelines", "level": 80 },
+      { "name": "BigQuery", "level": 75 },
+      { "name": "Uvicorn/ASGI", "level": 85 }
+    ]
+  },
+  "ai_ml": {
+    "label": "AI & Machine Learning",
+    "skills": [
+      { "name": "LangChain", "level": 85 },
+      { "name": "LangGraph", "level": 85 },
+      { "name": "Google Gemini AI", "level": 90 },
+      { "name": "OpenAI GPT", "level": 85 },
+      { "name": "Azure OpenAI", "level": 80 },
+      { "name": "Ollama", "level": 75 },
+      { "name": "RAG Pipelines", "level": 85 },
+      { "name": "FAISS Vector Search", "level": 80 },
+      { "name": "Vertex AI Search", "level": 80 },
+      { "name": "Prompt Engineering", "level": 85 },
+      { "name": "SentenceTransformers", "level": 80 }
+    ]
+  },
+  "integrations": {
+    "label": "Integrations & Tools",
+    "skills": [
+      "Apigee (API Gateway)",
+      "GCP Log Explorer",
+      "GCP Secret Manager",
+      "Selenium 4 (Web Scraping)",
+      "BeautifulSoup4",
+      "BigQuery",
+      "Cloud SQL (PostgreSQL)",
+      "Elasticsearch",
+      "Redis",
+      "Pydantic",
+      "Poetry / uv",
+      "deepeval / pytest",
+      "Pandas / NumPy",
+      "mitmproxy",
+      "Playwright",
+      "Salesforce",
+      "SAML / OAuth",
+      "Payment Gateways"
+    ]
+  },
+  "tools": {
+    "label": "Tools & Methodologies",
+    "skills": [
+      "Agile/Scrum",
+      "JIRA",
+      "Confluence",
+      "PHPStorm",
+      "VS Code",
+      "Postman",
+      "New Relic",
+      "Datadog"
+    ]
+  },
+  "soft": {
+    "label": "Soft Skills",
+    "skills": [
+      "Technical Leadership",
+      "Team Mentoring",
+      "Client Communication",
+      "Problem Solving",
+      "Agile Methodology",
+      "Code Review"
+    ]
+  }
+}`,
+    language: 'json',
+    icon: 'json',
     isActive: false,
   },
   // Hidden: architecture.md tab
