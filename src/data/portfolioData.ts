@@ -182,11 +182,12 @@ Singapore 🇸🇬
   "devops": {
     "label": "DevOps & Cloud",
     "skills": [
+      { "name": "GCP (Vertex AI, Cloud Run)", "level": 85 },
       { "name": "AWS (EC2, S3, Lambda)", "level": 80 },
       { "name": "Docker", "level": 85 },
-      { "name": "Git/GitHub", "level": 90 },
-      { "name": "CI/CD", "level": 80 },
-      { "name": "mitmproxy", "level": 75 },
+      { "name": "Git/GitHub Actions", "level": 90 },
+      { "name": "CI/CD Pipelines", "level": 80 },
+      { "name": "BigQuery", "level": 75 },
       { "name": "Uvicorn/ASGI", "level": 85 }
     ]
   },
@@ -206,16 +207,21 @@ Singapore 🇸🇬
   "integrations": {
     "label": "Integrations & Tools",
     "skills": [
-      "Selenium (Web Scraping)",
+      "Selenium 4 (Web Scraping)",
       "BeautifulSoup4",
-      "Google Cloud Platform",
+      "BigQuery",
+      "Cloud SQL (PostgreSQL)",
       "Elasticsearch",
       "Redis",
-      "CDN (CloudFront)",
-      "Adobe Analytics",
       "Pydantic",
-      "Poetry",
-      "Salesforce"
+      "Poetry / uv",
+      "deepeval / pytest",
+      "Pandas / NumPy",
+      "mitmproxy",
+      "Playwright",
+      "Salesforce",
+      "SAML / OAuth",
+      "Payment Gateways"
     ]
   },
   "tools": {
