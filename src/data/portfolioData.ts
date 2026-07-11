@@ -81,9 +81,9 @@ Singapore 🇸🇬
       "location": "India",
       "current": false,
       "responsibilities": [
-        "Developed enterprise Drupal applications for Fortune 500 clients",
+        "Developed enterprise CMS applications for Fortune 500 clients",
         "Implemented complex integrations with third-party systems",
-        "Optimized Drupal performance and caching strategies",
+        "Optimized CMS performance and caching strategies",
         "Provided technical leadership on client projects",
         "Conducted code reviews and knowledge sharing sessions"
       ]
@@ -95,11 +95,11 @@ Singapore 🇸🇬
       "location": "India",
       "current": false,
       "responsibilities": [
-        "Built custom Drupal modules and themes",
-        "Integrated Drupal with enterprise systems",
-        "Performed site migrations and upgrades",
-        "Collaborated with cross-functional teams",
-        "Delivered projects on time and within budget"
+        "Created chatbot using shell scripts and Python for automating developer workflows and updating configurations",
+        "Built custom CMS modules and themes for enterprise clients",
+        "Integrated CMS with enterprise systems and third-party APIs",
+        "Performed site migrations and upgrades across multiple platforms",
+        "Collaborated with cross-functional teams and delivered projects on time"
       ]
     },
     {
@@ -109,10 +109,11 @@ Singapore 🇸🇬
       "location": "India",
       "current": false,
       "responsibilities": [
-        "Worked on Drupal 8 projects for clients including Ixia and Haivision",
-        "Handled multilingual website support and created Drush commands",
-        "Implemented feed integration, module development, and theme customization",
-        "Led configuration management initiatives"
+        "Created Drubot chatbot using Artificial Intelligence Markup Language (AIML) for automated developer assistance and workflow optimization",
+        "Developed enterprise CMS applications for Fortune 500 clients including Ixia and Haivision",
+        "Handled multilingual website support and created command-line automation tools",
+        "Implemented feed integration, custom module development, and theme customization",
+        "Led configuration management and deployment automation initiatives"
       ]
     },
     {
@@ -122,10 +123,10 @@ Singapore 🇸🇬
       "location": "India",
       "current": false,
       "responsibilities": [
-        "Developed Drupal Commerce solutions and custom modules",
-        "Worked with Panels/Contexts and other contributed modules",
-        "Implemented discount structure logic for eBay.in project",
-        "Developed projects including bigbazaardirect.com and gitanjaligifts.com"
+        "Integrated e-commerce solutions into CMS platforms with custom module development",
+        "Worked with open-source modules for layout management and contextual content display",
+        "Implemented complex discount structure logic for eBay.in project",
+        "Developed and deployed projects including bigbazaardirect.com and gitanjaligifts.com"
       ]
     },
     {
@@ -135,10 +136,11 @@ Singapore 🇸🇬
       "location": "India",
       "current": false,
       "responsibilities": [
-        "Developed responsive websites using PHP, MySQL, JavaScript, and Drupal",
-        "Created custom themes and maintained client websites",
+        "Created shell scripts and PHP scripts for importing data into MySQL databases",
+        "Developed responsive websites using PHP, MySQL, JavaScript, and CMS platforms",
+        "Built custom themes and maintained client websites with ongoing enhancements",
         "Provided technical support and training for government corporations",
-        "Conducted training sessions on ERP workflows"
+        "Conducted training sessions on ERP workflows and system administration"
       ]
     }
   ],
