@@ -1645,14 +1645,6 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
             <span>📧</span>
             <span>Contact</span>
           </button>
-          <button
-            onClick={onNavigateNews}
-            className="group relative flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all hover:scale-105"
-          >
-            <span className="text-lg">📰</span>
-            <span className="text-xs font-semibold uppercase tracking-wider">Drupal Media</span>
-            <span className="text-xs opacity-70 group-hover:opacity-100 transition-opacity">→</span>
-          </button>
           <span className="hidden sm:inline">Saurabh Tripathi - Portfolio</span>
         </div>
       </div>
