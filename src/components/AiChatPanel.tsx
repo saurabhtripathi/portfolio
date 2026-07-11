@@ -20,26 +20,66 @@ const CHAT_API_URL =
   process.env.REACT_APP_CHAT_API_URL ||
   'https://drupal-news-api.vercel.app/api/chat';
 
+// Rate limiting configuration
+const MAX_REQUESTS_PER_MINUTE = 5;
+const MAX_INPUT_LENGTH = 500;
+
 const AiChatPanel: React.FC<{ onClose: () => void; hideHeader?: boolean; mobileCloseButton?: React.ReactNode }> = ({ onClose, hideHeader, mobileCloseButton }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
       content:
-        "Hi! I'm an AI assistant trained on Saurabh's resume. Ask me anything about his experience, skills, or projects.",
+        "Hi! I'm an AI assistant trained on Saurabh's resume and portfolio. Ask me about his experience, skills, projects, or contact information.",
     },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const requestTimestamps = useRef<number[]>([]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
+  const checkRateLimit = (): boolean => {
+    const now = Date.now();
+    const oneMinuteAgo = now - 60000;
+
+    // Remove timestamps older than 1 minute
+    requestTimestamps.current = requestTimestamps.current.filter(
+      (timestamp) => timestamp > oneMinuteAgo
+    );
+
+    // Check if rate limit exceeded
+    if (requestTimestamps.current.length >= MAX_REQUESTS_PER_MINUTE) {
+      return false;
+    }
+
+    // Add current request timestamp
+    requestTimestamps.current.push(now);
+    return true;
+  };
+
   const sendMessage = async (text: string) => {
     const trimmed = text.trim();
     if (!trimmed || loading) return;
+
+    // Clear previous rate limit error
+    setRateLimitError(null);
+
+    // Validate input length
+    if (trimmed.length > MAX_INPUT_LENGTH) {
+      setRateLimitError(`Message too long. Please limit to ${MAX_INPUT_LENGTH} characters.`);
+      return;
+    }
+
+    // Check rate limit
+    if (!checkRateLimit()) {
+      setRateLimitError(`Rate limit exceeded. Please wait a minute before sending more messages (max ${MAX_REQUESTS_PER_MINUTE} per minute).`);
+      return;
+    }
 
     const userMessage: Message = { role: 'user', content: trimmed };
     const updatedMessages = [...messages, userMessage];
@@ -175,29 +215,42 @@ const AiChatPanel: React.FC<{ onClose: () => void; hideHeader?: boolean; mobileC
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Rate limit error */}
+      {rateLimitError && (
+        <div className="px-3 py-2 bg-red-900/30 border-t border-red-800/50 text-red-300 text-xs">
+          {rateLimitError}
+        </div>
+      )}
+
       {/* Input */}
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-2 px-3 py-2 bg-gray-900 border-t border-gray-800 flex-shrink-0"
+        className="bg-gray-900 border-t border-gray-800 flex-shrink-0"
       >
-        <span className="text-purple-400 text-sm">{'>'}</span>
-        <input
-          ref={inputRef}
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask about skills, experience, projects..."
-          disabled={loading}
-          className="flex-1 bg-transparent outline-none text-white disabled:opacity-50"
-          style={{ caretColor: '#c084fc', fontSize: '13px' }}
-        />
-        <button
-          type="submit"
-          disabled={loading || !input.trim()}
-          className="text-purple-400 hover:text-purple-300 disabled:opacity-30 transition-colors text-xs"
-        >
-          send
-        </button>
+        <div className="flex items-center gap-2 px-3 py-2">
+          <span className="text-purple-400 text-sm">{'>'}</span>
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask about skills, experience, projects..."
+            disabled={loading}
+            maxLength={MAX_INPUT_LENGTH}
+            className="flex-1 bg-transparent outline-none text-white disabled:opacity-50"
+            style={{ caretColor: '#c084fc', fontSize: '13px' }}
+          />
+          <span className={`text-xs ${input.length > MAX_INPUT_LENGTH * 0.8 ? 'text-yellow-400' : 'text-gray-600'}`}>
+            {input.length}/{MAX_INPUT_LENGTH}
+          </span>
+          <button
+            type="submit"
+            disabled={loading || !input.trim()}
+            className="text-purple-400 hover:text-purple-300 disabled:opacity-30 transition-colors text-xs"
+          >
+            send
+          </button>
+        </div>
       </form>
     </div>
   );

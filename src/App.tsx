@@ -1684,22 +1684,22 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
               onClick={() => setActivePanel('terminal')}
               className={`flex items-center gap-1.5 px-4 py-1.5 text-xs border-t-2 transition-colors ${
                 activePanel === 'terminal'
-                  ? 'border-green-400 text-green-300 bg-gray-950'
+                  ? 'border-green-400 text-green-300 bg-gray-950 font-bold'
                   : 'border-transparent text-gray-500 hover:text-gray-300 hover:bg-gray-700'
               }`}
             >
-              <span className="text-green-400">●</span>
+              <span className={activePanel === 'terminal' ? 'text-green-400' : 'text-gray-600'}>●</span>
               TERMINAL
             </button>
             <button
               onClick={() => setActivePanel('chat')}
               className={`flex items-center gap-1.5 px-4 py-1.5 text-xs border-t-2 transition-all ${
                 activePanel === 'chat'
-                  ? 'border-purple-400 text-purple-300 bg-gray-950'
-                  : 'border-purple-500 text-purple-300 bg-purple-900/20 hover:bg-purple-900/40'
+                  ? 'border-purple-400 text-purple-300 bg-gray-950 font-bold'
+                  : 'border-transparent text-gray-500 hover:text-gray-300 hover:bg-gray-700'
               }`}
             >
-              <span className="text-purple-400">✦</span>
+              <span className={activePanel === 'chat' ? 'text-purple-400' : 'text-gray-600'}>✦</span>
               AI ASSISTANT
               {activePanel !== 'chat' && (
                 <span className="ml-1.5 bg-purple-500 text-white rounded px-1 py-0.5 animate-pulse" style={{ fontSize: '9px', letterSpacing: '0.05em' }}>NEW</span>
