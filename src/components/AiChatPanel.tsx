@@ -29,7 +29,7 @@ const AiChatPanel: React.FC<{ onClose: () => void; hideHeader?: boolean; mobileC
     {
       role: 'assistant',
       content:
-        "Hi! I'm an AI assistant trained on Saurabh's resume and portfolio. Ask me about his experience, skills, projects, or contact information.",
+        "Hi! Ask me about Saurabh's experience, skills, or projects.",
     },
   ]);
   const [input, setInput] = useState('');

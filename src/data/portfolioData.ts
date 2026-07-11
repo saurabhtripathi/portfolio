@@ -20,9 +20,9 @@ I am a Senior Solutions Architect & Full Stack AI Engineer with years of experie
 
 ### Certifications
 
-- **Acquia Certified Developer - Drupal 10 & 11**
-- **Acquia Grand Master - Drupal 9** (Triple Certified)
-- **Acquia Grand Master - Drupal 8** (Triple Certified)
+- **Triple Certified CMS Expert** (Drupal 10, 11)
+- **Triple Certified CMS Expert** (Drupal 9)
+- **Triple Certified CMS Expert** (Drupal 8)
 
 ### Core Expertise
 
