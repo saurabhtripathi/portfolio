@@ -216,7 +216,7 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
 
   const ProjectCard: React.FC<{ project: DrupalProject }> = ({ project }) => (
     <a
-      href={project.drupalUrl}
+      href={project.gitUrl}
       target="_blank"
       rel="noopener noreferrer"
       className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 hover:border-blue-500/50 hover:bg-gray-800/70 transition-colors block"
@@ -247,7 +247,7 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
       <div className="flex items-center justify-between">
         <span className="text-xs text-gray-500">{project.issues} issue{project.issues !== 1 ? 's' : ''}</span>
         <span className="text-xs text-blue-400 flex items-center gap-1">
-          View on Drupal.org →
+          View Repository →
         </span>
       </div>
     </a>
