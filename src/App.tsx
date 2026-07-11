@@ -284,8 +284,8 @@ const CodeEditor: React.FC<{
             <div className="flex items-center gap-2 text-sm sm:text-base">
               <span className="text-yellow-400 text-base sm:text-lg">💡</span>
               <p className="text-yellow-300 font-medium text-xs sm:text-base">
-                {isExperienceJson && 'Transform this JSON into an interactive timeline!'}
-                {isSkillsFile && 'Visualize this data as a skills dashboard!'}
+                {isExperienceJson && 'Click here to transform this JSON into an interactive timeline!'}
+                {isSkillsFile && 'Click here to visualize this data as a skills dashboard!'}
               </p>
             </div>
             {isExperienceJson && (
