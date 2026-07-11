@@ -448,148 +448,149 @@ Migrated large government portal from Drupal 7 to Drupal 8.
     icon: 'md',
     isActive: false,
   },
-  {
-    id: '5',
-    title: 'architecture.md',
-    content: `# Portfolio Architecture
-
-## Overview
-
-This portfolio is built as a **headless architecture demonstration**, showcasing modern web development practices.
-
-## Architecture
-
-\`\`\`
-┌─────────────────────┐
-│   React Frontend    │
-│  (TypeScript + CRA) │
-└──────────┬──────────┘
-           │
-           │ JSON:API
-           │
-┌──────────▼──────────┐
-│   Drupal Backend    │
-│    (Headless CMS)   │
-└──────────┬──────────┘
-           │
-           │
-┌──────────▼──────────┐
-│   AWS Lightsail     │
-└─────────────────────┘
-\`\`\`
-
-## Technology Stack
-
-### Frontend
-- **React 19** - Modern UI library
-- **TypeScript** - Type-safe development
-- **Tailwind CSS** - Utility-first styling
-- **Framer Motion** - Animations
-- **Create React App** - Build tooling
-
-### Backend
-- **Drupal 11** - Headless CMS
-- **JSON:API** - RESTful API
-- **PHP 8.2** - Server-side language
-- **MariaDB** - Database
-
-### Features
-- VS Code-like interface
-- Interactive terminal
-- Markdown rendering
-- Dynamic microsites (Experience Timeline, Skills Dashboard)
-- Responsive design (mobile + desktop)
-- Client-side routing
-- Headless CMS integration
-
-## Data Flow
-
-1. **Content Management**
-   - Portfolio content stored in Drupal CMS
-   - Admin interface for easy content updates
-   - Structured content types
-
-2. **API Layer**
-   - JSON:API provides RESTful endpoints
-   - Standardized data format
-   - CORS-enabled for cross-origin requests
-
-3. **Frontend Consumption**
-   - React fetches data via API calls
-   - TypeScript ensures type safety
-   - Real-time content updates
-
-## Deployment
-
-### Frontend Deployment
-- **Platform:** AWS Amplify / Vercel
-- **Build Process:** Automatic on git push
-- **CDN:** Global content delivery
-- **SSL:** Automatic HTTPS
-
-### Backend Deployment
-- **Platform:** AWS Lightsail
-- **Server:** Apache 2.4
-- **SSL:** Let's Encrypt
-- **Database:** MariaDB
-
-## Development Workflow
-
-1. **Content Updates**
-   - Log into Drupal admin
-   - Update content via CMS
-   - Changes reflect immediately via API
-
-2. **Frontend Development**
-   - npm start (local development)
-   - npm run build (production build)
-   - git push (auto-deploy)
-
-3. **Backend Maintenance**
-   - Drupal security updates
-   - Database backups
-   - Module updates
-
-## API Endpoints
-
-### Available Endpoints
-\`\`\`
-GET /jsonapi/node/portfolio_file?sort=field_order
-GET /jsonapi/node/portfolio_file/{uuid}
-GET /jsonapi/node/project
-\`\`\`
-
-## Benefits of Headless Architecture
-
-1. **Flexibility**
-   - Separate frontend and backend
-   - Easy to change either independently
-   - Multiple frontends possible
-
-2. **Performance**
-   - Optimized React frontend
-   - Cached API responses
-   - CDN distribution
-
-3. **Developer Experience**
-   - Modern tooling (React, TypeScript)
-   - Type-safe development
-   - Hot module replacement
-
-4. **Content Management**
-   - User-friendly Drupal interface
-   - Structured content
-   - Version control for content
-
-## Future Enhancements
-
-- Add CMS preview mode
-- Implement GraphQL endpoint
-- Add real-time content updates
-- Integrate analytics
-- Add search functionality`,
-    language: 'markdown',
-    icon: 'md',
-    isActive: false,
-  },
+  // Hidden: architecture.md tab
+  // {
+  //   id: '5',
+  //   title: 'architecture.md',
+  //   content: `# Portfolio Architecture
+  //
+  // ## Overview
+  //
+  // This portfolio is built as a **headless architecture demonstration**, showcasing modern web development practices.
+  //
+  // ## Architecture
+  //
+  // \`\`\`
+  // ┌─────────────────────┐
+  // │   React Frontend    │
+  // │  (TypeScript + CRA) │
+  // └──────────┬──────────┘
+  //            │
+  //            │ JSON:API
+  //            │
+  // ┌──────────▼──────────┐
+  // │   Drupal Backend    │
+  // │    (Headless CMS)   │
+  // └──────────┬──────────┘
+  //            │
+  //            │
+  // ┌──────────▼──────────┐
+  // │   AWS Lightsail     │
+  // └─────────────────────┘
+  // \`\`\`
+  //
+  // ## Technology Stack
+  //
+  // ### Frontend
+  // - **React 19** - Modern UI library
+  // - **TypeScript** - Type-safe development
+  // - **Tailwind CSS** - Utility-first styling
+  // - **Framer Motion** - Animations
+  // - **Create React App** - Build tooling
+  //
+  // ### Backend
+  // - **Drupal 11** - Headless CMS
+  // - **JSON:API** - RESTful API
+  // - **PHP 8.2** - Server-side language
+  // - **MariaDB** - Database
+  //
+  // ### Features
+  // - VS Code-like interface
+  // - Interactive terminal
+  // - Markdown rendering
+  // - Dynamic microsites (Experience Timeline, Skills Dashboard)
+  // - Responsive design (mobile + desktop)
+  // - Client-side routing
+  // - Headless CMS integration
+  //
+  // ## Data Flow
+  //
+  // 1. **Content Management**
+  //    - Portfolio content stored in Drupal CMS
+  //    - Admin interface for easy content updates
+  //    - Structured content types
+  //
+  // 2. **API Layer**
+  //    - JSON:API provides RESTful endpoints
+  //    - Standardized data format
+  //    - CORS-enabled for cross-origin requests
+  //
+  // 3. **Frontend Consumption**
+  //    - React fetches data via API calls
+  //    - TypeScript ensures type safety
+  //    - Real-time content updates
+  //
+  // ## Deployment
+  //
+  // ### Frontend Deployment
+  // - **Platform:** AWS Amplify / Vercel
+  // - **Build Process:** Automatic on git push
+  // - **CDN:** Global content delivery
+  // - **SSL:** Automatic HTTPS
+  //
+  // ### Backend Deployment
+  // - **Platform:** AWS Lightsail
+  // - **Server:** Apache 2.4
+  // - **SSL:** Let's Encrypt
+  // - **Database:** MariaDB
+  //
+  // ## Development Workflow
+  //
+  // 1. **Content Updates**
+  //    - Log into Drupal admin
+  //    - Update content via CMS
+  //    - Changes reflect immediately via API
+  //
+  // 2. **Frontend Development**
+  //    - npm start (local development)
+  //    - npm run build (production build)
+  //    - git push (auto-deploy)
+  //
+  // 3. **Backend Maintenance**
+  //    - Drupal security updates
+  //    - Database backups
+  //    - Module updates
+  //
+  // ## API Endpoints
+  //
+  // ### Available Endpoints
+  // \`\`\`
+  // GET /jsonapi/node/portfolio_file?sort=field_order
+  // GET /jsonapi/node/portfolio_file/{uuid}
+  // GET /jsonapi/node/project
+  // \`\`\`
+  //
+  // ## Benefits of Headless Architecture
+  //
+  // 1. **Flexibility**
+  //    - Separate frontend and backend
+  //    - Easy to change either independently
+  //    - Multiple frontends possible
+  //
+  // 2. **Performance**
+  //    - Optimized React frontend
+  //    - Cached API responses
+  //    - CDN distribution
+  //
+  // 3. **Developer Experience**
+  //    - Modern tooling (React, TypeScript)
+  //    - Type-safe development
+  //    - Hot module replacement
+  //
+  // 4. **Content Management**
+  //    - User-friendly Drupal interface
+  //    - Structured content
+  //    - Version control for content
+  //
+  // ## Future Enhancements
+  //
+  // - Add CMS preview mode
+  // - Implement GraphQL endpoint
+  // - Add real-time content updates
+  // - Integrate analytics
+  // - Add search functionality`,
+  //   language: 'markdown',
+  //   icon: 'md',
+  //   isActive: false,
+  // },
 ];
