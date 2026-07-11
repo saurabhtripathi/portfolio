@@ -207,7 +207,7 @@ const OpenSourceTab: React.FC = () => {
 
   const ProjectCard: React.FC<{ project: DrupalProject }> = ({ project }) => (
     <a
-      href={project.drupalUrl}
+      href={project.gitUrl}
       target="_blank"
       rel="noopener noreferrer"
       className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 hover:border-blue-500/50 hover:bg-gray-800/70 transition-colors block"
@@ -231,7 +231,7 @@ const OpenSourceTab: React.FC = () => {
       <div className="flex items-center justify-between">
         <span className="text-xs text-gray-500">{project.issues} issue{project.issues !== 1 ? 's' : ''}</span>
         <span className="text-xs text-blue-400 flex items-center gap-1">
-          View on Drupal.org →
+          View Repository →
         </span>
       </div>
     </a>
@@ -269,19 +269,8 @@ const OpenSourceTab: React.FC = () => {
             </div>
             <div>
               <div className="text-2xl sm:text-3xl font-bold text-orange-400">{stats.yearsOnDrupal}+</div>
-              <div className="text-xs text-gray-400">Years on Drupal.org</div>
+              <div className="text-xs text-gray-400">Years Open Source Contributor</div>
             </div>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-4 mt-4 pt-4 border-t border-gray-700">
-            <a
-              href="https://www.drupal.org/u/saurabhtripathics"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1"
-            >
-              💧 View Drupal.org Profile →
-            </a>
           </div>
         </div>
 

@@ -267,16 +267,7 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
             >
               View All Projects →
             </button>
-          ) : (
-            <a
-              href="https://www.drupal.org/u/saurabhtripathics"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-blue-400 hover:text-blue-300"
-            >
-              View Profile →
-            </a>
-          )}
+          ) : null}
         </div>
 
         <div className="grid grid-cols-4 gap-2 mb-3">
@@ -346,19 +337,8 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
           </div>
           <div>
             <div className="text-2xl sm:text-3xl font-bold text-orange-400">{stats.yearsOnDrupal}+</div>
-            <div className="text-xs text-gray-400">Years on Drupal.org</div>
+            <div className="text-xs text-gray-400">Years Open Source Contributor</div>
           </div>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-4 mt-4 pt-4 border-t border-gray-700">
-          <a
-            href="https://www.drupal.org/u/saurabhtripathics"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1"
-          >
-            View Drupal.org Profile →
-          </a>
         </div>
       </div>
 
