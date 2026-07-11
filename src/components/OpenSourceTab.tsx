@@ -358,10 +358,6 @@ const OpenSourceTab: React.FC = () => {
               <span>Security Advisory Coverage Eligible</span>
             </div>
             <div className="flex items-start gap-2">
-              <span className="text-blue-400">🎤</span>
-              <span>DrupalCon Asia 2016 Attendee</span>
-            </div>
-            <div className="flex items-start gap-2">
               <span className="text-yellow-400">🏢</span>
               <span>Previously at Acquia, Accenture</span>
             </div>
