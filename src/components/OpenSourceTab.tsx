@@ -293,8 +293,7 @@ const OpenSourceTab: React.FC = () => {
             <span className="text-xs text-gray-500">({maintainedProjects.length + contributedProjects.length} repos)</span>
           </div>
           <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
-            <p className="text-gray-400 text-sm mb-4">All project source code is hosted on Drupal's GitLab instance at git.drupalcode.org</p>
-            
+
             {/* Maintained Repos */}
             <div className="mb-4">
               <h4 className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-2">Maintained Projects</h4>
@@ -388,7 +387,7 @@ const OpenSourceTab: React.FC = () => {
 
         {/* Footer */}
         <div className="text-center text-gray-600 text-xs mt-10 pt-6 border-t border-gray-800">
-          <p>All projects are available on drupal.org and git.drupalcode.org</p>
+          <p>All projects are available on drupal.org</p>
         </div>
       </div>
     </div>
