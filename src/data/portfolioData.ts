@@ -213,6 +213,9 @@ I am a Senior Solutions Architect & Full Stack AI Engineer with years of experie
 - **Antigravity and Gemini Enterprise** - Google Cloud
 - **Architecting on AWS** - Amazon Web Services
 
+**Workshops:**
+- **Generative AI Enhanced Engineering**
+
 **Certifications:**
 - **Triple Certified CMS Expert** (Drupal 10, 11)
 - **Triple Certified CMS Expert** (Drupal 9)
