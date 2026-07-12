@@ -309,14 +309,14 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
 
   return (
     <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
-      {/* Header - same as OpenSourceTab */}
+      {/* Header */}
       <div className="mb-4">
         <p className="text-gray-400 text-sm">
           My contributions to the Drupal community and open source ecosystem.
         </p>
       </div>
 
-      {/* Stats Banner - same as OpenSourceTab */}
+      {/* Stats Banner */}
       <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-500/30 rounded-lg p-4 mb-6">
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 text-center">
           <div>
@@ -342,8 +342,8 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
         </div>
       </div>
 
-      {/* Git Repositories Section - same as OpenSourceTab */}
-      <div className="mb-6">
+      {/* Git Repositories Section */}
+      <div className="mb-4">
         <div className="flex items-center gap-2 mb-3">
           <h3 className="text-base font-semibold text-white">Git Repositories</h3>
           <span className="text-xs text-gray-500">({maintainedProjects.length + contributedProjects.length} repos)</span>
@@ -389,46 +389,17 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
         </div>
       </div>
 
-      {/* Maintained Projects - same as OpenSourceTab */}
-      <div className="mb-6">
-        <div className="flex items-center gap-2 mb-3">
-          <h3 className="text-base font-semibold text-white">Projects I Maintain</h3>
-          <span className="text-xs text-gray-500">({maintainedProjects.length} projects)</span>
+      {/* View Full Details Link */}
+      {onViewAll && (
+        <div className="text-center">
+          <button
+            onClick={onViewAll}
+            className="text-sm text-blue-400 hover:text-blue-300 hover:underline"
+          >
+            View full details in Open Source tab →
+          </button>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {maintainedProjects.map((project) => (
-            <ProjectCard key={project.machineName} project={project} />
-          ))}
-        </div>
-      </div>
-
-      {/* Contributed Projects - same as OpenSourceTab */}
-      <div className="mb-6">
-        <div className="flex items-center gap-2 mb-3">
-          <h3 className="text-base font-semibold text-white">Projects I've Contributed To</h3>
-          <span className="text-xs text-gray-500">({contributedProjects.length} projects)</span>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {contributedProjects.map((project) => (
-            <ProjectCard key={project.machineName} project={project} />
-          ))}
-        </div>
-      </div>
-
-      {/* Community Involvement - same as OpenSourceTab */}
-      <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-6">
-        <h3 className="text-white font-semibold mb-3">Community Involvement</h3>
-        <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-400">
-          <div className="flex items-start gap-2">
-            <span className="text-green-400">✓</span>
-            <span>Security Advisory Coverage Eligible</span>
-          </div>
-          <div className="flex items-start gap-2">
-            <span className="text-yellow-400">🏢</span>
-            <span>Previously at Acquia, Accenture</span>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
