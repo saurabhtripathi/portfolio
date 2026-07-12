@@ -581,6 +581,15 @@ const WelcomeTab: React.FC<{
     }
   };
 
+  const courses = [
+    'Antigravity and Gemini Enterprise - Google Cloud',
+    'Architecting on AWS - Amazon Web Services',
+  ];
+
+  const workshops = [
+    'Generative AI Enhanced Engineering',
+  ];
+
   const certifications = [
     'Acquia Certified Developer - Drupal 10 & 11',
     'Acquia Grand Master - Drupal 9 (Triple Certified)',
@@ -799,16 +808,42 @@ const WelcomeTab: React.FC<{
           </div>
         </div>
 
-        {/* Certifications */}
+        {/* Certifications & Courses */}
         <div className="mb-10">
-          <h3 className="text-sm text-gray-500 uppercase tracking-wider mb-3">Certifications</h3>
+          <h3 className="text-sm text-gray-500 uppercase tracking-wider mb-3">Certifications & Courses</h3>
           <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
-            {certifications.map((cert, idx) => (
-              <div key={idx} className="flex items-center gap-2 py-2 border-b border-gray-700 last:border-0">
-                <span className="text-green-400">✓</span>
-                <span className="text-gray-300 text-sm">{cert}</span>
-              </div>
-            ))}
+            {/* Courses */}
+            <div className="mb-4">
+              <h4 className="text-xs font-semibold text-teal-400 mb-2">Courses</h4>
+              {courses.map((course, idx) => (
+                <div key={idx} className="flex items-center gap-2 py-1.5">
+                  <span className="text-teal-400">•</span>
+                  <span className="text-gray-300 text-sm">{course}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Workshops */}
+            <div className="mb-4">
+              <h4 className="text-xs font-semibold text-purple-400 mb-2">Workshops</h4>
+              {workshops.map((workshop, idx) => (
+                <div key={idx} className="flex items-center gap-2 py-1.5">
+                  <span className="text-purple-400">•</span>
+                  <span className="text-gray-300 text-sm">{workshop}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Certifications */}
+            <div>
+              <h4 className="text-xs font-semibold text-blue-400 mb-2">Certifications</h4>
+              {certifications.map((cert, idx) => (
+                <div key={idx} className="flex items-center gap-2 py-1.5">
+                  <span className="text-green-400">✓</span>
+                  <span className="text-gray-300 text-sm">{cert}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
