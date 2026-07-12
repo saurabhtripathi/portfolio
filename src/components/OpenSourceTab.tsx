@@ -8,6 +8,7 @@ interface DrupalProject {
   issues: number;
   drupalUrl: string;
   gitUrl: string;
+  isAI?: boolean;
 }
 
 const OpenSourceTab: React.FC = () => {
@@ -20,6 +21,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 11,
       drupalUrl: 'https://www.drupal.org/project/aiml_parser',
       gitUrl: 'https://git.drupalcode.org/project/aiml_parser',
+      isAI: true,
     },
     {
       name: 'Bulk delete 301',
@@ -47,6 +49,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/dail',
       gitUrl: 'https://git.drupalcode.org/project/dail',
+      isAI: true,
     },
     {
       name: 'drubot',
@@ -56,6 +59,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/drubot',
       gitUrl: 'https://git.drupalcode.org/project/drubot',
+      isAI: true,
     },
     {
       name: 'PasswordResetTabs',
@@ -197,6 +201,8 @@ const OpenSourceTab: React.FC = () => {
     },
   ];
 
+  const allProjects = [...maintainedProjects, ...contributedProjects];
+
   const stats = {
     totalIssues: 92,
     yearsOnDrupal: 13,
@@ -210,24 +216,31 @@ const OpenSourceTab: React.FC = () => {
       href={project.gitUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 hover:border-blue-500/50 hover:bg-gray-800/70 transition-colors block"
+      className="bg-gray-800/50 border border-gray-700 rounded-lg p-3 sm:p-4 hover:border-blue-500/50 hover:bg-gray-800/70 transition-colors block"
     >
-      <div className="flex items-start justify-between mb-2">
-        <div>
-          <h4 className="font-semibold text-white text-sm">{project.name}</h4>
-          <code className="text-xs text-gray-500">{project.machineName}</code>
+      <div className="flex items-start justify-between gap-2 mb-2">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap mb-1">
+            <h4 className="font-semibold text-white text-sm">{project.name}</h4>
+            {project.isAI && (
+              <span className="text-xs px-1.5 py-0.5 rounded bg-purple-900/50 text-purple-300 border border-purple-700 whitespace-nowrap">
+                AI
+              </span>
+            )}
+          </div>
+          <code className="text-xs text-gray-500 block truncate">{project.machineName}</code>
         </div>
-        <span className={`text-xs px-2 py-0.5 rounded ${
-          project.role === 'maintainer' 
-            ? 'bg-green-900/50 text-green-400 border border-green-700' 
+        <span className={`text-xs px-2 py-0.5 rounded whitespace-nowrap flex-shrink-0 ${
+          project.role === 'maintainer'
+            ? 'bg-green-900/50 text-green-400 border border-green-700'
             : 'bg-blue-900/50 text-blue-400 border border-blue-700'
         }`}>
           {project.role === 'maintainer' ? 'Maintainer' : 'Contributor'}
         </span>
       </div>
-      
+
       <p className="text-gray-400 text-xs mb-3 line-clamp-2">{project.description}</p>
-      
+
       <div className="flex items-center justify-between">
         <span className="text-xs text-gray-500">{project.issues} issue{project.issues !== 1 ? 's' : ''}</span>
         <span className="text-xs text-blue-400 flex items-center gap-1">
@@ -239,134 +252,75 @@ const OpenSourceTab: React.FC = () => {
 
   return (
     <div className="p-4 sm:p-8 overflow-auto h-full bg-gray-900">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white mb-2">Open Source Contributions</h1>
-          <p className="text-gray-400">
-            My contributions to the Drupal community and open source ecosystem.
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl font-bold text-white mb-2">Open Source Contributions</h1>
+          <p className="text-sm sm:text-base text-gray-400">
+            My contributions to the open source ecosystem.
           </p>
         </div>
 
         {/* Stats Banner */}
-        <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-500/30 rounded-lg p-6 mb-8">
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 text-center">
+        <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-500/30 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 text-center">
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-blue-400">{stats.totalIssues}</div>
+              <div className="text-xl sm:text-3xl font-bold text-blue-400">{stats.totalIssues}</div>
               <div className="text-xs text-gray-400">Issue Credits</div>
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-green-400">{stats.maintainedProjects}</div>
-              <div className="text-xs text-gray-400">Projects Maintained</div>
+              <div className="text-xl sm:text-3xl font-bold text-green-400">{stats.maintainedProjects}</div>
+              <div className="text-xs text-gray-400">Maintained</div>
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-purple-400">{stats.contributedProjects}</div>
-              <div className="text-xs text-gray-400">Projects Contributed</div>
+              <div className="text-xl sm:text-3xl font-bold text-purple-400">{stats.contributedProjects}</div>
+              <div className="text-xs text-gray-400">Contributed</div>
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400">{stats.coreContributions}</div>
-              <div className="text-xs text-gray-400">Core Contributions</div>
+              <div className="text-xl sm:text-3xl font-bold text-yellow-400">{stats.coreContributions}</div>
+              <div className="text-xs text-gray-400">Core</div>
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-orange-400">{stats.yearsOnDrupal}+</div>
-              <div className="text-xs text-gray-400">Years Open Source Contributor</div>
+              <div className="text-xl sm:text-3xl font-bold text-orange-400">{stats.yearsOnDrupal}+</div>
+              <div className="text-xs text-gray-400">Years</div>
             </div>
           </div>
         </div>
 
-        {/* Git Repositories Section */}
-        <div className="mb-8">
+        {/* Git Repositories - Single Unified Section */}
+        <div className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 mb-4">
-            <span className="text-orange-400 text-lg">📦</span>
-            <h2 className="text-lg font-semibold text-white">Git Repositories</h2>
-            <span className="text-xs text-gray-500">({maintainedProjects.length + contributedProjects.length} repos)</span>
+            <span className="text-orange-400 text-base sm:text-lg">📦</span>
+            <h2 className="text-base sm:text-lg font-semibold text-white">Git Repositories</h2>
+            <span className="text-xs text-gray-500">({allProjects.length} repos)</span>
           </div>
-          <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
 
-            {/* Maintained Repos */}
-            <div className="mb-4">
-              <h4 className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-2">Maintained Projects</h4>
-              <div className="flex flex-wrap gap-2">
-                {maintainedProjects.map((project) => (
-                  <a
-                    key={project.machineName}
-                    href={project.gitUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs bg-green-900/30 text-green-300 px-3 py-1.5 rounded-md hover:bg-green-900/50 transition-colors border border-green-700/50 flex items-center gap-1"
-                  >
-                    <span>📦</span> {project.machineName}
-                  </a>
-                ))}
-              </div>
-            </div>
-            
-            {/* Contributed Repos */}
-            <div>
-              <h4 className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">Contributed Projects</h4>
-              <div className="flex flex-wrap gap-2">
-                {contributedProjects.map((project) => (
-                  <a
-                    key={project.machineName}
-                    href={project.gitUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs bg-blue-900/30 text-blue-300 px-3 py-1.5 rounded-md hover:bg-blue-900/50 transition-colors border border-blue-700/50 flex items-center gap-1"
-                  >
-                    <span>📦</span> {project.machineName}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Maintained Projects */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="text-green-400 text-lg">✓</span>
-            <h2 className="text-lg font-semibold text-white">Projects I Maintain</h2>
-            <span className="text-xs text-gray-500">({maintainedProjects.length} projects)</span>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {maintainedProjects.map((project) => (
-              <ProjectCard key={project.machineName} project={project} />
-            ))}
-          </div>
-        </div>
-
-        {/* Contributed Projects */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="text-blue-400 text-lg">+</span>
-            <h2 className="text-lg font-semibold text-white">Projects I've Contributed To</h2>
-            <span className="text-xs text-gray-500">({contributedProjects.length} projects)</span>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {contributedProjects.map((project) => (
+          {/* Project Grid - Responsive */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            {allProjects.map((project) => (
               <ProjectCard key={project.machineName} project={project} />
             ))}
           </div>
         </div>
 
         {/* Additional Info */}
-        <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-6">
-          <h3 className="text-white font-semibold mb-3">Community Involvement</h3>
-          <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-400">
+        <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 sm:p-6">
+          <h3 className="text-white font-semibold mb-3 text-sm sm:text-base">Community Involvement</h3>
+          <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm text-gray-400">
             <div className="flex items-start gap-2">
-              <span className="text-green-400">✓</span>
+              <span className="text-green-400 flex-shrink-0">✓</span>
               <span>Security Advisory Coverage Eligible</span>
             </div>
             <div className="flex items-start gap-2">
-              <span className="text-yellow-400">🏢</span>
+              <span className="text-yellow-400 flex-shrink-0">🏢</span>
               <span>Previously at Acquia, Accenture</span>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="text-center text-gray-600 text-xs mt-10 pt-6 border-t border-gray-800">
-          <p>All projects are available on drupal.org</p>
+        <div className="text-center text-gray-600 text-xs mt-8 sm:mt-10 pt-4 sm:pt-6 border-t border-gray-800">
+          <p>View source code repositories for all open source contributions</p>
         </div>
       </div>
     </div>
