@@ -207,8 +207,13 @@ Migrated large government portal from Drupal 7 to Drupal 8.
 
 I am a Senior Solutions Architect & Full Stack AI Engineer with years of experience in building AI-powered applications and enterprise-level web solutions. My expertise spans from traditional CMS development to cutting-edge AI/ML implementations, specializing in RAG pipelines, conversational AI, and intelligent automation systems.
 
-### Certifications
+### Certifications & Courses
 
+**Courses:**
+- **Antigravity and Gemini Enterprise** - Google Cloud
+- **Architecting on AWS** - Amazon Web Services
+
+**Certifications:**
 - **Triple Certified CMS Expert** (Drupal 10, 11)
 - **Triple Certified CMS Expert** (Drupal 9)
 - **Triple Certified CMS Expert** (Drupal 8)
