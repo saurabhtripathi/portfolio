@@ -853,6 +853,37 @@ const WelcomeTab: React.FC<{
           <DrupalContributions onViewAll={onOpenOpenSource} />
         </div>
 
+        {/* Publications */}
+        <div className="mb-10">
+          <h3 className="text-sm text-gray-500 uppercase tracking-wider mb-3">Publications</h3>
+          <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
+            <div className="space-y-4">
+              <div className="pb-4 border-b border-gray-700 last:border-0 last:pb-0">
+                <a
+                  href="https://saurabhtripathitech.wordpress.com/2023/10/20/using-aiml-in-drupal/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 font-medium text-sm block mb-1"
+                >
+                  Building a Chatbot using AIML parser in CMS
+                </a>
+                <p className="text-gray-500 text-xs">Faichi Solutions Pvt. Ltd. · Nov 25, 2016</p>
+              </div>
+              <div className="pb-4 border-b border-gray-700 last:border-0 last:pb-0">
+                <a
+                  href="https://saurabhtripathitech.wordpress.com/2023/10/19/implement-eu-cookie-in-drupal-8/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 font-medium text-sm block mb-1"
+                >
+                  EU cookie implementation in CMS, JAVASCRIPT
+                </a>
+                <p className="text-gray-500 text-xs">Faichi Solutions Pvt. Ltd. · Nov 25, 2016</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Recent Files - desktop only, mobile uses bottom nav */}
         <div className="mb-8 hidden sm:block">
           <h3 className="text-sm text-gray-500 uppercase tracking-wider mb-3">Quick Access</h3>
