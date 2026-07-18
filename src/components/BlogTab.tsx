@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface BlogPost {
   id: string;
@@ -187,12 +187,36 @@ The EU Cookie Compliance module for Drupal provides a robust solution that handl
     }
   ];
 
+  // Handle hash-based routing for direct post links
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#/blog/')) {
+      const postId = hash.replace('#/blog/', '');
+      const post = blogPosts.find(p => p.id === postId);
+      if (post) {
+        setSelectedPost(post);
+      }
+    }
+  }, []);
+
+  // Update hash when post is selected
+  const handleSelectPost = (post: BlogPost) => {
+    setSelectedPost(post);
+    window.location.hash = `/blog/${post.id}`;
+  };
+
+  // Clear hash when going back to list
+  const handleBackToList = () => {
+    setSelectedPost(null);
+    window.location.hash = '/blog';
+  };
+
   if (selectedPost) {
     return (
       <div className="p-4 sm:p-8 overflow-auto h-full bg-gray-900">
         <div className="max-w-4xl mx-auto">
           <button
-            onClick={() => setSelectedPost(null)}
+            onClick={handleBackToList}
             className="mb-6 text-blue-400 hover:text-blue-300 flex items-center gap-2"
           >
             ← Back to all posts
@@ -239,7 +263,7 @@ The EU Cookie Compliance module for Drupal provides a robust solution that handl
             <div
               key={post.id}
               className="bg-gray-800 border border-gray-700 rounded-lg p-6 hover:border-blue-500/50 transition-colors cursor-pointer"
-              onClick={() => setSelectedPost(post)}
+              onClick={() => handleSelectPost(post)}
             >
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                 <h2 className="text-lg sm:text-xl font-semibold text-white hover:text-blue-400">
