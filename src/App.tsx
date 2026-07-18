@@ -6,6 +6,7 @@ import ResumeDownload from './components/ResumeDownload';
 import ContactTab from './components/ContactTab';
 import DrupalContributions from './components/DrupalContributions';
 import OpenSourceTab from './components/OpenSourceTab';
+import BlogTab from './components/BlogTab';
 
 interface Tab {
   id: string;
@@ -539,7 +540,8 @@ const WelcomeTab: React.FC<{
   onOpenMicrosite: (tab: Tab) => void;
   onOpenContact: () => void;
   onOpenOpenSource: () => void;
-}> = ({ files, onFileSelect, onOpenMicrosite, onOpenContact, onOpenOpenSource }) => {
+  onOpenBlog: () => void;
+}> = ({ files, onFileSelect, onOpenMicrosite, onOpenContact, onOpenOpenSource, onOpenBlog }) => {
   const findFileByName = (name: string) => {
     return files.find(f => f.title.toLowerCase().includes(name.toLowerCase()));
   };
@@ -695,16 +697,23 @@ const WelcomeTab: React.FC<{
           </button>
         </div>
 
-        {/* Mobile Action Tiles - Big buttons for Resume, Open Source, Contact */}
-        <div className="grid grid-cols-3 gap-2 mb-3 sm:hidden">
+        {/* Mobile Action Tiles - Big buttons for Resume, Blog, Open Source, Contact */}
+        <div className="grid grid-cols-4 gap-2 mb-3 sm:hidden">
           <a
             href="https://raw.githubusercontent.com/saurabhtripathi/portfolio/main/public/resume/Saurabh_Tripathi_Resume.pdf"
             download="Saurabh_Tripathi_Resume.pdf"
             className="bg-gradient-to-br from-green-900/70 to-emerald-900/70 p-3 rounded-lg text-center border border-green-500/50 active:bg-green-800/50 transition-colors block"
           >
             <div className="text-xl text-green-400">📄</div>
-            <div className="text-[10px] text-green-300 mt-1 font-medium">Download Resume</div>
+            <div className="text-[10px] text-green-300 mt-1 font-medium">Resume</div>
           </a>
+          <button
+            onClick={onOpenBlog}
+            className="bg-gradient-to-br from-orange-900/70 to-amber-900/70 p-3 rounded-lg text-center border border-orange-500/50 active:bg-orange-800/50 transition-colors"
+          >
+            <div className="text-xl text-orange-400">📝</div>
+            <div className="text-[10px] text-orange-300 mt-1 font-medium">Blog</div>
+          </button>
           <button
             onClick={onOpenOpenSource}
             className="bg-gradient-to-br from-blue-900/70 to-cyan-900/70 p-3 rounded-lg text-center border border-blue-500/50 active:bg-blue-800/50 transition-colors"
@@ -717,7 +726,7 @@ const WelcomeTab: React.FC<{
             className="bg-gradient-to-br from-purple-900/70 to-violet-900/70 p-3 rounded-lg text-center border border-purple-500/50 active:bg-purple-800/50 transition-colors"
           >
             <div className="text-xl text-purple-400">📧</div>
-            <div className="text-[10px] text-purple-300 mt-1 font-medium">Contact Me</div>
+            <div className="text-[10px] text-purple-300 mt-1 font-medium">Contact</div>
           </button>
         </div>
 
@@ -859,25 +868,21 @@ const WelcomeTab: React.FC<{
           <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
             <div className="space-y-4">
               <div className="pb-4 border-b border-gray-700 last:border-0 last:pb-0">
-                <a
-                  href="https://saurabhtripathitech.wordpress.com/2023/10/20/using-aiml-in-drupal/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-400 hover:text-blue-300 font-medium text-sm block mb-1"
+                <button
+                  onClick={onOpenBlog}
+                  className="text-blue-400 hover:text-blue-300 font-medium text-sm block mb-1 text-left"
                 >
-                  Building a Chatbot using AIML parser in CMS
-                </a>
+                  Building a Chatbot using AIML parser in CMS →
+                </button>
                 <p className="text-gray-500 text-xs">Faichi Solutions Pvt. Ltd. · Nov 25, 2016</p>
               </div>
               <div className="pb-4 border-b border-gray-700 last:border-0 last:pb-0">
-                <a
-                  href="https://saurabhtripathitech.wordpress.com/2023/10/19/implement-eu-cookie-in-drupal-8/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-400 hover:text-blue-300 font-medium text-sm block mb-1"
+                <button
+                  onClick={onOpenBlog}
+                  className="text-blue-400 hover:text-blue-300 font-medium text-sm block mb-1 text-left"
                 >
-                  EU cookie implementation in CMS, JAVASCRIPT
-                </a>
+                  EU cookie implementation in CMS, JAVASCRIPT →
+                </button>
                 <p className="text-gray-500 text-xs">Faichi Solutions Pvt. Ltd. · Nov 25, 2016</p>
               </div>
             </div>
@@ -1368,6 +1373,23 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
     setActiveTabId('contact');
   };
 
+  const handleOpenBlog = () => {
+    const blogTab: Tab = {
+      id: 'blog',
+      title: 'Blog',
+      content: '',
+      language: 'blog',
+      icon: 'md',
+      type: 'file',
+    };
+    setTabs(prevTabs => {
+      const existingTab = prevTabs.find(t => t.id === 'blog');
+      if (existingTab) return prevTabs;
+      return [...prevTabs, blogTab];
+    });
+    setActiveTabId('blog');
+  };
+
   const handleOpenOpenSource = () => {
     const openSourceTab: Tab = {
       id: 'open-source',
@@ -1597,11 +1619,13 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
               <div className="text-gray-400">Loading...</div>
             </div>
           ) : activeTab?.type === 'welcome' ? (
-            <WelcomeTab files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} onOpenContact={handleOpenContact} onOpenOpenSource={handleOpenOpenSource} />
+            <WelcomeTab files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} onOpenContact={handleOpenContact} onOpenOpenSource={handleOpenOpenSource} onOpenBlog={handleOpenBlog} />
           ) : activeTab?.id === 'contact' ? (
             <ContactTab onOpenOpenSource={handleOpenOpenSource} />
           ) : activeTab?.id === 'open-source' ? (
             <OpenSourceTab />
+          ) : activeTab?.id === 'blog' ? (
+            <BlogTab />
           ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-experience' ? (
             <ExperienceMicrosite content={activeTab.content} onGoHome={handleGoHome} />
           ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-skills' ? (
@@ -1726,7 +1750,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
                 <div className="text-gray-400">Loading...</div>
               </div>
             ) : activeTab?.type === 'welcome' ? (
-              <WelcomeTab files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} onOpenContact={handleOpenContact} onOpenOpenSource={handleOpenOpenSource} />
+              <WelcomeTab files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} onOpenContact={handleOpenContact} onOpenOpenSource={handleOpenOpenSource} onOpenBlog={handleOpenBlog} />
             ) : activeTab?.id === 'contact' ? (
               <ContactTab onOpenOpenSource={handleOpenOpenSource} />
             ) : activeTab?.id === 'open-source' ? (
