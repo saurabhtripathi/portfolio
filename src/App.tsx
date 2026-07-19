@@ -1294,6 +1294,17 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
     loadFiles();
   }, []);
 
+  // Auto-open blog tab if hash contains blog post link
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#/blog/') || hash === '#/blog') {
+      // Delay to ensure tabs are loaded first
+      setTimeout(() => {
+        handleOpenBlog();
+      }, 100);
+    }
+  }, []);
+
   const loadFiles = async () => {
     setLoading(true);
     const fetchedFiles = await fetchFiles();
