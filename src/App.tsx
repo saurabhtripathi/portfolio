@@ -924,8 +924,6 @@ const StatusBar: React.FC<{
   return (
     <div className="bg-blue-600 text-white px-4 py-1 flex justify-between items-center text-xs">
       <div className="flex items-center gap-3">
-        <span>DDEV</span>
-        <span>main</span>
         <button
           onClick={() => onOpenPanel('terminal')}
           className={`flex items-center gap-1 px-2 py-0.5 rounded text-xs transition-colors ${
