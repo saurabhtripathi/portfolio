@@ -961,9 +961,12 @@ const Terminal: React.FC<{
   onFileSelect: (file: FileItem) => void;
   onOpenMicrosite: (tab: Tab) => void;
   onGoHome: () => void;
+  onOpenBlog?: () => void;
+  onOpenContact?: () => void;
+  onOpenOpenSource?: () => void;
   hideHeader?: boolean;
   mobileCloseButton?: React.ReactNode;
-}> = ({ files, onFileSelect, onOpenMicrosite, onGoHome, hideHeader, mobileCloseButton }) => {
+}> = ({ files, onFileSelect, onOpenMicrosite, onGoHome, onOpenBlog, onOpenContact, onOpenOpenSource, hideHeader, mobileCloseButton }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<TerminalLine[]>([
     { type: 'success', text: '💡 Type a command or tap a button above. Try: home, about, skills, experience' },
@@ -1007,6 +1010,7 @@ const Terminal: React.FC<{
       addLine('output', '  experience     → View my experience timeline');
       addLine('output', '  skills         → View my skills dashboard');
       addLine('output', '  projects       → Open my projects');
+      addLine('output', '  blog           → Read technical articles');
       addLine('output', '  architecture   → See how this site is built');
       addLine('output', '');
       addLine('success', '🛠️ Utility Commands:');
@@ -1047,14 +1051,30 @@ const Terminal: React.FC<{
       return;
     }
 
+    // Blog command
+    if (trimmedCmd === 'blog') {
+      if (onOpenBlog) {
+        onOpenBlog();
+        addLine('success', '📝 Blog opened! See technical posts above.');
+      } else {
+        addLine('output', '📝 Visit the Blog tab to read technical articles');
+      }
+      return;
+    }
+
     // Contact
     if (trimmedCmd === 'contact') {
-      addLine('output', '');
-      addLine('success', '📬 Contact Information:');
-      addLine('output', '   Email: saurabh.tripathi.cs@gmail.com');
-      addLine('output', '   LinkedIn: linkedin.com/in/saurabh-tripathi');
-      addLine('output', '   GitHub: github.com/saurabh-tripathi');
-      addLine('output', '');
+      if (onOpenContact) {
+        onOpenContact();
+        addLine('success', '📬 Contact tab opened!');
+      } else {
+        addLine('output', '');
+        addLine('success', '📬 Contact Information:');
+        addLine('output', '   Email: saurabh.tripathi.cs@gmail.com');
+        addLine('output', '   LinkedIn: linkedin.com/in/saurabh-tripathi');
+        addLine('output', '   GitHub: github.com/saurabh-tripathi');
+        addLine('output', '');
+      }
       return;
     }
 
@@ -1217,6 +1237,7 @@ const Terminal: React.FC<{
           { cmd: 'experience', color: 'text-green-400' },
           { cmd: 'skills', color: 'text-green-400' },
           { cmd: 'projects', color: 'text-blue-400' },
+          { cmd: 'blog', color: 'text-orange-400' },
           { cmd: 'whoami', color: 'text-purple-400' },
           { cmd: 'contact', color: 'text-purple-400' },
           { cmd: 'help', color: 'text-yellow-400' },
@@ -1703,6 +1724,24 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
                 setMobileTerminalOpen(false);
                 scrollMobileToContent();
               }}
+              onOpenBlog={() => {
+                handleOpenBlog();
+                showMobileToast('Blog opened');
+                setMobileTerminalOpen(false);
+                scrollMobileToContent();
+              }}
+              onOpenContact={() => {
+                handleOpenContact();
+                showMobileToast('Contact opened');
+                setMobileTerminalOpen(false);
+                scrollMobileToContent();
+              }}
+              onOpenOpenSource={() => {
+                handleOpenOpenSource();
+                showMobileToast('Open Source opened');
+                setMobileTerminalOpen(false);
+                scrollMobileToContent();
+              }}
             />
           </div>
         )}
@@ -1814,7 +1853,7 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
           </div>
           {/* Panel content */}
           <div style={{ display: activePanel === 'terminal' ? 'block' : 'none' }}>
-            <Terminal files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} hideHeader />
+            <Terminal files={files} onFileSelect={handleFileSelect} onOpenMicrosite={handleOpenMicrosite} onGoHome={handleGoHome} onOpenBlog={handleOpenBlog} onOpenContact={handleOpenContact} onOpenOpenSource={handleOpenOpenSource} hideHeader />
           </div>
           <div style={{ display: activePanel === 'chat' ? 'block' : 'none' }}>
             <AiChatPanel onClose={() => setActivePanel(null)} hideHeader />
