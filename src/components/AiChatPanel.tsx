@@ -7,12 +7,12 @@ interface Message {
 
 const SUGGESTED_QUESTIONS = [
   'What is your current role?',
-  'What are your top skills?',
-  'Tell me about CNA project',
-  'How many years experience?',
+  'What are your AI/ML skills?',
+  'Tell me about your LangGraph projects',
+  'What is your RAG experience?',
   'What certifications do you have?',
-  'What tech stack do you use?',
-  'Tell me about Mediacorp work',
+  'What is your GCP experience?',
+  'Tell me about multi-agent systems',
   'How to contact you?',
 ];
 

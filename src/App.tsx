@@ -1051,15 +1051,18 @@ const Terminal: React.FC<{
     if (trimmedCmd === 'whoami') {
       addLine('output', '');
       addLine('success', '👤 Saurabh Tripathi');
-      addLine('output', '   Full Stack AI Engineer');
-      addLine('output', '   14+ years in AI/ML & Full-Stack Development');
+      addLine('output', '   Full Stack AI Engineer & Forward Deployed Engineer');
+      addLine('output', '   14+ years in Full-Stack Development, AI/ML, Web & CMS Solutions');
       addLine('output', '');
-      addLine('output', '   🤖 AI/ML: LangGraph, LangChain, RAG Pipelines');
-      addLine('output', '   ☁️  Cloud: GCP (Vertex AI, Cloud Run, Cloud SQL)');
-      addLine('output', '   🐍 Backend: Python, FastAPI, Node.js');
-      addLine('output', '   ⚛️  Frontend: React, TypeScript, Next.js');
+      addLine('output', '   🤖 Agentic AI: LangGraph multi-agent systems, LangChain frameworks');
+      addLine('output', '   🔍 RAG Expertise: Vector search (FAISS), semantic retrieval, embeddings');
+      addLine('output', '   ☁️  GCP Stack: Vertex AI, Gemini API, Cloud Run, Cloud SQL, BigQuery');
+      addLine('output', '   🐍 Backend: Python (FastAPI), Node.js, WebSockets, RESTful APIs');
+      addLine('output', '   ⚛️  Frontend: React, TypeScript, Next.js, responsive design');
+      addLine('output', '   🌐 CMS & Web: Headless CMS architecture, enterprise integrations');
+      addLine('output', '   🚀 AI Integrations: LLM pipelines, conversational agents, ML workflows');
       addLine('output', '');
-      addLine('output', '   📍 Singapore 🇸🇬');
+      addLine('output', '   📍 Singapore 🇸🇬 | Senior Solutions Architect @ Mediacorp (2021-Present)');
       addLine('output', '');
       return;
     }
