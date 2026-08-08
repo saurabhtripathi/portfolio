@@ -15,7 +15,7 @@ export const portfolioFiles: FileItem[] = [
 
 ## AI-Powered News Search
 **Role:** Solutions Architect & AI Engineer
-**Duration:** 2025
+**Team Size:** 5-10
 **Technologies:** FastAPI, Google Gemini 2.0 Flash, FAISS, Selenium, WebSockets, mitmproxy, SentenceTransformers, BeautifulSoup4, Pydantic
 
 ### Overview
@@ -38,7 +38,7 @@ AI-powered conversational search experience that transforms traditional search i
 
 ## OTT Conversational Platform
 **Role:** AI Engineer & Solutions Architect
-**Duration:** 2026
+**Team Size:** 10-15
 **Technologies:** LangGraph, LangChain, Google Vertex AI (Gemini 2.5/3.0), Cloud SQL (PostgreSQL), Vertex AI Search, FastAPI, GCP Cloud Run, Apigee
 
 ### Overview
@@ -61,7 +61,7 @@ Multi-agent conversational platform for OTT content discovery with supervisor-le
 
 ## WhatsApp Support Bot - AI Agent Framework
 **Role:** Technical Lead & AI Engineer
-**Duration:** 2025
+**Team Size:** 5-10
 **Technologies:** LangChain, LangGraph, Google Gemini, FAISS, Azure OpenAI, Python, FastAPI
 
 ### Overview
@@ -84,7 +84,7 @@ Modular AI agent framework with WhatsApp chat history analysis as primary use ca
 
 ## CNA (Channel NewsAsia) Platform
 **Role:** Lead Solutions Architect
-**Duration:** June 2021 - Present
+**Team Size:** 10-15
 **Technologies:** CMS (Drupal 9/10/11), React, TypeScript, AWS, AI Integrations (OpenAI, Beyond Words TTS)
 
 ### Overview
@@ -109,7 +109,7 @@ Singapore's leading English-language news platform serving millions of users acr
 
 ## Berita
 **Role:** Senior Solutions Architect
-**Duration:** 2020 - Present
+**Team Size:** 5-10
 **Technologies:** CMS (Drupal 10/11), React, Next.js, AI-assisted development workflows, AI editor tools
 
 ### Overview
@@ -133,7 +133,7 @@ Leading Malay-language news portal in Singapore with modern architecture, AI-ass
 
 ## Seithi Tamil News Platform
 **Role:** Technical Lead
-**Duration:** 2020 - 2022
+**Team Size:** 5-10
 **Technologies:** CMS (Drupal 9), React, GraphQL, AI editor tools
 
 ### Overview
@@ -156,7 +156,7 @@ First Tamil-language digital news platform in Singapore built from scratch with 
 
 ## Enterprise E-commerce Platform
 **Role:** Software Engineer, Research and Development
-**Duration:** 2017 - 2018
+**Team Size:** 10-15
 **Technologies:** Drupal 8, Commerce, Salesforce
 
 ### Overview
@@ -177,7 +177,7 @@ Multi-brand e-commerce platform for Fortune 500 company.
 
 ## Government Portal Migration
 **Role:** Application Development Senior Analyst & Senior Drupal Developer
-**Duration:** 2015 - 2016
+**Team Size:** 5-10
 **Technologies:** Drupal 7, Drupal 8
 
 ### Overview
