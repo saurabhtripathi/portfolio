@@ -13,17 +13,17 @@ export const portfolioFiles: FileItem[] = [
     title: 'projects.md',
     content: `# Major Projects
 
-## Ask CNA - AI-Powered News Search
+## AI-Powered News Search
 **Role:** Solutions Architect & AI Engineer
 **Duration:** 2025
 **Technologies:** FastAPI, Google Gemini 2.0 Flash, FAISS, Selenium, WebSockets, mitmproxy, SentenceTransformers, BeautifulSoup4, Pydantic
 
 ### Overview
-AI-powered conversational search experience for Channel NewsAsia that transforms traditional search into intelligent Q&A with real-time streaming responses using RAG (Retrieval-Augmented Generation) pipeline.
+AI-powered conversational search experience that transforms traditional search into intelligent Q&A with real-time streaming responses using RAG (Retrieval-Augmented Generation) pipeline.
 
 ### Key Responsibilities
 - Architected end-to-end RAG pipeline with semantic search and answer generation
-- Implemented transparent proxy using mitmproxy to inject custom UI into CNA search without modifying servers
+- Implemented transparent proxy using mitmproxy to inject custom UI without modifying existing servers
 - Built WebSocket-based streaming backend with FastAPI for progressive response delivery
 - Developed semantic article ranking using SentenceTransformers embeddings and FAISS vector search
 - Created parallel web scraping system with Selenium for real-time article retrieval across multiple pages
@@ -32,28 +32,28 @@ AI-powered conversational search experience for Channel NewsAsia that transforms
 - Real-time AI answer generation with live progress updates and streaming tokens
 - Semantic search with top 5 article citations as sources using L2 distance ranking
 - Sub-2-second response time including scraping, embedding, and AI generation
-- Zero infrastructure changes to existing CNA platform via proxy injection
+- Zero infrastructure changes to existing platform via proxy injection
 
 ---
 
-## mewatch Conversational Experience Platform (mewatch-cep)
+## OTT Conversational Platform
 **Role:** AI Engineer & Solutions Architect
 **Duration:** 2026
 **Technologies:** LangGraph, LangChain, Google Vertex AI (Gemini 2.5/3.0), Cloud SQL (PostgreSQL), Vertex AI Search, FastAPI, GCP Cloud Run, Apigee
 
 ### Overview
-Multi-agent conversational platform for mewatch content discovery with supervisor-led orchestration, client-side tool relay, long-term memory, and robust error handling. Handles VOD catalogue search, personalized recommendations, FIFA World Cup history, IFAB Football Rules, and FAQ queries.
+Multi-agent conversational platform for OTT content discovery with supervisor-led orchestration, client-side tool relay, long-term memory, and robust error handling. Handles VOD catalogue search, personalized recommendations, sports event history, rules queries, and FAQ support.
 
 ### Key Responsibilities
-- Built multi-agent architecture using LangGraph with orchestrator, FIFA agent, content search, and recommendation agents
+- Built multi-agent architecture using LangGraph with orchestrator, sports agent, content search, and recommendation agents
 - Implemented client-side tool relay via SSE for watch history and personalized features
-- Integrated Vertex AI Search and custom RAG engine for football rules and FAQ queries
+- Integrated Vertex AI Search and custom RAG engine for sports rules and FAQ queries
 - Developed Cloud SQL-backed conversation memory and long-term semantic user facts storage
 - Created modular FastAPI backend with semantic versioning and automated GCP Cloud Run deployments
 
 ### Achievements
 - Supervisor-led multi-agent orchestration with safety recovery for Vertex AI recitation blocks
-- Semantic search using RAG for football rules with citation support
+- Semantic search using RAG for domain-specific queries with citation support
 - Client-side tool execution pattern for secure personalized features
 - Production deployment pipeline with staging, feature-branch, and semantic release workflows
 
@@ -232,11 +232,12 @@ I am a Senior Solutions Architect & Full Stack AI Engineer with years of experie
 
 ### Career Highlights
 
-- Built AI-powered conversational search (Ask CNA) using RAG, Gemini AI, and FAISS
-- Developed intelligent WhatsApp Support Bot with multi-turn conversation memory
-- Led development of major media platforms (CNA, Berita, Seithi)
+- Built AI-powered conversational search using RAG, Gemini AI, and FAISS
+- Developed OTT conversational platform with LangGraph multi-agent architecture
+- Created intelligent WhatsApp Support Bot with multi-turn conversation memory
+- Led development of major media platforms serving millions of users
 - Architected AI-assisted feature development workflows for engineering teams
-- Contributed to open-source projects and CMS community
+- Contributed to open-source AI/ML projects and developer community
 
 ### Location
 

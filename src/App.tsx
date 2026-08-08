@@ -647,6 +647,13 @@ const WelcomeTab: React.FC<{
               <span>💧</span>
               <span>Open Source Contributions</span>
             </button>
+            <button
+              onClick={onOpenBlog}
+              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-gray-800 hover:bg-orange-600 text-orange-400 hover:text-white rounded-lg text-sm transition-colors border border-gray-700 hover:border-orange-500"
+            >
+              <span>📝</span>
+              <span>Blog</span>
+            </button>
             <ResumeDownload />
             <button
               onClick={onOpenContact}
@@ -1046,7 +1053,13 @@ const Terminal: React.FC<{
       addLine('success', '👤 Saurabh Tripathi');
       addLine('output', '   Full Stack AI Engineer');
       addLine('output', '   14+ years in AI/ML & Full-Stack Development');
-      addLine('output', '   Singapore 🇸🇬');
+      addLine('output', '');
+      addLine('output', '   🤖 AI/ML: LangGraph, LangChain, RAG Pipelines');
+      addLine('output', '   ☁️  Cloud: GCP (Vertex AI, Cloud Run, Cloud SQL)');
+      addLine('output', '   🐍 Backend: Python, FastAPI, Node.js');
+      addLine('output', '   ⚛️  Frontend: React, TypeScript, Next.js');
+      addLine('output', '');
+      addLine('output', '   📍 Singapore 🇸🇬');
       addLine('output', '');
       return;
     }
@@ -1803,6 +1816,8 @@ const PortfolioApp: React.FC<{ onNavigateNews: () => void }> = ({ onNavigateNews
               <ContactTab onOpenOpenSource={handleOpenOpenSource} />
             ) : activeTab?.id === 'open-source' ? (
               <OpenSourceTab />
+            ) : activeTab?.id === 'blog' ? (
+              <BlogTab />
             ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-experience' ? (
               <ExperienceMicrosite content={activeTab.content} onGoHome={handleGoHome} />
             ) : activeTab?.type === 'microsite' && activeTab.language === 'microsite-skills' ? (
