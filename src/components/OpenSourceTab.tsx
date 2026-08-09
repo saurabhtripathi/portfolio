@@ -312,7 +312,7 @@ const OpenSourceTab: React.FC = () => {
         <div className="mb-6 sm:mb-8">
           <h1 className="text-xl sm:text-2xl font-bold text-white mb-2">Open Source Contributions</h1>
           <p className="text-sm sm:text-base text-gray-400">
-            My contributions to the open source ecosystem.
+            AI/ML projects and open source contributions.
           </p>
         </div>
 
@@ -358,11 +358,11 @@ const OpenSourceTab: React.FC = () => {
           </div>
         </div>
 
-        {/* Drupal Git Repositories - Single Unified Section */}
+        {/* Open Source Repositories */}
         <div className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 mb-4">
             <span className="text-orange-400 text-base sm:text-lg">📦</span>
-            <h2 className="text-base sm:text-lg font-semibold text-white">Drupal Git Repositories</h2>
+            <h2 className="text-base sm:text-lg font-semibold text-white">Open Source Repositories</h2>
             <span className="text-xs text-gray-500">({allProjects.length} repos)</span>
           </div>
 

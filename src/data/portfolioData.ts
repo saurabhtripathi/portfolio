@@ -244,6 +244,10 @@ I am a Senior Solutions Architect & Full Stack AI Engineer with years of experie
 - **[PyDrubot](https://github.com/saurabhtripathi/pydrubot)** - Python AIML chatbot with pattern-matching engine and talking avatar web app
 - **[Analytics Pipeline Lab](https://github.com/saurabhtripathi/analytics-pipeline-lab)** - Production ML pipeline for customer analytics with feature engineering and predictive models
 
+### Open Source Contributions
+
+View all open source contributions →
+
 ### Location
 
 Singapore 🇸🇬
