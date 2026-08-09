@@ -976,7 +976,7 @@ const Terminal: React.FC<{
 }> = ({ files, onFileSelect, onOpenMicrosite, onGoHome, onOpenBlog, onOpenContact, onOpenOpenSource, hideHeader, mobileCloseButton }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<TerminalLine[]>([
-    { type: 'success', text: '💡 Type a command or tap a button above. Try: home, about, skills, experience' },
+    { type: 'success', text: '💡 Type a command or tap a button above. Try: home, about, skills, experience. Or click AI Assistant tab for smart suggestions!' },
   ]);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const terminalRef = React.useRef<HTMLDivElement>(null);
