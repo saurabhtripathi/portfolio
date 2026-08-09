@@ -9,6 +9,7 @@ interface DrupalProject {
   drupalUrl: string;
   gitUrl: string;
   isAI?: boolean;
+  tags?: string[];
 }
 
 interface GitHubProject {
@@ -29,6 +30,7 @@ const OpenSourceTab: React.FC = () => {
       drupalUrl: 'https://www.drupal.org/project/aiml_parser',
       gitUrl: 'https://git.drupalcode.org/project/aiml_parser',
       isAI: true,
+      tags: ['AI', 'PHP', 'Python'],
     },
     {
       name: 'Bulk delete 301',
@@ -38,6 +40,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/bulk_delete_301',
       gitUrl: 'https://git.drupalcode.org/project/bulk_delete_301',
+      tags: ['PHP'],
     },
     {
       name: 'Country Specific Nodes',
@@ -47,6 +50,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 3,
       drupalUrl: 'https://www.drupal.org/project/country_specific_nodes',
       gitUrl: 'https://git.drupalcode.org/project/country_specific_nodes',
+      tags: ['PHP', 'JS'],
     },
     {
       name: 'D.A.I.L.',
@@ -57,6 +61,7 @@ const OpenSourceTab: React.FC = () => {
       drupalUrl: 'https://www.drupal.org/project/dail',
       gitUrl: 'https://git.drupalcode.org/project/dail',
       isAI: true,
+      tags: ['AI', 'PHP', 'Python'],
     },
     {
       name: 'drubot',
@@ -67,6 +72,7 @@ const OpenSourceTab: React.FC = () => {
       drupalUrl: 'https://www.drupal.org/project/drubot',
       gitUrl: 'https://git.drupalcode.org/project/drubot',
       isAI: true,
+      tags: ['AI', 'PHP', 'Python'],
     },
     {
       name: 'PasswordResetTabs',
@@ -76,6 +82,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 5,
       drupalUrl: 'https://www.drupal.org/project/password_reset_tabs',
       gitUrl: 'https://git.drupalcode.org/project/password_reset_tabs',
+      tags: ['PHP', 'JS'],
     },
   ];
 
@@ -88,6 +95,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 4,
       drupalUrl: 'https://www.drupal.org/project/drupal',
       gitUrl: 'https://git.drupalcode.org/project/drupal',
+      tags: ['PHP', 'JS'],
     },
     {
       name: 'Chaos Tool Suite (ctools)',
@@ -97,6 +105,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/ctools',
       gitUrl: 'https://git.drupalcode.org/project/ctools',
+      tags: ['PHP'],
     },
     {
       name: 'Index Now',
@@ -106,6 +115,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/index_now',
       gitUrl: 'https://git.drupalcode.org/project/index_now',
+      tags: ['PHP'],
     },
     {
       name: 'Contact Storage',
@@ -115,6 +125,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/contact_storage',
       gitUrl: 'https://git.drupalcode.org/project/contact_storage',
+      tags: ['PHP'],
     },
     {
       name: 'Feeds',
@@ -124,6 +135,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/feeds',
       gitUrl: 'https://git.drupalcode.org/project/feeds',
+      tags: ['PHP'],
     },
     {
       name: 'Global Redirect',
@@ -133,6 +145,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/globalredirect',
       gitUrl: 'https://git.drupalcode.org/project/globalredirect',
+      tags: ['PHP'],
     },
     {
       name: 'Lightning Media',
@@ -142,6 +155,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/lightning_media',
       gitUrl: 'https://git.drupalcode.org/project/lightning_media',
+      tags: ['PHP', 'JS'],
     },
     {
       name: 'Schema.org Metatag',
@@ -151,6 +165,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/schema_metatag',
       gitUrl: 'https://git.drupalcode.org/project/schema_metatag',
+      tags: ['PHP', 'JS'],
     },
     {
       name: 'Video Embed Field',
@@ -160,6 +175,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/video_embed_field',
       gitUrl: 'https://git.drupalcode.org/project/video_embed_field',
+      tags: ['PHP', 'JS'],
     },
     {
       name: 'ShareThis',
@@ -169,6 +185,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/sharethis',
       gitUrl: 'https://git.drupalcode.org/project/sharethis',
+      tags: ['PHP', 'JS'],
     },
     {
       name: 'Reroute Email',
@@ -178,6 +195,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/reroute_email',
       gitUrl: 'https://git.drupalcode.org/project/reroute_email',
+      tags: ['PHP'],
     },
     {
       name: 'Quiz',
@@ -187,6 +205,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/quiz',
       gitUrl: 'https://git.drupalcode.org/project/quiz',
+      tags: ['PHP', 'JS'],
     },
     {
       name: 'Libraries API',
@@ -196,6 +215,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 1,
       drupalUrl: 'https://www.drupal.org/project/libraries',
       gitUrl: 'https://git.drupalcode.org/project/libraries',
+      tags: ['PHP'],
     },
     {
       name: 'Txtlocal SMS',
@@ -205,6 +225,7 @@ const OpenSourceTab: React.FC = () => {
       issues: 2,
       drupalUrl: 'https://www.drupal.org/project/txtlocal',
       gitUrl: 'https://git.drupalcode.org/project/txtlocal',
+      tags: ['PHP'],
     },
   ];
 
@@ -242,17 +263,20 @@ const OpenSourceTab: React.FC = () => {
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap mb-1">
-            <h4 className="font-semibold text-white text-sm">{project.name}</h4>
-            {project.isAI && (
-              <span className="text-xs px-1.5 py-0.5 rounded bg-purple-900/50 text-purple-300 border border-purple-700 whitespace-nowrap">
-                AI
+          <h4 className="font-semibold text-white text-sm mb-1">{project.name}</h4>
+          <div className="flex items-center gap-1 flex-wrap mb-1">
+            {project.tags?.map((tag) => (
+              <span
+                key={tag}
+                className="text-[10px] px-1 py-0.5 rounded bg-purple-900/50 text-purple-300 border border-purple-700 whitespace-nowrap"
+              >
+                {tag}
               </span>
-            )}
+            ))}
           </div>
-          <code className="text-xs text-gray-500 block truncate">{project.machineName}</code>
+          <code className="text-[10px] text-gray-500 block truncate">{project.machineName}</code>
         </div>
-        <span className={`text-xs px-2 py-0.5 rounded whitespace-nowrap flex-shrink-0 ${
+        <span className={`text-[10px] px-1.5 py-0.5 rounded whitespace-nowrap flex-shrink-0 ${
           project.role === 'maintainer'
             ? 'bg-green-900/50 text-green-400 border border-green-700'
             : 'bg-blue-900/50 text-blue-400 border border-blue-700'
@@ -282,11 +306,11 @@ const OpenSourceTab: React.FC = () => {
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="flex-1 min-w-0">
           <h4 className="font-semibold text-white text-sm mb-1">{project.name}</h4>
-          <div className="flex items-center gap-1.5 flex-wrap">
+          <div className="flex items-center gap-1 flex-wrap">
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-xs px-1.5 py-0.5 rounded bg-purple-900/50 text-purple-300 border border-purple-700 whitespace-nowrap"
+                className="text-[10px] px-1 py-0.5 rounded bg-purple-900/50 text-purple-300 border border-purple-700 whitespace-nowrap"
               >
                 {tag}
               </span>
@@ -312,7 +336,7 @@ const OpenSourceTab: React.FC = () => {
         <div className="mb-6 sm:mb-8">
           <h1 className="text-xl sm:text-2xl font-bold text-white mb-2">Open Source Contributions</h1>
           <p className="text-sm sm:text-base text-gray-400">
-            AI/ML projects and open source contributions.
+            Open source contributions.
           </p>
         </div>
 
