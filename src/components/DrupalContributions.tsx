@@ -11,6 +11,14 @@ interface DrupalProject {
   isAI?: boolean;
 }
 
+interface GitHubProject {
+  name: string;
+  machineName: string;
+  description: string;
+  gitUrl: string;
+  tags: string[];
+}
+
 interface DrupalContributionsProps {
   compact?: boolean;
   onViewAll?: () => void;
@@ -206,6 +214,23 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
     },
   ];
 
+  const githubProjects: GitHubProject[] = [
+    {
+      name: 'PyDrubot',
+      machineName: 'pydrubot',
+      description: 'A Python AIML chatbot: a real pattern-matching engine plus a small chat web app with a talking avatar.',
+      gitUrl: 'https://github.com/saurabhtripathi/pydrubot',
+      tags: ['AI', 'Python', 'AIML', 'Chatbot'],
+    },
+    {
+      name: 'Analytics Pipeline Lab',
+      machineName: 'analytics-pipeline-lab',
+      description: 'Production customer-analytics ML pipeline — ingests transaction data, cleans it, engineers features, trains models, and produces per-customer predictions on a schedule. Everything runs in Docker on a single machine.',
+      gitUrl: 'https://github.com/saurabhtripathi/analytics-pipeline-lab',
+      tags: ['AI', 'ML', 'Python', 'Docker', 'Data Pipeline'],
+    },
+  ];
+
   const stats = {
     totalIssues: 92,
     yearsOnDrupal: 13,
@@ -312,14 +337,40 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
 
   return (
     <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
-      {/* Header */}
-      <div className="mb-4">
-        <p className="text-gray-400 text-sm">
-          Open source contributions.
-        </p>
+      {/* AI Projects Highlight - First */}
+      <div className="mb-6">
+        <h4 className="text-purple-400 text-sm font-semibold mb-3">AI/ML Open Source Projects</h4>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {/* GitHub AI/ML Projects */}
+          {githubProjects.map((project) => (
+            <a
+              key={project.machineName}
+              href={project.gitUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm bg-purple-900/30 text-purple-300 px-4 py-2 rounded-md hover:bg-purple-900/50 transition-colors border border-purple-700/50 flex items-center gap-2"
+            >
+              <span>{project.name}</span>
+              <span className="text-xs text-purple-400">({project.machineName})</span>
+            </a>
+          ))}
+          {/* Drupal AI Projects */}
+          {aiProjects.map((project) => (
+            <a
+              key={project.machineName}
+              href={project.gitUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm bg-purple-900/30 text-purple-300 px-4 py-2 rounded-md hover:bg-purple-900/50 transition-colors border border-purple-700/50 flex items-center gap-2"
+            >
+              <span>{project.name}</span>
+              <span className="text-xs text-purple-400">({project.machineName})</span>
+            </a>
+          ))}
+        </div>
       </div>
 
-      {/* Stats Banner */}
+      {/* Stats Banner - After AI Projects */}
       <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-500/30 rounded-lg p-4 mb-6">
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 text-center">
           <div>
@@ -342,25 +393,6 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
             <div className="text-2xl sm:text-3xl font-bold text-orange-400">{stats.yearsOnDrupal}+</div>
             <div className="text-xs text-gray-400">Years Open Source Contributor</div>
           </div>
-        </div>
-      </div>
-
-      {/* AI Projects Highlight */}
-      <div className="mb-4">
-        <h4 className="text-purple-400 text-sm font-semibold mb-3">AI/ML Open Source Projects</h4>
-        <div className="flex flex-wrap gap-2 mb-4">
-          {aiProjects.map((project) => (
-            <a
-              key={project.machineName}
-              href={project.gitUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm bg-purple-900/30 text-purple-300 px-4 py-2 rounded-md hover:bg-purple-900/50 transition-colors border border-purple-700/50 flex items-center gap-2"
-            >
-              <span>{project.name}</span>
-              <span className="text-xs text-purple-400">({project.machineName})</span>
-            </a>
-          ))}
         </div>
       </div>
 
