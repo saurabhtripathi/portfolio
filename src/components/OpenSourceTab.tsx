@@ -11,6 +11,13 @@ interface DrupalProject {
   isAI?: boolean;
 }
 
+interface GitHubProject {
+  name: string;
+  description: string;
+  gitUrl: string;
+  tags: string[];
+}
+
 const OpenSourceTab: React.FC = () => {
   const maintainedProjects: DrupalProject[] = [
     {
@@ -201,6 +208,21 @@ const OpenSourceTab: React.FC = () => {
     },
   ];
 
+  const githubProjects: GitHubProject[] = [
+    {
+      name: 'PyDrubot',
+      description: 'A Python AIML chatbot: a real pattern-matching engine plus a small chat web app with a talking avatar.',
+      gitUrl: 'https://github.com/saurabhtripathi/pydrubot',
+      tags: ['AI', 'Python', 'AIML', 'Chatbot'],
+    },
+    {
+      name: 'Analytics Pipeline Lab',
+      description: 'Production customer-analytics ML pipeline — ingests transaction data, cleans it, engineers features, trains models, and produces per-customer predictions on a schedule. Everything runs in Docker on a single machine.',
+      gitUrl: 'https://github.com/saurabhtripathi/analytics-pipeline-lab',
+      tags: ['AI', 'ML', 'Python', 'Docker', 'Data Pipeline'],
+    },
+  ];
+
   const allProjects = [...maintainedProjects, ...contributedProjects];
 
   const stats = {
@@ -250,6 +272,39 @@ const OpenSourceTab: React.FC = () => {
     </a>
   );
 
+  const GitHubProjectCard: React.FC<{ project: GitHubProject }> = ({ project }) => (
+    <a
+      href={project.gitUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-gray-800/50 border border-gray-700 rounded-lg p-3 sm:p-4 hover:border-blue-500/50 hover:bg-gray-800/70 transition-colors block"
+    >
+      <div className="flex items-start justify-between gap-2 mb-2">
+        <div className="flex-1 min-w-0">
+          <h4 className="font-semibold text-white text-sm mb-1">{project.name}</h4>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-xs px-1.5 py-0.5 rounded bg-purple-900/50 text-purple-300 border border-purple-700 whitespace-nowrap"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <p className="text-gray-400 text-xs mb-3 line-clamp-2">{project.description}</p>
+
+      <div className="flex items-center justify-end">
+        <span className="text-xs text-blue-400 flex items-center gap-1">
+          View Repository →
+        </span>
+      </div>
+    </a>
+  );
+
   return (
     <div className="p-4 sm:p-8 overflow-auto h-full bg-gray-900">
       <div className="max-w-6xl mx-auto">
@@ -287,11 +342,27 @@ const OpenSourceTab: React.FC = () => {
           </div>
         </div>
 
-        {/* Git Repositories - Single Unified Section */}
+        {/* AI/ML GitHub Projects */}
+        <div className="mb-6 sm:mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-purple-400 text-base sm:text-lg">🤖</span>
+            <h2 className="text-base sm:text-lg font-semibold text-white">AI/ML GitHub Projects</h2>
+            <span className="text-xs text-gray-500">({githubProjects.length} repos)</span>
+          </div>
+
+          {/* GitHub Project Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            {githubProjects.map((project) => (
+              <GitHubProjectCard key={project.name} project={project} />
+            ))}
+          </div>
+        </div>
+
+        {/* Drupal Git Repositories - Single Unified Section */}
         <div className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 mb-4">
             <span className="text-orange-400 text-base sm:text-lg">📦</span>
-            <h2 className="text-base sm:text-lg font-semibold text-white">Git Repositories</h2>
+            <h2 className="text-base sm:text-lg font-semibold text-white">Drupal Git Repositories</h2>
             <span className="text-xs text-gray-500">({allProjects.length} repos)</span>
           </div>
 
