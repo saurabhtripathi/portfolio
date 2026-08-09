@@ -315,7 +315,7 @@ const DrupalContributions: React.FC<DrupalContributionsProps> = ({ compact = fal
       {/* Header */}
       <div className="mb-4">
         <p className="text-gray-400 text-sm">
-          My contributions to the Drupal community and open source ecosystem.
+          Open source contributions.
         </p>
       </div>
 
