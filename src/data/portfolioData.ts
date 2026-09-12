@@ -14,7 +14,7 @@ export const portfolioFiles: FileItem[] = [
     content: `# Major Projects
 
 ## AI-Powered News Search
-**Role:** Solutions Architect & AI Engineer
+**Role:** Solutions Architect, CMS Expert & AI Engineer
 **Team Size:** 5-10
 **Technologies:** FastAPI, Google Gemini 2.0 Flash, FAISS, Selenium, WebSockets, mitmproxy, SentenceTransformers, BeautifulSoup4, Pydantic
 
@@ -37,7 +37,7 @@ AI-powered conversational search experience that transforms traditional search i
 ---
 
 ## OTT Conversational Platform
-**Role:** AI Engineer & Solutions Architect
+**Role:** AI Engineer, CMS Expert & Solutions Architect
 **Team Size:** 10-15
 **Technologies:** LangGraph, LangChain, Google Vertex AI (Gemini 2.5/3.0), Cloud SQL (PostgreSQL), Vertex AI Search, FastAPI, GCP Cloud Run, Apigee
 
@@ -60,7 +60,7 @@ Multi-agent conversational platform for OTT content discovery with supervisor-le
 ---
 
 ## WhatsApp Support Bot - AI Agent Framework
-**Role:** Technical Lead & AI Engineer
+**Role:** Technical Lead, CMS Expert & AI Engineer
 **Team Size:** 5-10
 **Technologies:** LangChain, LangGraph, Google Gemini, FAISS, Azure OpenAI, Python, FastAPI
 
@@ -83,7 +83,7 @@ Modular AI agent framework with WhatsApp chat history analysis as primary use ca
 ---
 
 ## CNA (Channel NewsAsia) Platform
-**Role:** Lead Solutions Architect
+**Role:** Lead Solutions Architect & CMS Expert
 **Team Size:** 10-15
 **Technologies:** CMS (Drupal 9/10/11), React, TypeScript, AWS, AI Integrations (OpenAI, Beyond Words TTS)
 
@@ -108,7 +108,7 @@ Singapore's leading English-language news platform serving millions of users acr
 ---
 
 ## Berita
-**Role:** Senior Solutions Architect
+**Role:** Senior Solutions Architect & CMS Expert
 **Team Size:** 5-10
 **Technologies:** CMS (Drupal 10/11), React, Next.js, AI-assisted development workflows, AI editor tools
 
@@ -132,7 +132,7 @@ Leading Malay-language news portal in Singapore with modern architecture, AI-ass
 ---
 
 ## Seithi Tamil News Platform
-**Role:** Technical Lead
+**Role:** Technical Lead & CMS Expert
 **Team Size:** 5-10
 **Technologies:** CMS (Drupal 9), React, GraphQL, AI editor tools
 
@@ -201,11 +201,11 @@ Migrated large government portal from Drupal 7 to Drupal 8.
     id: '2',
     title: 'README.md',
     content: `# Saurabh Tripathi
-## Senior Solutions Architect & Full Stack AI Engineer
+## Senior Solutions Architect, CMS Expert & Full Stack AI Engineer
 
 ### About Me
 
-I am a Senior Solutions Architect & Full Stack AI Engineer with years of experience in building AI-powered applications and enterprise-level web solutions. My expertise spans from traditional CMS development to cutting-edge AI/ML implementations, specializing in RAG pipelines, conversational AI, and intelligent automation systems.
+I am a Senior Solutions Architect, CMS Expert & Full Stack AI Engineer with years of experience in building AI-powered applications and enterprise-level web solutions. My expertise spans from traditional CMS development to cutting-edge AI/ML implementations, specializing in RAG pipelines, conversational AI, and intelligent automation systems.
 
 ### Certifications & Courses
 
