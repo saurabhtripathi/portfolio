@@ -607,6 +607,8 @@ const WelcomeTab: React.FC<{
     { name: 'FastAPI', icon: '⚡' },
     { name: 'React', icon: '⚛️' },
     { name: 'TypeScript', icon: '📘' },
+    { name: 'Drupal (CMS)', icon: '💧' },
+    { name: 'PHP', icon: '🐘' },
     { name: 'GCP/AWS', icon: '☁️' },
     { name: 'Docker', icon: '🐳' },
   ];
