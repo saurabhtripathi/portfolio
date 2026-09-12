@@ -617,9 +617,9 @@ const WelcomeTab: React.FC<{
         {/* Hero Section */}
         <div className="mb-6 sm:mb-10 text-center">
           <h1 className="text-2xl sm:text-4xl font-bold text-white mb-1 sm:mb-2">Saurabh Tripathi</h1>
-          <h2 className="text-base sm:text-xl text-blue-400 mb-2 sm:mb-4">Senior Solutions Architect & Full Stack AI Engineer</h2>
+          <h2 className="text-base sm:text-xl text-blue-400 mb-2 sm:mb-4">Senior Solutions Architect, CMS Expert & Full Stack AI Engineer</h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
-            Full Stack AI Engineer specializing in RAG pipelines, multi-agent systems, conversational AI,
+            Senior Solutions Architect, CMS Expert & Full Stack AI Engineer specializing in RAG pipelines, multi-agent systems, conversational AI,
             and enterprise applications using LangChain, LangGraph, and modern LLMs.
           </p>
           {/* Social Links - hidden on mobile (in bottom nav), shown on desktop */}
